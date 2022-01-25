@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -90,6 +91,11 @@ public class chassisSubsystem extends SubsystemBase {
   PIDController fRPidController = new PIDController(0.000078, 0.000143, 0);
   PIDController bLPidController = new PIDController(0.000078, 0.000143, 0);
   PIDController bRPidController = new PIDController(0.000078, 0.000143, 0);
+
+  PIDController fLTurnPid = new PIDController(0.105, 0, 0);
+  PIDController fRTurnPid = new PIDController(0.105, 0, 0);
+  PIDController bLTurnPid = new PIDController(0.105, 0, 0);
+  PIDController bRTurnPid = new PIDController(0.105, 0, 0);
   
   int currentRotationFl = 1;
   int currentRotationFr = 1;
@@ -229,11 +235,11 @@ public class chassisSubsystem extends SubsystemBase {
     // fRrotationMotor.getPIDController().setReference(fRAngle, ControlType.kPosition);
     // bLrotationMotor.getPIDController().setReference(bLAngle, ControlType.kPosition);
     // bRrotationMotor.getPIDController().setReference(bRAngle, ControlType.kPosition);
-    
-    /*
-    *   TODO 
-    *   Make PID for turn motors.
-    */
+
+    fLPidController.setSetpoint(fLAngle);
+    fRPidController.setSetpoint(fRAngle);
+    bLPidController.setSetpoint(bLAngle);
+    bRPidController.setSetpoint(bRAngle);
 
     //WIP for replacing the avoidance method of infinite rotation with real infinite rotation.
     //Uses the turn forever method of going past full rotation.  Make sure to comment out rotationOverflow calls and the previous inputs to the rotation motors.
@@ -356,6 +362,8 @@ public class chassisSubsystem extends SubsystemBase {
     rotationOverflow(bLrotationMotor, 2);
     rotationOverflow(bRrotationMotor, 3);
     
+    //TODO Fix PID stuff
+
     //these lines tell the motor controller what poisition to set the motor to
     // fLrotationMotor.getPIDController().setReference(fLAngle, ControlType.kPosition);
     // fRrotationMotor.getPIDController().setReference(fRAngle, ControlType.kPosition);
@@ -374,7 +382,10 @@ public class chassisSubsystem extends SubsystemBase {
     
     // Set the speed in TalonFX to a percent output.
 
-
+    fLrotationMotor.set(TalonFXControlMode.Position, fLAngle);
+    fRrotationMotor.set(TalonFXControlMode.Position, fLAngle);
+    bLrotationMotor.set(TalonFXControlMode.Position, fLAngle);
+    bRrotationMotor.set(TalonFXControlMode.Position, fLAngle);
 
     fLDriveMotor.set(frontLeftSpeed);
     fRDriveMotor.set(-frontRightSpeed);
@@ -480,6 +491,8 @@ public class chassisSubsystem extends SubsystemBase {
     rotationOverflow(fRrotationMotor, 1);
     rotationOverflow(bLrotationMotor, 2);
     rotationOverflow(bRrotationMotor, 3);
+    
+    //TODO Fix PID stuff
     
     //these lines tell the motor controller what poisition to set the motor to
     // fLrotationMotor.getPIDController().setReference(fLAngle, ControlType.kPosition);
@@ -685,30 +698,30 @@ public class chassisSubsystem extends SubsystemBase {
   
   // Creates the PID controllers for all 4 rotation motors.  Should only ever be called once
   public void SetPIDController(){
-    // fLrotationMotor.getEncoder().setPosition(0);
-    // fRrotationMotor.getEncoder().setPosition(0);
-    // bLrotationMotor.getEncoder().setPosition(0);
-    // bRrotationMotor.getEncoder().setPosition(0);
-    
-    // fLrotationMotor.getPIDController().setP(0.105);
-    // fLrotationMotor.getPIDController().setI(0.0);
-    // fLrotationMotor.getPIDController().setFF(0);
-    // fLrotationMotor.getPIDController().setOutputRange(-0.5, 0.5);
+    fLrotationMotor.setSelectedSensorPosition(0);
+    fRrotationMotor.setSelectedSensorPosition(0);
+    bLrotationMotor.setSelectedSensorPosition(0);
+    bRrotationMotor.setSelectedSensorPosition(0);
 
-    // fRrotationMotor.getPIDController().setP(0.105);
-    // fRrotationMotor.getPIDController().setI(0.0);
-    // fRrotationMotor.getPIDController().setFF(0);
-    // fRrotationMotor.getPIDController().setOutputRange(-0.5, 0.5);
+    fLrotationMotor.config_kP(0, 0.105);
+    fLrotationMotor.config_kI(0, 0);
+    fLrotationMotor.config_kD(0, 0);
+    fLrotationMotor.config_kF(0, 0);
 
-    // bLrotationMotor.getPIDController().setP(0.105);
-    // bLrotationMotor.getPIDController().setI(0.0);
-    // bLrotationMotor.getPIDController().setFF(0);
-    // bLrotationMotor.getPIDController().setOutputRange(-0.5, 0.5);
+    fRrotationMotor.config_kP(0, 0.105);
+    fRrotationMotor.config_kI(0, 0);
+    fRrotationMotor.config_kD(0, 0);
+    fRrotationMotor.config_kF(0, 0);
 
-    // bRrotationMotor.getPIDController().setP(0.105);
-    // bRrotationMotor.getPIDController().setI(0.0);
-    // bRrotationMotor.getPIDController().setFF(0);
-    // bRrotationMotor.getPIDController().setOutputRange(-0.5, 0.5);
+    bLrotationMotor.config_kP(0, 0.105);
+    bLrotationMotor.config_kI(0, 0);
+    bLrotationMotor.config_kD(0, 0);
+    bLrotationMotor.config_kF(0, 0);
+
+    bRrotationMotor.config_kP(0, 0.105);
+    bRrotationMotor.config_kI(0, 0);
+    bRrotationMotor.config_kD(0, 0);
+    bRrotationMotor.config_kF(0, 0);
 
     fLPidController.setTolerance(1, 0.0000001);
     fRPidController.setTolerance(1, 0.0000001);
