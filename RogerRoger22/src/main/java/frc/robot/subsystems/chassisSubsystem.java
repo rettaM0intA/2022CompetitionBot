@@ -49,16 +49,16 @@ public class chassisSubsystem extends SubsystemBase {
 
   //The Falcon 500s are in charge of spinning the wheels
   WPI_TalonFX fRDriveMotor = new WPI_TalonFX(6);
-  WPI_TalonFX fLDriveMotor = new WPI_TalonFX(21);
-  WPI_TalonFX bRDriveMotor = new WPI_TalonFX(2);
-  WPI_TalonFX bLDriveMotor = new WPI_TalonFX(11);
+  WPI_TalonFX fLDriveMotor = new WPI_TalonFX(8);
+  WPI_TalonFX bRDriveMotor = new WPI_TalonFX(4);
+  WPI_TalonFX bLDriveMotor = new WPI_TalonFX(2);
 
 
   //The Neo550s are in charge of rotating the wheels
-  public CANSparkMax fRrotationMotor = new CANSparkMax(5, MotorType.kBrushless);
-  public CANSparkMax fLrotationMotor = new CANSparkMax(20, MotorType.kBrushless);
-  public CANSparkMax bRrotationMotor = new CANSparkMax(10, MotorType.kBrushless);
-  public CANSparkMax bLrotationMotor = new CANSparkMax(1, MotorType.kBrushless);
+  public WPI_TalonFX fRrotationMotor = new WPI_TalonFX(5);
+  public WPI_TalonFX fLrotationMotor = new WPI_TalonFX(7);
+  public WPI_TalonFX bRrotationMotor = new WPI_TalonFX(3);
+  public WPI_TalonFX bLrotationMotor = new WPI_TalonFX(1);
 
   SlewRateLimiter frontLeftLimiter = new SlewRateLimiter(.72);
   SlewRateLimiter frontRightLimiter = new SlewRateLimiter(.72);
@@ -202,10 +202,10 @@ public class chassisSubsystem extends SubsystemBase {
 
     
 
-    SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
-    SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
-    SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
-    SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
+    SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
+    SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
+    SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
+    SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
 
     
 
@@ -229,6 +229,7 @@ public class chassisSubsystem extends SubsystemBase {
     rotationOverflow(bRrotationMotor, 3);
     
     //these lines tell the motor controller what poisition to set the motor to
+    //TODO !
     // fLrotationMotor.getPIDController().setReference(fLAngle, ControlType.kPosition);
     // fRrotationMotor.getPIDController().setReference(fRAngle, ControlType.kPosition);
     // bLrotationMotor.getPIDController().setReference(bLAngle, ControlType.kPosition);
@@ -244,10 +245,10 @@ public class chassisSubsystem extends SubsystemBase {
     
     
     // Set the speed in TalonFX to a percent output.
-    // fLDriveMotor.set(frontLeftLimiter.calculate(frontLeftSpeed));
-    // fRDriveMotor.set(-frontRightLimiter.calculate(frontRightSpeed));
+    fLDriveMotor.set(frontLeftLimiter.calculate(frontLeftSpeed));
+    fRDriveMotor.set(-frontRightLimiter.calculate(frontRightSpeed));
     bLDriveMotor.set(backLeftLimiter.calculate(backLeftSpeed));
-    // bRDriveMotor.set(-backRightLimiter.calculate(backRightSpeed));
+    bRDriveMotor.set(-backRightLimiter.calculate(backRightSpeed));
 
     // fLDriveMotor.set(0);
     // fRDriveMotor.set(0);
@@ -343,10 +344,11 @@ public class chassisSubsystem extends SubsystemBase {
     rotationOverflow(bRrotationMotor, 3);
     
     //these lines tell the motor controller what poisition to set the motor to
-    fLrotationMotor.getPIDController().setReference(fLAngle, ControlType.kPosition);
-    fRrotationMotor.getPIDController().setReference(fRAngle, ControlType.kPosition);
-    bLrotationMotor.getPIDController().setReference(bLAngle, ControlType.kPosition);
-    bRrotationMotor.getPIDController().setReference(bRAngle, ControlType.kPosition);
+    // TODO !
+    // fLrotationMotor.getPIDController().setReference(fLAngle, ControlType.kPosition);
+    // fRrotationMotor.getPIDController().setReference(fRAngle, ControlType.kPosition);
+    // bLrotationMotor.getPIDController().setReference(bLAngle, ControlType.kPosition);
+    // bRrotationMotor.getPIDController().setReference(bRAngle, ControlType.kPosition);
     
 
     //WIP for replacing the avoidance method of infinite rotation with real infinite rotation.
@@ -454,10 +456,11 @@ public class chassisSubsystem extends SubsystemBase {
     rotationOverflow(bRrotationMotor, 3);
     
     //these lines tell the motor controller what poisition to set the motor to
-    fLrotationMotor.getPIDController().setReference(fLAngle, ControlType.kPosition);
-    fRrotationMotor.getPIDController().setReference(fRAngle, ControlType.kPosition);
-    bLrotationMotor.getPIDController().setReference(bLAngle, ControlType.kPosition);
-    bRrotationMotor.getPIDController().setReference(bRAngle, ControlType.kPosition);
+    //TODO 
+    // fLrotationMotor.getPIDController().setReference(fLAngle, ControlType.kPosition);
+    // fRrotationMotor.getPIDController().setReference(fRAngle, ControlType.kPosition);
+    // bLrotationMotor.getPIDController().setReference(bLAngle, ControlType.kPosition);
+    // bRrotationMotor.getPIDController().setReference(bRAngle, ControlType.kPosition); 
     
 
     //WIP for replacing the avoidance method of infinite rotation with real infinite rotation.
@@ -528,8 +531,8 @@ public class chassisSubsystem extends SubsystemBase {
    * @param rotationMotor Used to check a motor's position to avoid doing a full rotation
    * @param angleNumber input an integer based on which motor is being used.  FL = 0, FR = 1, BL = 2, BR = 3
    */
-  public void rotationOverflow(CANSparkMax rotationMotor, int angleNumber){
-    double currentRotation = rotationMotor.getEncoder().getPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation;
+  public void rotationOverflow(WPI_TalonFX rotationMotor, int angleNumber){
+    double currentRotation = rotationMotor.getSelectedSensorPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation;
     double goalAngle = 0;   //used as a reference of the Rotation Motor's goal rotation in degrees.
     
     if(angleNumber == 0){
@@ -658,30 +661,30 @@ public class chassisSubsystem extends SubsystemBase {
   
   // Creates the PID controllers for all 4 rotation motors.  Should only ever be called once
   public void SetPIDController(){
-    fLrotationMotor.getEncoder().setPosition(0);
-    fRrotationMotor.getEncoder().setPosition(0);
-    bLrotationMotor.getEncoder().setPosition(0);
-    bRrotationMotor.getEncoder().setPosition(0);
+    // fLrotationMotor.getEncoder().setPosition(0);
+    // fRrotationMotor.getEncoder().setPosition(0);
+    // bLrotationMotor.getEncoder().setPosition(0);
+    // bRrotationMotor.getEncoder().setPosition(0);
     
-    fLrotationMotor.getPIDController().setP(0.105);
-    fLrotationMotor.getPIDController().setI(0.0);
-    fLrotationMotor.getPIDController().setFF(0);
-    fLrotationMotor.getPIDController().setOutputRange(-0.5, 0.5);
+    // fLrotationMotor.getPIDController().setP(0.105);
+    // fLrotationMotor.getPIDController().setI(0.0);
+    // fLrotationMotor.getPIDController().setFF(0);
+    // fLrotationMotor.getPIDController().setOutputRange(-0.5, 0.5);
 
-    fRrotationMotor.getPIDController().setP(0.105);
-    fRrotationMotor.getPIDController().setI(0.0);
-    fRrotationMotor.getPIDController().setFF(0);
-    fRrotationMotor.getPIDController().setOutputRange(-0.5, 0.5);
+    // fRrotationMotor.getPIDController().setP(0.105);
+    // fRrotationMotor.getPIDController().setI(0.0);
+    // fRrotationMotor.getPIDController().setFF(0);
+    // fRrotationMotor.getPIDController().setOutputRange(-0.5, 0.5);
 
-    bLrotationMotor.getPIDController().setP(0.105);
-    bLrotationMotor.getPIDController().setI(0.0);
-    bLrotationMotor.getPIDController().setFF(0);
-    bLrotationMotor.getPIDController().setOutputRange(-0.5, 0.5);
+    // bLrotationMotor.getPIDController().setP(0.105);
+    // bLrotationMotor.getPIDController().setI(0.0);
+    // bLrotationMotor.getPIDController().setFF(0);
+    // bLrotationMotor.getPIDController().setOutputRange(-0.5, 0.5);
 
-    bRrotationMotor.getPIDController().setP(0.105);
-    bRrotationMotor.getPIDController().setI(0.0);
-    bRrotationMotor.getPIDController().setFF(0);
-    bRrotationMotor.getPIDController().setOutputRange(-0.5, 0.5);
+    // bRrotationMotor.getPIDController().setP(0.105);
+    // bRrotationMotor.getPIDController().setI(0.0);
+    // bRrotationMotor.getPIDController().setFF(0);
+    // bRrotationMotor.getPIDController().setOutputRange(-0.5, 0.5);
 
     fLPidController.setTolerance(10, 0.0000001);
     fRPidController.setTolerance(10, 0.0000001);
@@ -780,10 +783,10 @@ public class chassisSubsystem extends SubsystemBase {
      SmartDashboard.putData(gyro);
      SmartDashboard.putBoolean("Gyro connected", gyro.isConnected());
  
-     SmartDashboard.putNumber("fR Rotation", fRrotationMotor.getEncoder().getPosition() / Constants.kChassisNeoMotorRotationPerWheelRotation * 360);
-     SmartDashboard.putNumber("fL Rotation", fLrotationMotor.getEncoder().getPosition() / Constants.kChassisNeoMotorRotationPerWheelRotation * 360);
-     SmartDashboard.putNumber("bR Rotation", bRrotationMotor.getEncoder().getPosition() / Constants.kChassisNeoMotorRotationPerWheelRotation * 360);
-     SmartDashboard.putNumber("bL Rotation", bLrotationMotor.getEncoder().getPosition() / Constants.kChassisNeoMotorRotationPerWheelRotation * 360);
+     SmartDashboard.putNumber("fR Rotation", fRrotationMotor.getSelectedSensorPosition() / Constants.kChassisNeoMotorRotationPerWheelRotation * 360);
+     SmartDashboard.putNumber("fL Rotation", fLrotationMotor.getSelectedSensorPosition() / Constants.kChassisNeoMotorRotationPerWheelRotation * 360);
+     SmartDashboard.putNumber("bR Rotation", bRrotationMotor.getSelectedSensorPosition() / Constants.kChassisNeoMotorRotationPerWheelRotation * 360);
+     SmartDashboard.putNumber("bL Rotation", bLrotationMotor.getSelectedSensorPosition() / Constants.kChassisNeoMotorRotationPerWheelRotation * 360);
  
     //  SmartDashboard.putNumber("FrontLeftEncoder", fLAnalogEncoder.get());   
     //  SmartDashboard.putNumber("FrontRightEncoder", fRAnalogEncoder.get());
