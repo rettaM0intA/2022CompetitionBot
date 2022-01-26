@@ -47,6 +47,8 @@ public final class Constants {
 	//This is used to lower the speed of the drive motors to reasonable values
 	public static final double kChassisMotorSpeedLower = 5.67;
 	
+	// 8 tooth > ? > 14 > 72 New Chassis Gearbox
+	
 	public static final double kChassisSwerveOutputDegreeToNeoRotation = 360 / kChassisNeoMotorRotationPerWheelRotation;	//5.4000054000054
 
 	public static final double kChassisAbsoluteZerofL = 3.118;	//Absolute reads 4.118	lowered for conversion
