@@ -44,10 +44,14 @@ public final class Constants {
 	public static final double kChassisNeoMotorRotationPerWheelRotation = kChassisNeoToGearbox / kChassisGearboxToOutputGear * kChassisOutputDriveGearToInputGear;
 	public static final double kChassisNeoMotorRotationtoRadians = kChassisNeoMotorRotationPerWheelRotation * Math.PI;
 	
+
+	public static final double kChassisFalconToWheelRatio = 2048 * 3 * (72/14);		//0.64814;
+	public static final double kChassisDegreetoMotor = 360 / kChassisFalconToWheelRatio;
+
 	//This is used to lower the speed of the drive motors to reasonable values
 	public static final double kChassisMotorSpeedLower = 5.67;
 	
-	// 8 tooth > ? > 14 > 72 New Chassis Gearbox
+	// 8 tooth > 24 > 14 > 72 New Chassis Gearbox
 	
 	public static final double kChassisSwerveOutputDegreeToNeoRotation = 360 / kChassisNeoMotorRotationPerWheelRotation;	//5.4000054000054
 

@@ -123,6 +123,7 @@ public class chassisSubsystem extends SubsystemBase {
   Translation2d backRightLocation = new Translation2d(-0.292, -0.286);
 
     fLrotationMotor.setInverted(false);
+    bLrotationMotor.setInverted(true);
 
   if(setPid){
     SetPIDController();
@@ -207,17 +208,17 @@ public class chassisSubsystem extends SubsystemBase {
 
     
 
-    SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
-    // SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fRrotationMotor.getSelectedSensorPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
-    SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((bLrotationMotor.getSelectedSensorPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
-    // SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((bRrotationMotor.getSelectedSensorPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
+    SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor * (Math.PI/180))));
+    // SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fRrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((bLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor * (Math.PI/180))));
+    // SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((bRrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
     
 
     // Get the needed angle from the module state and convert it to the Cnts needed for the CanSparkMax PID loop
-    fLAngle = (frontLeftOptimize.angle.getDegrees()); // Constants.kChassisSwerveOutputDegreeToNeoRotation);
-    // fRAngle = (frontRightOptimize.angle.getDegrees() / Constants.kChassisSwerveOutputDegreeToNeoRotation);
-    bLAngle = (backLeftOptimize.angle.getDegrees()); // Constants.kChassisSwerveOutputDegreeToNeoRotation);
-    // bRAngle = (backRightOptimize.angle.getDegrees() / Constants.kChassisSwerveOutputDegreeToNeoRotation);
+    fLAngle = (frontLeftOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    // fRAngle = (frontRightOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    bLAngle = (backLeftOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    // bRAngle = (backRightOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
 
 
     // Get the needed speed from the module state and convert it to the -1 to 1 value needed for percent output command of the CANTalon
@@ -227,9 +228,9 @@ public class chassisSubsystem extends SubsystemBase {
     // double backRightSpeed = backRightOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
 
     //The goal of these four uses of rotationOverflow is to have the wheels avoid a 350+ degree rotation
-    rotationOverflow(fLrotationMotor, 0);
+    // rotationOverflow(fLrotationMotor, 0);
     // rotationOverflow(fRrotationMotor, 1);
-    rotationOverflow(bLrotationMotor, 2);
+    // rotationOverflow(bLrotationMotor, 2);
     // rotationOverflow(bRrotationMotor, 3);
     
     //these lines tell the motor controller what position to set the motor to
@@ -243,20 +244,13 @@ public class chassisSubsystem extends SubsystemBase {
     // bLPidController.setSetpoint(bLAngle);
     // bRPidController.setSetpoint(bRAngle);
 
-    bLrotationMotor.set(TalonFXControlMode.Position, (int)fLAngle * 10);
+    fLrotationMotor.set(TalonFXControlMode.Position, (int)fLAngle);
 
-    SmartDashboard.putNumber("fLAngle", fLAngle * 10);
+    SmartDashboard.putNumber("fLAngle", bLAngle);
 
     
     // fLrotationMotor.set(0.2);
 
-    //WIP for replacing the avoidance method of infinite rotation with real infinite rotation.
-    //Uses the turn forever method of going past full rotation.  Make sure to comment out rotationOverflow calls and the previous inputs to the rotation motors.
-    // fLrotationMotor.getPIDController().setReference(TurnForever(fLrotationMotor, fLAngle), ControlType.kPosition);
-    // fRrotationMotor.getPIDController().setReference(TurnForever(fRrotationMotor, fRAngle), ControlType.kPosition);
-    // bLrotationMotor.getPIDController().setReference(TurnForever(bLrotationMotor, bLAngle), ControlType.kPosition);
-    // bRrotationMotor.getPIDController().setReference(TurnForever(bRrotationMotor, bRAngle), ControlType.kPosition);
-    
     
     // Set the speed in TalonFX to a percent output.
     fLDriveMotor.set(frontLeftLimiter.calculate(frontLeftSpeed));
@@ -266,15 +260,10 @@ public class chassisSubsystem extends SubsystemBase {
 
     // fLDriveMotor.set(0);
     // fRDriveMotor.set(0);
-    // bLDriveMotor.set(0);
+    bLDriveMotor.set(0);
     // bRDriveMotor.set(0);
 
     //fLDriveMotor.set(fLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), 1000));
-
-    // lastSpeedfL = frontLeftSpeed;
-    // lastSpeedfR = frontRightSpeed;
-    // lastSpeedbL = backLeftSpeed;
-    // lastSpeedbR = backRightSpeed;
 
   }
 
@@ -347,16 +336,16 @@ public class chassisSubsystem extends SubsystemBase {
     SwerveModuleState backRight = moduleStates[3];
 
     
-    SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
-    // SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
-    SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
-    // SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
+    SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    // SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    // SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
 
     // Get the needed angle from the module state and convert it to the Cnts needed for the CanSparkMAx PID loop
-    fLAngle = (frontLeft.angle.getDegrees() / Constants.kChassisSwerveOutputDegreeToNeoRotation);
-    fRAngle = (frontRight.angle.getDegrees() / Constants.kChassisSwerveOutputDegreeToNeoRotation);
-    bLAngle = (backLeft.angle.getDegrees() / Constants.kChassisSwerveOutputDegreeToNeoRotation);
-    bRAngle = (backRight.angle.getDegrees() / Constants.kChassisSwerveOutputDegreeToNeoRotation);
+    fLAngle = (frontLeft.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    fRAngle = (frontRight.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    bLAngle = (backLeft.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    bRAngle = (backRight.angle.getDegrees() / Constants.kChassisDegreetoMotor);
 
 
     // Get the needed speed from the module state and convert it to the -1 to 1 value needed for percent output command of the CANTalon
@@ -477,16 +466,16 @@ public class chassisSubsystem extends SubsystemBase {
     SwerveModuleState backLeft = moduleStates[2];
     SwerveModuleState backRight = moduleStates[3];
 
-    // SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
-    // SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
-    // SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
-    // SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
+    // SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    // SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    // SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    // SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
 
     // Get the needed angle from the module state and convert it to the Cnts needed for the CanSparkMAx PID loop
-    fLAngle = (frontLeft.angle.getDegrees()); // Constants.kChassisSwerveOutputDegreeToNeoRotation;
-    fRAngle = (frontRight.angle.getDegrees()); // Constants.kChassisSwerveOutputDegreeToNeoRotation;
-    bLAngle = (backLeft.angle.getDegrees()); // Constants.kChassisSwerveOutputDegreeToNeoRotation;
-    bRAngle = (backRight.angle.getDegrees()); // Constants.kChassisSwerveOutputDegreeToNeoRotation;
+    fLAngle = (frontLeft.angle.getDegrees()); // Constants.kChassisDegreetoMotor;
+    fRAngle = (frontRight.angle.getDegrees()); // Constants.kChassisDegreetoMotor;
+    bLAngle = (backLeft.angle.getDegrees()); // Constants.kChassisDegreetoMotor;
+    bRAngle = (backRight.angle.getDegrees()); // Constants.kChassisDegreetoMotor;
 
 
     // Get the needed speed from the module state and convert it to the -1 to 1 value needed for percent output command of the CANTalon
@@ -578,17 +567,17 @@ public class chassisSubsystem extends SubsystemBase {
    * @param angleNumber input an integer based on which motor is being used.  FL = 0, FR = 1, BL = 2, BR = 3
    */
   public void rotationOverflow(WPI_TalonFX rotationMotor, int angleNumber){
-    double currentRotation = rotationMotor.getSelectedSensorPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation;
+    double currentRotation = rotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor;
     double goalAngle = 0;   //used as a reference of the Rotation Motor's goal rotation in degrees.
     
     if(angleNumber == 0){
-      goalAngle = fLAngle * Constants.kChassisSwerveOutputDegreeToNeoRotation;
+      goalAngle = fLAngle * Constants.kChassisDegreetoMotor;
     }else if(angleNumber == 1){
-      goalAngle = fRAngle * Constants.kChassisSwerveOutputDegreeToNeoRotation;
+      goalAngle = fRAngle * Constants.kChassisDegreetoMotor;
     }else if(angleNumber == 2){
-      goalAngle = bLAngle * Constants.kChassisSwerveOutputDegreeToNeoRotation;
+      goalAngle = bLAngle * Constants.kChassisDegreetoMotor;
     }else if(angleNumber == 3){
-      goalAngle = bRAngle * Constants.kChassisSwerveOutputDegreeToNeoRotation;
+      goalAngle = bRAngle * Constants.kChassisDegreetoMotor;
     }
 
     //Checks to see if the goal rotation is near +-180 degrees.  If it is the goal rotation is flipped to avoid having the wheel do a 360
@@ -601,13 +590,13 @@ public class chassisSubsystem extends SubsystemBase {
     }
 
     if(angleNumber == 0){
-      fLAngle = goalAngle / Constants.kChassisSwerveOutputDegreeToNeoRotation;
+      fLAngle = goalAngle / Constants.kChassisDegreetoMotor;
     }else if(angleNumber == 1){
-      fRAngle = goalAngle / Constants.kChassisSwerveOutputDegreeToNeoRotation;
+      fRAngle = goalAngle / Constants.kChassisDegreetoMotor;
     }else if(angleNumber == 2){
-      bLAngle = goalAngle / Constants.kChassisSwerveOutputDegreeToNeoRotation;
+      bLAngle = goalAngle / Constants.kChassisDegreetoMotor;
     }else if(angleNumber == 3){
-      bRAngle = goalAngle / Constants.kChassisSwerveOutputDegreeToNeoRotation;
+      bRAngle = goalAngle / Constants.kChassisDegreetoMotor;
     }
     
   }
@@ -621,7 +610,7 @@ public class chassisSubsystem extends SubsystemBase {
    */
   // public double TurnForever(CANSparkMax motor, double goalAngle){
 
-  //   double convertedTo180s = motor.getEncoder().getPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation;
+  //   double convertedTo180s = motor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor;
 
   //   SmartDashboard.putNumber("LookATME!", goalAngle);
     
@@ -635,24 +624,24 @@ public class chassisSubsystem extends SubsystemBase {
     
 
 
-  //   return goalAngle / Constants.kChassisSwerveOutputDegreeToNeoRotation;
+  //   return goalAngle / Constants.kChassisDegreetoMotor;
 
   // }
 
   public double TurnForever(WPI_TalonFX motor, double angleNumber){
 
-    double motorAngle = motor.getSelectedSensorPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation;
+    double motorAngle = motor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor;
     double goalPosition = 0;
     double goalAngle = 0;
 
     if(angleNumber == 0){
-      goalAngle = fLAngle * Constants.kChassisSwerveOutputDegreeToNeoRotation;
+      goalAngle = fLAngle * Constants.kChassisDegreetoMotor;
     }else if(angleNumber == 1){
-      goalAngle = fRAngle * Constants.kChassisSwerveOutputDegreeToNeoRotation;
+      goalAngle = fRAngle * Constants.kChassisDegreetoMotor;
     }else if(angleNumber == 2){
-      goalAngle = bLAngle * Constants.kChassisSwerveOutputDegreeToNeoRotation;
+      goalAngle = bLAngle * Constants.kChassisDegreetoMotor;
     }else if(angleNumber == 3){
-      goalAngle = bRAngle * Constants.kChassisSwerveOutputDegreeToNeoRotation;
+      goalAngle = bRAngle * Constants.kChassisDegreetoMotor;
     }
 
     // if()
@@ -663,7 +652,7 @@ public class chassisSubsystem extends SubsystemBase {
 
   public double optimizeDirection(WPI_TalonFX motor, double goalAngle){
     
-    if(90 - (motor.getSelectedSensorPosition() / Constants.kChassisSwerveOutputDegreeToNeoRotation) < 90){
+    if(90 - (motor.getSelectedSensorPosition() / Constants.kChassisDegreetoMotor) < 90){
 
     }
 
@@ -829,10 +818,10 @@ public class chassisSubsystem extends SubsystemBase {
      SmartDashboard.putData(gyro);
      SmartDashboard.putBoolean("Gyro connected", gyro.isConnected());
  
-    //  SmartDashboard.putNumber("fR Rotation", fRrotationMotor.getSelectedSensorPosition() / Constants.kChassisNeoMotorRotationPerWheelRotation * 360);
-     SmartDashboard.putNumber("fL Rotation", fLrotationMotor.getSelectedSensorPosition() / Constants.kChassisNeoMotorRotationPerWheelRotation * 360);
-    //  SmartDashboard.putNumber("bR Rotation", bRrotationMotor.getSelectedSensorPosition() / Constants.kChassisNeoMotorRotationPerWheelRotation * 360);
-     SmartDashboard.putNumber("bL Rotation", bLrotationMotor.getSelectedSensorPosition() / Constants.kChassisNeoMotorRotationPerWheelRotation * 360);
+    //  SmartDashboard.putNumber("fR Rotation", fRrotationMotor.getSelectedSensorPosition() / Constants.kChassisFalconToWheelRatio * 360);
+     SmartDashboard.putNumber("fL Rotation", fLrotationMotor.getSelectedSensorPosition() / Constants.kChassisFalconToWheelRatio * 360);
+    //  SmartDashboard.putNumber("bR Rotation", bRrotationMotor.getSelectedSensorPosition() / Constants.kChassisFalconToWheelRatio * 360);
+     SmartDashboard.putNumber("bL Rotation", bLrotationMotor.getSelectedSensorPosition());
  
      SmartDashboard.putNumber("FrontLeftEncoder", fLAnalogEncoder.get());   
      SmartDashboard.putNumber("FrontRightEncoder", fRAnalogEncoder.get());
