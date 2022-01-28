@@ -245,6 +245,8 @@ public class chassisSubsystem extends SubsystemBase {
     // bRPidController.setSetpoint(bRAngle);
 
     fLrotationMotor.set(TalonFXControlMode.Position, (int)fLAngle);
+    
+    bLrotationMotor.set(TalonFXControlMode.Position, (int)bLAngle);
 
     SmartDashboard.putNumber("fLAngle", bLAngle);
 
@@ -260,7 +262,7 @@ public class chassisSubsystem extends SubsystemBase {
 
     // fLDriveMotor.set(0);
     // fRDriveMotor.set(0);
-    bLDriveMotor.set(0);
+    // bLDriveMotor.set(0);
     // bRDriveMotor.set(0);
 
     //fLDriveMotor.set(fLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), 1000));
