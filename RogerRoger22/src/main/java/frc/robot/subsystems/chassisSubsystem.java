@@ -48,16 +48,16 @@ public class chassisSubsystem extends SubsystemBase {
 
 
   //The Falcon 500s are in charge of spinning the wheels
-  // WPI_TalonFX fRDriveMotor = new WPI_TalonFX(6);
+  WPI_TalonFX fRDriveMotor = new WPI_TalonFX(6);
   WPI_TalonFX fLDriveMotor = new WPI_TalonFX(8);
-  // WPI_TalonFX bRDriveMotor = new WPI_TalonFX(4);
+  WPI_TalonFX bRDriveMotor = new WPI_TalonFX(4);
   WPI_TalonFX bLDriveMotor = new WPI_TalonFX(2);
 
 
   //The Neo550s are in charge of rotating the wheels
-  // public WPI_TalonFX fRrotationMotor = new WPI_TalonFX(5);
+  public WPI_TalonFX fRrotationMotor = new WPI_TalonFX(5);
   public WPI_TalonFX fLrotationMotor = new WPI_TalonFX(7);
-  // public WPI_TalonFX bRrotationMotor = new WPI_TalonFX(3);
+  public WPI_TalonFX bRrotationMotor = new WPI_TalonFX(3);
   public WPI_TalonFX bLrotationMotor = new WPI_TalonFX(1);
 
   SlewRateLimiter frontLeftLimiter = new SlewRateLimiter(.72);
@@ -122,7 +122,9 @@ public class chassisSubsystem extends SubsystemBase {
   Translation2d backLeftLocation = new Translation2d(-0.292, 0.286);
   Translation2d backRightLocation = new Translation2d(-0.292, -0.286);
 
-    fLrotationMotor.setInverted(false);
+    //TODO Show how fl turn direction was fixed
+
+    fLrotationMotor.setInverted(true);
     bLrotationMotor.setInverted(true);
 
   if(setPid){
@@ -144,15 +146,15 @@ public class chassisSubsystem extends SubsystemBase {
 
     if(RobotContainer.operator.getYButton()){
       resetGyro();
-      // fRDriveMotor.setSelectedSensorPosition(0);
+      fRDriveMotor.setSelectedSensorPosition(0);
       fLDriveMotor.setSelectedSensorPosition(0);
-      // bRDriveMotor.setSelectedSensorPosition(0);
+      bRDriveMotor.setSelectedSensorPosition(0);
       bLDriveMotor.setSelectedSensorPosition(0);
     }else if(RobotContainer.driver.getRawButton(9)){
       resetGyro();
-      // fRDriveMotor.setSelectedSensorPosition(0);
+      fRDriveMotor.setSelectedSensorPosition(0);
       fLDriveMotor.setSelectedSensorPosition(0);
-      // bRDriveMotor.setSelectedSensorPosition(0);
+      bRDriveMotor.setSelectedSensorPosition(0);
       bLDriveMotor.setSelectedSensorPosition(0);
     }
 
@@ -209,23 +211,23 @@ public class chassisSubsystem extends SubsystemBase {
     
 
     SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor * (Math.PI/180))));
-    // SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fRrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fRrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor * (Math.PI/180))));
     SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((bLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor * (Math.PI/180))));
-    // SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((bRrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
-    
+    SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((bRrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor * (Math.PI/180))));
+  
 
     // Get the needed angle from the module state and convert it to the Cnts needed for the CanSparkMax PID loop
     fLAngle = (frontLeftOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
-    // fRAngle = (frontRightOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    fRAngle = (frontRightOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
     bLAngle = (backLeftOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
-    // bRAngle = (backRightOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    bRAngle = (backRightOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
 
 
     // Get the needed speed from the module state and convert it to the -1 to 1 value needed for percent output command of the CANTalon
-    double frontLeftSpeed = frontLeftOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
-    // double frontRightSpeed = frontRightOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    double frontLeftSpeed = -frontLeftOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    double frontRightSpeed = -frontRightOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
     double backLeftSpeed = backLeftOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
-    // double backRightSpeed = backRightOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    double backRightSpeed = backRightOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
 
     //The goal of these four uses of rotationOverflow is to have the wheels avoid a 350+ degree rotation
     // rotationOverflow(fLrotationMotor, 0);
@@ -246,9 +248,13 @@ public class chassisSubsystem extends SubsystemBase {
 
     fLrotationMotor.set(TalonFXControlMode.Position, (int)fLAngle);
     
+    fRrotationMotor.set(TalonFXControlMode.Position, (int)fRAngle);
+
     bLrotationMotor.set(TalonFXControlMode.Position, (int)bLAngle);
 
-    SmartDashboard.putNumber("fLAngle", bLAngle);
+    bRrotationMotor.set(TalonFXControlMode.Position, (int)bRAngle);
+
+    SmartDashboard.putNumber("fRAngle", bRAngle);
 
     
     // fLrotationMotor.set(0.2);
@@ -256,9 +262,9 @@ public class chassisSubsystem extends SubsystemBase {
     
     // Set the speed in TalonFX to a percent output.
     fLDriveMotor.set(frontLeftLimiter.calculate(frontLeftSpeed));
-    // fRDriveMotor.set(-frontRightLimiter.calculate(frontRightSpeed));
+    fRDriveMotor.set(frontRightLimiter.calculate(frontRightSpeed));
     bLDriveMotor.set(backLeftLimiter.calculate(backLeftSpeed));
-    // bRDriveMotor.set(-backRightLimiter.calculate(backRightSpeed));
+    bRDriveMotor.set(backRightLimiter.calculate(backRightSpeed));
 
     // fLDriveMotor.set(0);
     // fRDriveMotor.set(0);
@@ -383,14 +389,14 @@ public class chassisSubsystem extends SubsystemBase {
     // Set the speed in TalonFX to a percent output.
 
     fLrotationMotor.set(TalonFXControlMode.Position, fLAngle);
-    // fRrotationMotor.set(TalonFXControlMode.Position, fLAngle);
+    fRrotationMotor.set(TalonFXControlMode.Position, fRAngle);
     bLrotationMotor.set(TalonFXControlMode.Position, fLAngle);
-    // bRrotationMotor.set(TalonFXControlMode.Position, fLAngle);
+    bRrotationMotor.set(TalonFXControlMode.Position, bRAngle);
 
     fLDriveMotor.set(frontLeftSpeed);
-    // fRDriveMotor.set(-frontRightSpeed);
+    fRDriveMotor.set(frontRightSpeed);
     bLDriveMotor.set(backLeftSpeed);
-    // bRDriveMotor.set(-backRightSpeed);
+    bRDriveMotor.set(backRightSpeed);
 
 
     lastSpeedfL = frontLeftSpeed;
@@ -491,8 +497,6 @@ public class chassisSubsystem extends SubsystemBase {
     // rotationOverflow(fRrotationMotor, 1);
     rotationOverflow(bLrotationMotor, 2);
     // rotationOverflow(bRrotationMotor, 3);
-    
-    //TODO Fix PID stuff
     
     //these lines tell the motor controller what poisition to set the motor to
     // fLrotationMotor.getPIDController().setReference(fLAngle, ControlType.kPosition);
@@ -698,30 +702,30 @@ public class chassisSubsystem extends SubsystemBase {
   
   // Creates the PID controllers for all 4 rotation motors.  Should only ever be called once
   public void SetPIDController(){
-    fLrotationMotor.setSelectedSensorPosition(0);
-    // fRrotationMotor.setSelectedSensorPosition(0);
-    bLrotationMotor.setSelectedSensorPosition(0);
-    // bRrotationMotor.setSelectedSensorPosition(0);
+    // fLrotationMotor.setSelectedSensorPosition(0);
+    fRrotationMotor.setSelectedSensorPosition(0);
+    // bLrotationMotor.setSelectedSensorPosition(0);
+    bRrotationMotor.setSelectedSensorPosition(0);
 
     fLrotationMotor.config_kP(0, 0.105);
     fLrotationMotor.config_kI(0, 0);
     fLrotationMotor.config_kD(0, 0);
     fLrotationMotor.config_kF(0, 0);
 
-    // fRrotationMotor.config_kP(0, 0.105);
-    // fRrotationMotor.config_kI(0, 0);
-    // fRrotationMotor.config_kD(0, 0);
-    // fRrotationMotor.config_kF(0, 0);
+    fRrotationMotor.config_kP(0, 0.105);
+    fRrotationMotor.config_kI(0, 0);
+    fRrotationMotor.config_kD(0, 0);
+    fRrotationMotor.config_kF(0, 0);
 
     bLrotationMotor.config_kP(0, 0.25);
     bLrotationMotor.config_kI(0, 0);
     bLrotationMotor.config_kD(0, 0);
     bLrotationMotor.config_kF(0, 0);
 
-    // bRrotationMotor.config_kP(0, 0.105);
-    // bRrotationMotor.config_kI(0, 0);
-    // bRrotationMotor.config_kD(0, 0);
-    // bRrotationMotor.config_kF(0, 0);
+    bRrotationMotor.config_kP(0, 0.105);
+    bRrotationMotor.config_kI(0, 0);
+    bRrotationMotor.config_kD(0, 0);
+    bRrotationMotor.config_kF(0, 0);
 
     fLPidController.setTolerance(1, 0.0000001);
     fRPidController.setTolerance(1, 0.0000001);
