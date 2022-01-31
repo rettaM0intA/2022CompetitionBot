@@ -11,8 +11,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ChassisDefaultCommand;
 import frc.robot.commands.ControllerSwitchCommand;
+import frc.robot.commands.RandomDefaultCommand;
+import frc.robot.commands.TestShootingCommand;
+import frc.robot.subsystems.RandomSubsystem;
 import frc.robot.subsystems.chassisSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -25,9 +29,12 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   public static chassisSubsystem m_chassisSubsystem = new chassisSubsystem();
+  public static RandomSubsystem m_RandomSubsystem = new RandomSubsystem();
 
   // private static ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   public static ChassisDefaultCommand chassisDefaultCommand = new ChassisDefaultCommand();
+  public static RandomDefaultCommand randomDefaultCommand = new RandomDefaultCommand();
+  public static TestShootingCommand shootingDefaultCommand = new TestShootingCommand();
   // private static WheelsFaceForwardCommand m_wheelsFaceForwardCommand = new WheelsFaceForwardCommand();
 
   
@@ -37,12 +44,15 @@ public class RobotContainer {
   public static ControllerInControl gamepadDriver = ControllerInControl.flightStick;
 
   public static boolean fullSpeed = false;
+  public static Subsystem m_TestShootingCommand;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
     // m_chassisSubsystem.setDefaultCommand(new m_exampleSubsystem());\
     m_chassisSubsystem.setDefaultCommand(chassisDefaultCommand);
+    m_RandomSubsystem.setDefaultCommand(randomDefaultCommand);
+    m_TestShootingCommand.setDefaultCommand(shootingDefaultCommand);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -58,17 +68,22 @@ public class RobotContainer {
 
     JoystickButton padControllSwitchButton = new JoystickButton(operator, 6);
     padControllSwitchButton.whenPressed(new ControllerSwitchCommand());
+
+    JoystickButton testShootingButton = new JoystickButton(operator, 1);
+    testShootingButton.whenHeld(new TestShootingCommand());
+    
+    JoystickButton testIntakeButton = new JoystickButton(operator, 3);
+    testIntakeButton.whenHeld(new TestShootingCommand());
+
     JoystickButton joyControllSwitchButton = new JoystickButton(driver, 6);
     joyControllSwitchButton.whenPressed(new ControllerSwitchCommand());
-
+    
     if(gamepadDriver == ControllerInControl.gamepad){
       // JoystickButton padSpinButton = new JoystickButton(operator, 2);
       // padSpinButton.whenActive(new SpinCommand());
       // JoystickButton padGyroSet0Button = new JoystickButton(operator, 2);
       // padGyroSet0Button.whenPressed(new ResetGyroCommand());
 
-
-      fullSpeed = false;
     }else{
       // JoystickButton joyGyroSet0Button = new JoystickButton(driver, 9);
       // joyGyroSet0Button.whenPressed(new GyroSet0Command());

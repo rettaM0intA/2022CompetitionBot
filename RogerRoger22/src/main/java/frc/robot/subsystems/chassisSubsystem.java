@@ -45,11 +45,11 @@ public class chassisSubsystem extends SubsystemBase {
   public AnalogEncoder bRAnalogEncoder = new AnalogEncoder(new AnalogInput(3));
   public AnalogEncoder bLAnalogEncoder = new AnalogEncoder(new AnalogInput(1));
 
-
+//TODO fix fLDriveMotor value; should be 8
 
   //The Falcon 500s are in charge of spinning the wheels
   WPI_TalonFX fRDriveMotor = new WPI_TalonFX(6);
-  WPI_TalonFX fLDriveMotor = new WPI_TalonFX(8);
+  WPI_TalonFX fLDriveMotor = new WPI_TalonFX(9);
   WPI_TalonFX bRDriveMotor = new WPI_TalonFX(4);
   WPI_TalonFX bLDriveMotor = new WPI_TalonFX(2);
 
@@ -122,10 +122,10 @@ public class chassisSubsystem extends SubsystemBase {
   Translation2d backLeftLocation = new Translation2d(-0.292, 0.286);
   Translation2d backRightLocation = new Translation2d(-0.292, -0.286);
 
-    //TODO Show how fl turn direction was fixed
+    
 
-    fLrotationMotor.setInverted(true);
-    bLrotationMotor.setInverted(true);
+  fLrotationMotor.setInverted(true);
+  bLrotationMotor.setInverted(true);
 
   if(setPid){
     SetPIDController();
