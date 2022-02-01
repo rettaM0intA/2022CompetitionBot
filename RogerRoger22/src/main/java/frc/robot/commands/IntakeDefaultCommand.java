@@ -7,9 +7,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class TestShootingCommand extends CommandBase {
-  /** Creates a new TestShootingCommand. */
-  public TestShootingCommand() {
+public class IntakeDefaultCommand extends CommandBase {
+  /** Creates a new IntakeDefaultCommand. */
+  public IntakeDefaultCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_IntakeSubsystem);
   }
@@ -22,13 +22,8 @@ public class TestShootingCommand extends CommandBase {
   @Override
   public void execute() {
 
-    RobotContainer.m_IntakeSubsystem.shoot(1);
+    RobotContainer.m_IntakeSubsystem.shoot(0);
 
-    /* if(I can remember){
-     be suprised
-     }else{
-     be disapointed
-     }*/
   }
 
   // Called once the command ends or is interrupted.

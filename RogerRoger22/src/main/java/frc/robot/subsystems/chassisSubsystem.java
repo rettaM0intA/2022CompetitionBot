@@ -717,7 +717,7 @@ public class chassisSubsystem extends SubsystemBase {
     fRrotationMotor.config_kD(0, 0);
     fRrotationMotor.config_kF(0, 0);
 
-    bLrotationMotor.config_kP(0, 0.25);
+    bLrotationMotor.config_kP(0, 0.105);
     bLrotationMotor.config_kI(0, 0);
     bLrotationMotor.config_kD(0, 0);
     bLrotationMotor.config_kF(0, 0);

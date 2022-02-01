@@ -9,10 +9,15 @@ import frc.robot.commandGroups.TestCommand;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.BButtonSpinDefaultCommand;
 import frc.robot.commands.ChassisDefaultCommand;
 import frc.robot.commands.ControllerSwitchCommand;
 import frc.robot.commands.RandomDefaultCommand;
+import frc.robot.commands.TestBButtonSpin;
+import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.TestShootingCommand;
+import frc.robot.subsystems.BButtonSpinSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.RandomSubsystem;
 import frc.robot.subsystems.chassisSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,11 +35,14 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static chassisSubsystem m_chassisSubsystem = new chassisSubsystem();
   public static RandomSubsystem m_RandomSubsystem = new RandomSubsystem();
+  public static IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  public static BButtonSpinSubsystem m_BButtonSpinSubsystem = new BButtonSpinSubsystem();
 
   // private static ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   public static ChassisDefaultCommand chassisDefaultCommand = new ChassisDefaultCommand();
   public static RandomDefaultCommand randomDefaultCommand = new RandomDefaultCommand();
-  public static TestShootingCommand shootingDefaultCommand = new TestShootingCommand();
+  public static IntakeDefaultCommand intakeDefaultCommand = new IntakeDefaultCommand();
+  public static BButtonSpinDefaultCommand bButtonSpinDefaultCommand = new BButtonSpinDefaultCommand();
   // private static WheelsFaceForwardCommand m_wheelsFaceForwardCommand = new WheelsFaceForwardCommand();
 
   
@@ -44,7 +52,6 @@ public class RobotContainer {
   public static ControllerInControl gamepadDriver = ControllerInControl.flightStick;
 
   public static boolean fullSpeed = false;
-  public static Subsystem m_TestShootingCommand;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -52,7 +59,8 @@ public class RobotContainer {
     // m_chassisSubsystem.setDefaultCommand(new m_exampleSubsystem());\
     m_chassisSubsystem.setDefaultCommand(chassisDefaultCommand);
     m_RandomSubsystem.setDefaultCommand(randomDefaultCommand);
-    m_TestShootingCommand.setDefaultCommand(shootingDefaultCommand);
+    m_IntakeSubsystem.setDefaultCommand(intakeDefaultCommand);
+    m_BButtonSpinSubsystem.setDefaultCommand(bButtonSpinDefaultCommand);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -74,6 +82,9 @@ public class RobotContainer {
     
     JoystickButton testIntakeButton = new JoystickButton(operator, 3);
     testIntakeButton.whenHeld(new TestShootingCommand());
+
+    JoystickButton bButtonSpin = new JoystickButton(operator, 2);
+    bButtonSpin.whenHeld(new TestBButtonSpin());
 
     JoystickButton joyControllSwitchButton = new JoystickButton(driver, 6);
     joyControllSwitchButton.whenPressed(new ControllerSwitchCommand());
