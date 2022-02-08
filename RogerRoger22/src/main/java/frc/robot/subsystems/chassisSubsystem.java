@@ -117,10 +117,10 @@ public class chassisSubsystem extends SubsystemBase {
     wheelBrakesMode();
   
   // Locations for the swerve drive modules relative to the robot center.
-  Translation2d frontLeftLocation = new Translation2d(0.292, 0.286);
-  Translation2d frontRightLocation = new Translation2d(0.292, -0.286);
-  Translation2d backLeftLocation = new Translation2d(-0.292, 0.286);
-  Translation2d backRightLocation = new Translation2d(-0.292, -0.286);
+  Translation2d frontLeftLocation = new Translation2d(0.238125, 0.2365375);
+  Translation2d frontRightLocation = new Translation2d(0.238125, -0.2365375);
+  Translation2d backLeftLocation = new Translation2d(-0.238125, 0.2365375);
+  Translation2d backRightLocation = new Translation2d(-0.238125, -0.2365375);
 
     
 
