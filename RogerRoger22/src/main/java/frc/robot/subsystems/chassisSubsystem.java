@@ -49,7 +49,7 @@ public class chassisSubsystem extends SubsystemBase {
 
   //The Falcon 500s are in charge of spinning the wheels
   WPI_TalonFX fRDriveMotor = new WPI_TalonFX(6);
-  WPI_TalonFX fLDriveMotor = new WPI_TalonFX(9);
+  WPI_TalonFX fLDriveMotor = new WPI_TalonFX(8);
   WPI_TalonFX bRDriveMotor = new WPI_TalonFX(4);
   WPI_TalonFX bLDriveMotor = new WPI_TalonFX(2);
 
@@ -124,6 +124,8 @@ public class chassisSubsystem extends SubsystemBase {
 
     
 
+  fRrotationMotor.setInverted(true);
+  bRrotationMotor.setInverted(true);
   fLrotationMotor.setInverted(true);
   bLrotationMotor.setInverted(true);
 
@@ -224,7 +226,7 @@ public class chassisSubsystem extends SubsystemBase {
 
 
     // Get the needed speed from the module state and convert it to the -1 to 1 value needed for percent output command of the CANTalon
-    double frontLeftSpeed = -frontLeftOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    double frontLeftSpeed = frontLeftOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
     double frontRightSpeed = -frontRightOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
     double backLeftSpeed = backLeftOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
     double backRightSpeed = backRightOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
@@ -286,15 +288,15 @@ public class chassisSubsystem extends SubsystemBase {
 
     if(RobotContainer.operator.getYButton()){
       resetGyro();
-      // fRDriveMotor.setSelectedSensorPosition(0);
+      fRDriveMotor.setSelectedSensorPosition(0);
       fLDriveMotor.setSelectedSensorPosition(0);
-      // bRDriveMotor.setSelectedSensorPosition(0);
+      bRDriveMotor.setSelectedSensorPosition(0);
       bLDriveMotor.setSelectedSensorPosition(0);
     }else if(RobotContainer.driver.getRawButton(9)){
       resetGyro();
-      // fRDriveMotor.setSelectedSensorPosition(0);
+      fRDriveMotor.setSelectedSensorPosition(0);
       fLDriveMotor.setSelectedSensorPosition(0);
-      // bRDriveMotor.setSelectedSensorPosition(0);
+      bRDriveMotor.setSelectedSensorPosition(0);
       bLDriveMotor.setSelectedSensorPosition(0);
     }
 
@@ -417,15 +419,15 @@ public class chassisSubsystem extends SubsystemBase {
 
     if(RobotContainer.operator.getYButton()){
       resetGyro();
-      // fRDriveMotor.setSelectedSensorPosition(0);
+      fRDriveMotor.setSelectedSensorPosition(0);
       fLDriveMotor.setSelectedSensorPosition(0);
-      // bRDriveMotor.setSelectedSensorPosition(0);
+      bRDriveMotor.setSelectedSensorPosition(0);
       bLDriveMotor.setSelectedSensorPosition(0);
     }else if(RobotContainer.driver.getRawButton(9)){
       resetGyro();
-      // fRDriveMotor.setSelectedSensorPosition(0);
+      fRDriveMotor.setSelectedSensorPosition(0);
       fLDriveMotor.setSelectedSensorPosition(0);
-      // bRDriveMotor.setSelectedSensorPosition(0);
+      bRDriveMotor.setSelectedSensorPosition(0);
       bLDriveMotor.setSelectedSensorPosition(0);
     }
 
@@ -514,16 +516,16 @@ public class chassisSubsystem extends SubsystemBase {
     
     // Set the speed in TalonFX to a percent output.
     fLDriveMotor.set(frontLeftLimiter.calculate(frontLeftSpeed));
-    // fRDriveMotor.set(-frontRightLimiter.calculate(frontRightSpeed));
+    fRDriveMotor.set(-frontRightLimiter.calculate(frontRightSpeed));
     bLDriveMotor.set(backLeftLimiter.calculate(backLeftSpeed));
-    // bRDriveMotor.set(-backRightLimiter.calculate(backRightSpeed));
+    bRDriveMotor.set(-backRightLimiter.calculate(backRightSpeed));
     
     
 
     fLDriveMotor.set(toPointSpeedLimit(fLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), fLgoalPosition)));
-    // fRDriveMotor.set(toPointSpeedLimit(-fRPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), -fRgoalPosition)));
-    bLDriveMotor.set(toPointSpeedLimit(bLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), bLgoalPosition)));
-    // bRDriveMotor.set(toPointSpeedLimit(-bRPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), -bRgoalPosition))); 
+    fRDriveMotor.set(toPointSpeedLimit(-fRPidController.calculate(fRDriveMotor.getSelectedSensorPosition(), -fRgoalPosition)));
+    bLDriveMotor.set(toPointSpeedLimit(bLPidController.calculate(bLDriveMotor.getSelectedSensorPosition(), bLgoalPosition)));
+    bRDriveMotor.set(toPointSpeedLimit(-bRPidController.calculate(bRDriveMotor.getSelectedSensorPosition(), -bRgoalPosition))); 
 
     lastSpeedfL = frontLeftSpeed;
     lastSpeedfR = frontRightSpeed;
@@ -673,9 +675,9 @@ public class chassisSubsystem extends SubsystemBase {
    */
   public void wheelBrakesMode(){
     fLDriveMotor.setNeutralMode(NeutralMode.Coast);
-    // fRDriveMotor.setNeutralMode(NeutralMode.Coast);
+    fRDriveMotor.setNeutralMode(NeutralMode.Coast);
     bLDriveMotor.setNeutralMode(NeutralMode.Coast);
-    // bRDriveMotor.setNeutralMode(NeutralMode.Coast);
+    bRDriveMotor.setNeutralMode(NeutralMode.Coast);
   }
 
   /**
@@ -683,9 +685,9 @@ public class chassisSubsystem extends SubsystemBase {
    */
   public double wheelMotorCountAverage(){
     return (
-    // -fRDriveMotor.getSelectedSensorPosition() +
+    -fRDriveMotor.getSelectedSensorPosition() +
      fLDriveMotor.getSelectedSensorPosition() +
-    // -bRDriveMotor.getSelectedSensorPosition() +
+    -bRDriveMotor.getSelectedSensorPosition() +
      bLDriveMotor.getSelectedSensorPosition())/ 4;
   }
 
@@ -793,9 +795,9 @@ public class chassisSubsystem extends SubsystemBase {
    * Zeros all 4 drive motors 
    */
   public void zeroMotors(){
-    // fRDriveMotor.setSelectedSensorPosition(0);
+    fRDriveMotor.setSelectedSensorPosition(0);
     fLDriveMotor.setSelectedSensorPosition(0);
-    // bRDriveMotor.setSelectedSensorPosition(0);
+    bRDriveMotor.setSelectedSensorPosition(0);
     bLDriveMotor.setSelectedSensorPosition(0);
   }
 
@@ -834,10 +836,10 @@ public class chassisSubsystem extends SubsystemBase {
      SmartDashboard.putNumber("BackLeftEncoder", bLAnalogEncoder.get());
      SmartDashboard.putNumber("BackRightEncoder", bRAnalogEncoder.get());
  
-    //  SmartDashboard.putNumber("rotations traveled", (-fRDriveMotor.getSelectedSensorPosition() + fLDriveMotor.getSelectedSensorPosition() - bRDriveMotor.getSelectedSensorPosition() + bLDriveMotor.getSelectedSensorPosition()) / 4);
-    //  SmartDashboard.putNumber("Fr", fRDriveMotor.getSelectedSensorPosition());
+     SmartDashboard.putNumber("rotations traveled", (-fRDriveMotor.getSelectedSensorPosition() + fLDriveMotor.getSelectedSensorPosition() - bRDriveMotor.getSelectedSensorPosition() + bLDriveMotor.getSelectedSensorPosition()) / 4);
+     SmartDashboard.putNumber("Fr", fRDriveMotor.getSelectedSensorPosition());
      SmartDashboard.putNumber("Fl", fLDriveMotor.getSelectedSensorPosition());
-    //  SmartDashboard.putNumber("br", bRDriveMotor.getSelectedSensorPosition());
+     SmartDashboard.putNumber("br", bRDriveMotor.getSelectedSensorPosition());
      SmartDashboard.putNumber("bl", bLDriveMotor.getSelectedSensorPosition());
     //  SmartDashboard.putNumber("Wheel power", fRDriveMotor.get());
 

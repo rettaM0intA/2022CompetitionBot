@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class BButtonSpinSubsystem extends SubsystemBase {
 
-  WPI_TalonFX spinMotor = new WPI_TalonFX(8);
+  // WPI_TalonFX spinMotor = new WPI_TalonFX(8);
 
   /** Creates a new BButtonSpinSubsystem. */
   public BButtonSpinSubsystem() {
@@ -22,12 +22,12 @@ public class BButtonSpinSubsystem extends SubsystemBase {
 
 public void SetPIDController(){
 
-  spinMotor.setSelectedSensorPosition(0);
+  // spinMotor.setSelectedSensorPosition(0);
 
-  spinMotor.config_kP(0, 0.05);
-  spinMotor.config_kI(0, 0);
-  spinMotor.config_kD(0, 0);
-  spinMotor.config_kF(0, 0);
+  // spinMotor.config_kP(0, 0.05);
+  // spinMotor.config_kI(0, 0);
+  // spinMotor.config_kD(0, 0);
+  // spinMotor.config_kF(0, 0);
 }
 
   // public void spin(double speed){

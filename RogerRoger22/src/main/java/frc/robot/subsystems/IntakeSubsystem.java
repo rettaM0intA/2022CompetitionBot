@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-  WPI_TalonFX shootMotor = new WPI_TalonFX(8);
+  // WPI_TalonFX shootMotor = new WPI_TalonFX(8);
 
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
@@ -20,7 +20,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void shoot(double speed){
-    shootMotor.set(ControlMode.PercentOutput, speed);
+    // shootMotor.set(ControlMode.PercentOutput, speed);
   }
 
   // public void shootBad(double velocity){

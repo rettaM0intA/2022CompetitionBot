@@ -9,11 +9,11 @@ import frc.robot.commandGroups.TestCommand;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.BButtonSpinDefaultCommand;
+// import frc.robot.commands.BButtonSpinDefaultCommand;
 import frc.robot.commands.ChassisDefaultCommand;
 import frc.robot.commands.ControllerSwitchCommand;
 import frc.robot.commands.RandomDefaultCommand;
-import frc.robot.commands.TestBButtonSpin;
+// import frc.robot.commands.BButtonSpinCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.TestShootingCommand;
 import frc.robot.subsystems.BButtonSpinSubsystem;
@@ -42,7 +42,7 @@ public class RobotContainer {
   public static ChassisDefaultCommand chassisDefaultCommand = new ChassisDefaultCommand();
   public static RandomDefaultCommand randomDefaultCommand = new RandomDefaultCommand();
   public static IntakeDefaultCommand intakeDefaultCommand = new IntakeDefaultCommand();
-  public static BButtonSpinDefaultCommand bButtonSpinDefaultCommand = new BButtonSpinDefaultCommand();
+  // public static BButtonSpinDefaultCommand bButtonSpinDefaultCommand = new BButtonSpinDefaultCommand();
   // private static WheelsFaceForwardCommand m_wheelsFaceForwardCommand = new WheelsFaceForwardCommand();
 
   
@@ -60,7 +60,7 @@ public class RobotContainer {
     m_chassisSubsystem.setDefaultCommand(chassisDefaultCommand);
     m_RandomSubsystem.setDefaultCommand(randomDefaultCommand);
     m_IntakeSubsystem.setDefaultCommand(intakeDefaultCommand);
-    m_BButtonSpinSubsystem.setDefaultCommand(bButtonSpinDefaultCommand);
+    // m_BButtonSpinSubsystem.setDefaultCommand(bButtonSpinDefaultCommand);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -77,14 +77,14 @@ public class RobotContainer {
     JoystickButton padControllSwitchButton = new JoystickButton(operator, 6);
     padControllSwitchButton.whenPressed(new ControllerSwitchCommand());
 
-    JoystickButton testShootingButton = new JoystickButton(operator, 1);
-    testShootingButton.whenHeld(new TestShootingCommand());
+    // JoystickButton testShootingButton = new JoystickButton(operator, 1);
+    // testShootingButton.whenHeld(new TestShootingCommand());
     
-    JoystickButton testIntakeButton = new JoystickButton(operator, 3);
-    testIntakeButton.whenHeld(new TestShootingCommand());
+    // JoystickButton testIntakeButton = new JoystickButton(operator, 3);
+    // testIntakeButton.whenHeld(new TestShootingCommand());
 
-    JoystickButton bButtonSpin = new JoystickButton(operator, 2);
-    bButtonSpin.whenHeld(new TestBButtonSpin());
+    // JoystickButton bButtonSpin = new JoystickButton(operator, 2);
+    // bButtonSpin.whenPressed(new BButtonSpinCommand());
 
     JoystickButton joyControllSwitchButton = new JoystickButton(driver, 6);
     joyControllSwitchButton.whenPressed(new ControllerSwitchCommand());

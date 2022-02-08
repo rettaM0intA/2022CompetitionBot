@@ -12,7 +12,7 @@ import frc.robot.RobotContainer;
 
 public class RandomSubsystem extends SubsystemBase {
 
-  WPI_TalonFX shootMotor = new WPI_TalonFX(10);
+  // WPI_TalonFX shootMotor = new WPI_TalonFX(10);
 
   /** Creates a new RandomSubsystem. */
   public RandomSubsystem() {
@@ -23,7 +23,7 @@ public class RandomSubsystem extends SubsystemBase {
 
 
   public void shoot(double speed){
-    shootMotor.set(ControlMode.PercentOutput, speed);
+    // shootMotor.set(ControlMode.PercentOutput, speed);
   }
 
 
