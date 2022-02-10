@@ -18,7 +18,7 @@ public class ForwardRight extends SequentialCommandGroup {
     addCommands(new ResetGyroCommand());
     addCommands(new AutoChassisMovePid(0, 25, 2, 2, 2, 2));
     addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisMovePid(90, 15, 1.5, 1.5, 1.5, 1.5));
+    addCommands(new AutoChassisMovePid(90, 20, 1.5, 1.5, 1.5, 1.5));
     addCommands(new ResetGyroCommand());
 
 
