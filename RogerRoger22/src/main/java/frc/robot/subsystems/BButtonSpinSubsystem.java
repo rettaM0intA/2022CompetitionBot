@@ -18,8 +18,6 @@ public class BButtonSpinSubsystem extends SubsystemBase {
 
   }
 
-// Note to self: want to make motor rotate 2048 counts.
-
 public void SetPIDController(){
 
   // spinMotor.setSelectedSensorPosition(0);
