@@ -51,6 +51,7 @@ public class RobotContainer {
 
   public static ControllerInControl gamepadDriver = ControllerInControl.flightStick;
 
+
   public static boolean fullSpeed = false;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -76,6 +77,11 @@ public class RobotContainer {
 
     JoystickButton padControllSwitchButton = new JoystickButton(operator, 6);
     padControllSwitchButton.whenPressed(new ControllerSwitchCommand());
+
+    
+  if(gamepadDriver == ControllerInControl.flightStick){
+
+  }
 
     // JoystickButton testShootingButton = new JoystickButton(operator, 1);
     // testShootingButton.whenHeld(new TestShootingCommand());
@@ -105,6 +111,8 @@ public class RobotContainer {
       //   fullSpeed = false;
       // }
     }
+
+
   }
 
   /**
