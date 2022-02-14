@@ -9,9 +9,9 @@ import frc.robot.commands.ResetGyroCommand;
 import frc.robot.commands.AutoChassisMovePid;
 import frc.robot.commands.AutoChassisSpinCommand;
 
-public class ForwardRight extends SequentialCommandGroup {
+public class AssignmentCommand extends SequentialCommandGroup {
   /** Add your docs here. */
-  public ForwardRight() {
+  public AssignmentCommand() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -19,15 +19,14 @@ public class ForwardRight extends SequentialCommandGroup {
     addCommands(new ResetGyroCommand());
     addCommands(new AutoChassisMovePid(0, 50, -3, -3, -3, -3));
     addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisSpinCommand(180, 50));
-    addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisSpinCommand(-180, 50));
-    addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisMovePid(0, 50, 2, 2, 2, 2));
+    // addCommands(new AutoChassisSpinCommand(180, 50));
+    // addCommands(new ResetGyroCommand());
+    // addCommands(new AutoChassisSpinCommand(-180, 50));
+    // addCommands(new ResetGyroCommand());
+    addCommands(new AutoChassisMovePid(0, 50, 3, 3, 3, 3));
     addCommands(new ResetGyroCommand());
 
     //Start at tower base, move 15 feet away in straight line, turn around 180 deg., turn around 180 deg. again, move back to tower.
-    //Get new code from GitHub.
 
     // To run multiple commands at the same time,
     // use addParallel()

@@ -14,7 +14,7 @@ public class AutoChassisSpinCommand extends CommandBase {
   double travelDistance = 0;
   boolean isInit = false;
   boolean isFinished = false; // boolean used to end the command. is necessary since the isFinished function
-                              // is called immediatly.
+  // is called immediatly.
 
   int buffer = 0;
 
