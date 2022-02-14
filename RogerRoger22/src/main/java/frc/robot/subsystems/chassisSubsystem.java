@@ -436,6 +436,7 @@ public class chassisSubsystem extends SubsystemBase {
     if(fwd < Constants.kDirectionalDeadzone && fwd > -Constants.kDirectionalDeadzone){
       fwd = 0;
     }
+
     if(strafe < Constants.kDirectionalDeadzone && strafe > -Constants.kDirectionalDeadzone){
       strafe = 0;
     }
@@ -536,10 +537,10 @@ public class chassisSubsystem extends SubsystemBase {
     // bLDriveMotor.set(toPointSpeedLimit(bLPidController.calculate(bLDriveMotor.getSelectedSensorPosition(), bLgoalPosition)));
     // bRDriveMotor.set(toPointSpeedLimit(-bRPidController.calculate(bRDriveMotor.getSelectedSensorPosition(), -bRgoalPosition))); 
 
-    lastSpeedfL = frontLeftSpeed;
-    lastSpeedfR = frontRightSpeed;
-    lastSpeedbL = backLeftSpeed;
-    lastSpeedbR = backRightSpeed;
+    // lastSpeedfL = frontLeftSpeed;
+    // lastSpeedfR = frontRightSpeed;
+    // lastSpeedbL = backLeftSpeed;
+    // lastSpeedbR = backRightSpeed;
 
   }
 
@@ -745,15 +746,19 @@ public class chassisSubsystem extends SubsystemBase {
 
     fLDriveMotor.config_kP(0, 0.000078);
     fLDriveMotor.config_kI(0, 0.000143);
+    fLDriveMotor.configClosedloopRamp(1);
     
     bLDriveMotor.config_kP(0, 0.000078);
     bLDriveMotor.config_kI(0, 0.000143);
+    bLDriveMotor.configClosedloopRamp(1);
 
     fRDriveMotor.config_kP(0, 0.000078);
     fRDriveMotor.config_kI(0, 0.000143);
+    fRDriveMotor.configClosedloopRamp(1);
 
     bLDriveMotor.config_kP(0, 0.000078);
     bLDriveMotor.config_kI(0, 0.000143);
+    bLDriveMotor.configClosedloopRamp(1);
     
     
 
