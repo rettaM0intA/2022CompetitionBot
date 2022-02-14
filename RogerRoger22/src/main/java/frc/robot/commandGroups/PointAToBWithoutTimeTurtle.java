@@ -6,7 +6,6 @@ package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AutoChassisMovePid;
-import frc.robot.commands.ResetGyroCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -16,8 +15,6 @@ public class PointAToBWithoutTimeTurtle extends SequentialCommandGroup {
   public PointAToBWithoutTimeTurtle() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-   addCommands(new AutoChassisMovePid(0, 25, 3, 3, 3, 3));
-   addCommands(new ResetGyroCommand());
-   addCommands(new AutoChassisMovePid(0, -25, -3, -3, -3, -3));
+    addCommands(new AutoChassisMovePid(0, 50, 1, 1, 1, 1));
   }
 }

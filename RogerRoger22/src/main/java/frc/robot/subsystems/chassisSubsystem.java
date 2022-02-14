@@ -4,10 +4,10 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -19,7 +19,9 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -343,11 +345,10 @@ public class chassisSubsystem extends SubsystemBase {
     SwerveModuleState backLeft = moduleStates[2];
     SwerveModuleState backRight = moduleStates[3];
 
-    //TODO uncomment 1 and 3
-
-    //SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    
+    SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
     // SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
-    //SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
     // SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
 
     // Get the needed angle from the module state and convert it to the Cnts needed for the CanSparkMAx PID loop
@@ -434,7 +435,6 @@ public class chassisSubsystem extends SubsystemBase {
     if(fwd < Constants.kDirectionalDeadzone && fwd > -Constants.kDirectionalDeadzone){
       fwd = 0;
     }
-
     if(strafe < Constants.kDirectionalDeadzone && strafe > -Constants.kDirectionalDeadzone){
       strafe = 0;
     }
@@ -496,15 +496,16 @@ public class chassisSubsystem extends SubsystemBase {
 
     //The goal of these four uses of rotationOverflow is to have the wheels avoid a 350+ degree rotation
     rotationOverflow(fLrotationMotor, 0);
-    rotationOverflow(fRrotationMotor, 1);
+    // rotationOverflow(fRrotationMotor, 1);
     rotationOverflow(bLrotationMotor, 2);
-    rotationOverflow(bRrotationMotor, 3);
+    // rotationOverflow(bRrotationMotor, 3);
     
     //these lines tell the motor controller what poisition to set the motor to
     // fLrotationMotor.getPIDController().setReference(fLAngle, ControlType.kPosition);
     // fRrotationMotor.getPIDController().setReference(fRAngle, ControlType.kPosition);
     // bLrotationMotor.getPIDController().setReference(bLAngle, ControlType.kPosition);
     // bRrotationMotor.getPIDController().setReference(bRAngle, ControlType.kPosition);
+    
 
     //WIP for replacing the avoidance method of infinite rotation with real infinite rotation.
     //Uses the turn forever method of going past full rotation.  Make sure to comment out rotationOverflow calls and the previous inputs to the rotation motors.
@@ -514,61 +515,48 @@ public class chassisSubsystem extends SubsystemBase {
     // bRrotationMotor.getPIDController().setReference(TurnForever(bRrotationMotor, bRAngle), ControlType.kPosition);
     
     // Set the speed in TalonFX to a percent output.
-
-    fLrotationMotor.set(TalonFXControlMode.Position, fLAngle);
-    fRrotationMotor.set(TalonFXControlMode.Position, fRAngle);
-    bLrotationMotor.set(TalonFXControlMode.Position, fLAngle);
-    bRrotationMotor.set(TalonFXControlMode.Position, bRAngle);
-
-    // fLDriveMotor.set(frontLeftLimiter.calculate(frontLeftSpeed));
-    // fRDriveMotor.set(-frontRightLimiter.calculate(frontRightSpeed));
-    // bLDriveMotor.set(backLeftLimiter.calculate(backLeftSpeed));
-    // bRDriveMotor.set(-backRightLimiter.calculate(backRightSpeed));
+    fLDriveMotor.set(frontLeftLimiter.calculate(frontLeftSpeed));
+    fRDriveMotor.set(-frontRightLimiter.calculate(frontRightSpeed));
+    bLDriveMotor.set(backLeftLimiter.calculate(backLeftSpeed));
+    bRDriveMotor.set(-backRightLimiter.calculate(backRightSpeed));
     
-    fLDriveMotor.set(ControlMode.Position, fLgoalPosition);
-    bLDriveMotor.set(ControlMode.Position, bLgoalPosition);
-    fRDriveMotor.set(ControlMode.Position, fRgoalPosition);
-    bRDriveMotor.set(ControlMode.Position, bRgoalPosition);
+    
 
-    // fLDriveMotor.set(toPointSpeedLimit(fLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), fLgoalPosition)));
-    // fRDriveMotor.set(toPointSpeedLimit(-fRPidController.calculate(fRDriveMotor.getSelectedSensorPosition(), -fRgoalPosition)));
-    // bLDriveMotor.set(toPointSpeedLimit(bLPidController.calculate(bLDriveMotor.getSelectedSensorPosition(), bLgoalPosition)));
-    // bRDriveMotor.set(toPointSpeedLimit(-bRPidController.calculate(bRDriveMotor.getSelectedSensorPosition(), -bRgoalPosition))); 
+    fLDriveMotor.set(toPointSpeedLimit(fLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), fLgoalPosition)));
+    fRDriveMotor.set(toPointSpeedLimit(-fRPidController.calculate(fRDriveMotor.getSelectedSensorPosition(), -fRgoalPosition)));
+    bLDriveMotor.set(toPointSpeedLimit(bLPidController.calculate(bLDriveMotor.getSelectedSensorPosition(), bLgoalPosition)));
+    bRDriveMotor.set(toPointSpeedLimit(-bRPidController.calculate(bRDriveMotor.getSelectedSensorPosition(), -bRgoalPosition))); 
 
-    // lastSpeedfL = frontLeftSpeed;
-    // lastSpeedfR = frontRightSpeed;
-    // lastSpeedbL = backLeftSpeed;
-    // lastSpeedbR = backRightSpeed;
+    lastSpeedfL = frontLeftSpeed;
+    lastSpeedfR = frontRightSpeed;
+    lastSpeedbL = backLeftSpeed;
+    lastSpeedbR = backRightSpeed;
 
   }
 
-//TODO uncomment these things
+
   
-  // private double toPointSpeedLimit(double attemptSpeed){
+  private double toPointSpeedLimit(double attemptSpeed){
     
-  //   if(Math.abs(attemptSpeed) > 0.7){
-  //     if(attemptSpeed > 0){
-  //       return 0.65;
-  //     }else{
-  //       return -0.65;
-  //     }
-  //   }
+    if(Math.abs(attemptSpeed) > 0.7){
+      if(attemptSpeed > 0){
+        return 0.65;
+      }else{
+        return -0.65;
+      }
+    }
 
-  //   return attemptSpeed;
-  // }
+    return attemptSpeed;
+  }
 
-//TODO uncomment
-
-//   private int calcQuad(double _desiredAngle) {
-//     int desiredQuad = 1;
-//     if (_desiredAngle >= 0 && _desiredAngle < 90) { desiredQuad = 1; } else 
-//     if (_desiredAngle >= 90 && _desiredAngle < 180) { desiredQuad = 2; } else 
-//     if (_desiredAngle < 0 && _desiredAngle > -90) { desiredQuad = -1; } else 
-//     if (_desiredAngle < -90 && _desiredAngle > -180) { desiredQuad = -2; }
-//     return desiredQuad;
-// }
-
-//unncomment till here
+  private int calcQuad(double _desiredAngle) {
+    int desiredQuad = 1;
+    if (_desiredAngle >= 0 && _desiredAngle < 90) { desiredQuad = 1; } else 
+    if (_desiredAngle >= 90 && _desiredAngle < 180) { desiredQuad = 2; } else 
+    if (_desiredAngle < 0 && _desiredAngle > -90) { desiredQuad = -1; } else 
+    if (_desiredAngle < -90 && _desiredAngle > -180) { desiredQuad = -2; }
+    return desiredQuad;
+}
 
 // private int calcAngleQuadrant(double _desiredAngle, int _previousDesiredQuad) {
     // int desiredQuad = calcQuad(_desiredAngle);
@@ -648,31 +636,27 @@ public class chassisSubsystem extends SubsystemBase {
 
   // }
 
-//TODO uncomment till comment that says to stop
+  public double TurnForever(WPI_TalonFX motor, double angleNumber){
 
-  // public double TurnForever(WPI_TalonFX motor, double angleNumber){
+    double motorAngle = motor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor;
+    double goalPosition = 0;
+    double goalAngle = 0;
 
-  //   double motorAngle = motor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor;
-  //   double goalPosition = 0;
-  //   double goalAngle = 0;
+    if(angleNumber == 0){
+      goalAngle = fLAngle * Constants.kChassisDegreetoMotor;
+    }else if(angleNumber == 1){
+      goalAngle = fRAngle * Constants.kChassisDegreetoMotor;
+    }else if(angleNumber == 2){
+      goalAngle = bLAngle * Constants.kChassisDegreetoMotor;
+    }else if(angleNumber == 3){
+      goalAngle = bRAngle * Constants.kChassisDegreetoMotor;
+    }
 
-  //   if(angleNumber == 0){
-  //     goalAngle = fLAngle * Constants.kChassisDegreetoMotor;
-  //   }else if(angleNumber == 1){
-  //     goalAngle = fRAngle * Constants.kChassisDegreetoMotor;
-  //   }else if(angleNumber == 2){
-  //     goalAngle = bLAngle * Constants.kChassisDegreetoMotor;
-  //   }else if(angleNumber == 3){
-  //     goalAngle = bRAngle * Constants.kChassisDegreetoMotor;
-  //   }
-
-  //   // if()
+    // if()
 
 
-  //   return goalPosition;
-  // }
-
-  //stop uncommenting
+    return goalPosition;
+  }
 
   public double optimizeDirection(WPI_TalonFX motor, double goalAngle){
     
@@ -749,22 +733,6 @@ public class chassisSubsystem extends SubsystemBase {
     fRPidController.setTolerance(1, 0.0000001);
     bLPidController.setTolerance(1, 0.0000001);
     bRPidController.setTolerance(1, 0.0000001);
-
-    fLDriveMotor.config_kP(0, 0.000078);
-    fLDriveMotor.config_kI(0, 0.000143);
-    fLDriveMotor.configClosedloopRamp(1);
-    
-    bLDriveMotor.config_kP(0, 0.000078);
-    bLDriveMotor.config_kI(0, 0.000143);
-    bLDriveMotor.configClosedloopRamp(1);
-
-    fRDriveMotor.config_kP(0, 0.000078);
-    fRDriveMotor.config_kI(0, 0.000143);
-    fRDriveMotor.configClosedloopRamp(1);
-
-    bLDriveMotor.config_kP(0, 0.000078);
-    bLDriveMotor.config_kI(0, 0.000143);
-    bLDriveMotor.configClosedloopRamp(1);
     
     
 

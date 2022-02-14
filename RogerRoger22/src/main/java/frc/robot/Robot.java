@@ -11,10 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commandGroups.Auton_1;
 import frc.robot.commandGroups.Auton_2;
-import frc.robot.commandGroups.ForwardRight;
 import frc.robot.commandGroups.TestCommand;
-import frc.robot.commandGroups.AssignmentCommand;
-import frc.robot.commandGroups.PointAToBWithoutTimeTurtle;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -48,9 +45,6 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("auton", new Auton_1());
     m_chooser.addOption("test", new TestCommand());
     m_chooser.addOption("auton_2", new Auton_2());
-    m_chooser.addOption("It can be anything", new ForwardRight());
-    m_chooser.addOption("unrelated to cats", new AssignmentCommand());
-    m_chooser.addOption("past tense dibujar", new PointAToBWithoutTimeTurtle());
     // m_chooser.addOption(name, object);
 
     SmartDashboard.putData(m_chooser);
