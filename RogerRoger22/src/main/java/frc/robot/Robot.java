@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commandGroups.Auton_1;
 import frc.robot.commandGroups.Auton_2;
-import frc.robot.commandGroups.ForwardRight;
 import frc.robot.commandGroups.TestCommand;
 
 /**
@@ -46,7 +45,6 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("auton", new Auton_1());
     m_chooser.addOption("test", new TestCommand());
     m_chooser.addOption("auton_2", new Auton_2());
-    m_chooser.addOption("It can be anything", new ForwardRight());
     // m_chooser.addOption(name, object);
 
     SmartDashboard.putData(m_chooser);

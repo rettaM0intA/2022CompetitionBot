@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -12,7 +11,7 @@ import frc.robot.RobotContainer;
 
 public class AutoChassisMovePid extends CommandBase {
 
-  boolean finished = false;
+  boolean isFinished;
 
   double goalRadian;
   double speed;
@@ -60,7 +59,7 @@ public class AutoChassisMovePid extends CommandBase {
   public void initialize() {
 
     RobotContainer.m_chassisSubsystem.zeroMotors();
-    finished = false;
+    isFinished = false;
     waitBeforeStart = 0;
 
   }
@@ -69,18 +68,16 @@ public class AutoChassisMovePid extends CommandBase {
   @Override
   public void execute() {
 
-    SmartDashboard.putNumber("gun", 0);
-
     waitBeforeStart += 1;
 
-    // if(waitBeforeStart > 10){
-      RobotContainer.m_chassisSubsystem.driveToPoint(fwd, strafe, 0, distanceFrontLeft, distanceFrontRight, distanceBackLeft, distanceBackRight);
+    if(waitBeforeStart > 10){
+      RobotContainer.m_chassisSubsystem.driveToPoint(0, 0.5, 0, distanceFrontLeft, distanceFrontRight, distanceBackLeft, distanceBackRight);
     
-    // }
-    // RobotContainer.m_chassisSubsystem.driveToPoint(0, 0, 0, 100000, -100000, 100000, -100000);
+    }
+    //RobotContainer.m_chassisSubsystem.driveToPoint(0, 0, 0, 100000, -100000, 100000, -100000);
 
-    if(RobotContainer.m_chassisSubsystem.checkPIDlocation() && waitBeforeStart > 10){
-      finished = true;
+    if(RobotContainer.m_chassisSubsystem.checkPIDlocation()){
+      isFinished = true;
     }
 
   }
@@ -92,13 +89,10 @@ public class AutoChassisMovePid extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(finished){
-      finished = false;
+    if(isFinished){
       RobotContainer.m_chassisSubsystem.resetGyro();
       RobotContainer.m_chassisSubsystem.zeroMotors();
-      // RobotContainer.m_chassisSubsystem.disablePids();
-      
-      SmartDashboard.putNumber("gun", 1);
+      //RobotContainer.m_chassisSubsystem.disablePids();
 
       return true;
     }

@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -497,15 +496,16 @@ public class chassisSubsystem extends SubsystemBase {
 
     //The goal of these four uses of rotationOverflow is to have the wheels avoid a 350+ degree rotation
     rotationOverflow(fLrotationMotor, 0);
-    rotationOverflow(fRrotationMotor, 1);
+    // rotationOverflow(fRrotationMotor, 1);
     rotationOverflow(bLrotationMotor, 2);
-    rotationOverflow(bRrotationMotor, 3);
+    // rotationOverflow(bRrotationMotor, 3);
     
     //these lines tell the motor controller what poisition to set the motor to
     // fLrotationMotor.getPIDController().setReference(fLAngle, ControlType.kPosition);
     // fRrotationMotor.getPIDController().setReference(fRAngle, ControlType.kPosition);
     // bLrotationMotor.getPIDController().setReference(bLAngle, ControlType.kPosition);
     // bRrotationMotor.getPIDController().setReference(bRAngle, ControlType.kPosition);
+    
 
     //WIP for replacing the avoidance method of infinite rotation with real infinite rotation.
     //Uses the turn forever method of going past full rotation.  Make sure to comment out rotationOverflow calls and the previous inputs to the rotation motors.
@@ -515,26 +515,17 @@ public class chassisSubsystem extends SubsystemBase {
     // bRrotationMotor.getPIDController().setReference(TurnForever(bRrotationMotor, bRAngle), ControlType.kPosition);
     
     // Set the speed in TalonFX to a percent output.
-
-    fLrotationMotor.set(TalonFXControlMode.Position, fLAngle);
-    fRrotationMotor.set(TalonFXControlMode.Position, fRAngle);
-    bLrotationMotor.set(TalonFXControlMode.Position, fLAngle);
-    bRrotationMotor.set(TalonFXControlMode.Position, bRAngle);
-
-    // fLDriveMotor.set(frontLeftLimiter.calculate(frontLeftSpeed));
-    // fRDriveMotor.set(-frontRightLimiter.calculate(frontRightSpeed));
-    // bLDriveMotor.set(backLeftLimiter.calculate(backLeftSpeed));
-    // bRDriveMotor.set(-backRightLimiter.calculate(backRightSpeed));
+    fLDriveMotor.set(frontLeftLimiter.calculate(frontLeftSpeed));
+    fRDriveMotor.set(-frontRightLimiter.calculate(frontRightSpeed));
+    bLDriveMotor.set(backLeftLimiter.calculate(backLeftSpeed));
+    bRDriveMotor.set(-backRightLimiter.calculate(backRightSpeed));
     
-    fLDriveMotor.set(ControlMode.Position, fLgoalPosition);
-    bLDriveMotor.set(ControlMode.Position, bLgoalPosition);
-    fRDriveMotor.set(ControlMode.Position, fRgoalPosition);
-    bRDriveMotor.set(ControlMode.Position, bRgoalPosition);
+    
 
-    // fLDriveMotor.set(toPointSpeedLimit(fLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), fLgoalPosition)));
-    // fRDriveMotor.set(toPointSpeedLimit(-fRPidController.calculate(fRDriveMotor.getSelectedSensorPosition(), -fRgoalPosition)));
-    // bLDriveMotor.set(toPointSpeedLimit(bLPidController.calculate(bLDriveMotor.getSelectedSensorPosition(), bLgoalPosition)));
-    // bRDriveMotor.set(toPointSpeedLimit(-bRPidController.calculate(bRDriveMotor.getSelectedSensorPosition(), -bRgoalPosition))); 
+    fLDriveMotor.set(toPointSpeedLimit(fLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), fLgoalPosition)));
+    fRDriveMotor.set(toPointSpeedLimit(-fRPidController.calculate(fRDriveMotor.getSelectedSensorPosition(), -fRgoalPosition)));
+    bLDriveMotor.set(toPointSpeedLimit(bLPidController.calculate(bLDriveMotor.getSelectedSensorPosition(), bLgoalPosition)));
+    bRDriveMotor.set(toPointSpeedLimit(-bRPidController.calculate(bRDriveMotor.getSelectedSensorPosition(), -bRgoalPosition))); 
 
     lastSpeedfL = frontLeftSpeed;
     lastSpeedfR = frontRightSpeed;
@@ -742,18 +733,6 @@ public class chassisSubsystem extends SubsystemBase {
     fRPidController.setTolerance(1, 0.0000001);
     bLPidController.setTolerance(1, 0.0000001);
     bRPidController.setTolerance(1, 0.0000001);
-
-    fLDriveMotor.config_kP(0, 0.000078);
-    fLDriveMotor.config_kI(0, 0.000143);
-    
-    bLDriveMotor.config_kP(0, 0.000078);
-    bLDriveMotor.config_kI(0, 0.000143);
-
-    fRDriveMotor.config_kP(0, 0.000078);
-    fRDriveMotor.config_kI(0, 0.000143);
-
-    bLDriveMotor.config_kP(0, 0.000078);
-    bLDriveMotor.config_kI(0, 0.000143);
     
     
 
