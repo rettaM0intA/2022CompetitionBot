@@ -8,7 +8,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -20,9 +19,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -346,10 +343,11 @@ public class chassisSubsystem extends SubsystemBase {
     SwerveModuleState backLeft = moduleStates[2];
     SwerveModuleState backRight = moduleStates[3];
 
-    
-    SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    //TODO uncomment 1 and 3
+
+    //SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
     // SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
-    SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    //SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
     // SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
 
     // Get the needed angle from the module state and convert it to the Cnts needed for the CanSparkMAx PID loop
@@ -543,29 +541,33 @@ public class chassisSubsystem extends SubsystemBase {
 
   }
 
-
+//TODO uncomment these things
   
-  private double toPointSpeedLimit(double attemptSpeed){
+  // private double toPointSpeedLimit(double attemptSpeed){
     
-    if(Math.abs(attemptSpeed) > 0.7){
-      if(attemptSpeed > 0){
-        return 0.65;
-      }else{
-        return -0.65;
-      }
-    }
+  //   if(Math.abs(attemptSpeed) > 0.7){
+  //     if(attemptSpeed > 0){
+  //       return 0.65;
+  //     }else{
+  //       return -0.65;
+  //     }
+  //   }
 
-    return attemptSpeed;
-  }
+  //   return attemptSpeed;
+  // }
 
-  private int calcQuad(double _desiredAngle) {
-    int desiredQuad = 1;
-    if (_desiredAngle >= 0 && _desiredAngle < 90) { desiredQuad = 1; } else 
-    if (_desiredAngle >= 90 && _desiredAngle < 180) { desiredQuad = 2; } else 
-    if (_desiredAngle < 0 && _desiredAngle > -90) { desiredQuad = -1; } else 
-    if (_desiredAngle < -90 && _desiredAngle > -180) { desiredQuad = -2; }
-    return desiredQuad;
-}
+//TODO uncomment
+
+//   private int calcQuad(double _desiredAngle) {
+//     int desiredQuad = 1;
+//     if (_desiredAngle >= 0 && _desiredAngle < 90) { desiredQuad = 1; } else 
+//     if (_desiredAngle >= 90 && _desiredAngle < 180) { desiredQuad = 2; } else 
+//     if (_desiredAngle < 0 && _desiredAngle > -90) { desiredQuad = -1; } else 
+//     if (_desiredAngle < -90 && _desiredAngle > -180) { desiredQuad = -2; }
+//     return desiredQuad;
+// }
+
+//unncomment till here
 
 // private int calcAngleQuadrant(double _desiredAngle, int _previousDesiredQuad) {
     // int desiredQuad = calcQuad(_desiredAngle);
@@ -645,27 +647,31 @@ public class chassisSubsystem extends SubsystemBase {
 
   // }
 
-  public double TurnForever(WPI_TalonFX motor, double angleNumber){
+//TODO uncomment till comment that says to stop
 
-    double motorAngle = motor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor;
-    double goalPosition = 0;
-    double goalAngle = 0;
+  // public double TurnForever(WPI_TalonFX motor, double angleNumber){
 
-    if(angleNumber == 0){
-      goalAngle = fLAngle * Constants.kChassisDegreetoMotor;
-    }else if(angleNumber == 1){
-      goalAngle = fRAngle * Constants.kChassisDegreetoMotor;
-    }else if(angleNumber == 2){
-      goalAngle = bLAngle * Constants.kChassisDegreetoMotor;
-    }else if(angleNumber == 3){
-      goalAngle = bRAngle * Constants.kChassisDegreetoMotor;
-    }
+  //   double motorAngle = motor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor;
+  //   double goalPosition = 0;
+  //   double goalAngle = 0;
 
-    // if()
+  //   if(angleNumber == 0){
+  //     goalAngle = fLAngle * Constants.kChassisDegreetoMotor;
+  //   }else if(angleNumber == 1){
+  //     goalAngle = fRAngle * Constants.kChassisDegreetoMotor;
+  //   }else if(angleNumber == 2){
+  //     goalAngle = bLAngle * Constants.kChassisDegreetoMotor;
+  //   }else if(angleNumber == 3){
+  //     goalAngle = bRAngle * Constants.kChassisDegreetoMotor;
+  //   }
+
+  //   // if()
 
 
-    return goalPosition;
-  }
+  //   return goalPosition;
+  // }
+
+  //stop uncommenting
 
   public double optimizeDirection(WPI_TalonFX motor, double goalAngle){
     
