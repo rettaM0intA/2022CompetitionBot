@@ -7,7 +7,6 @@ package frc.robot.commandGroups;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.ResetGyroCommand;
 import frc.robot.commands.AutoChassisMovePid;
-import frc.robot.commands.AutoChassisSpinCommand;
 
 public class ForwardRight extends SequentialCommandGroup {
   /** Add your docs here. */
@@ -17,17 +16,11 @@ public class ForwardRight extends SequentialCommandGroup {
     // addSequential(new Command2());
     // these will run in order.
     addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisMovePid(0, 50, -3, -3, -3, -3));
+    addCommands(new AutoChassisMovePid(0, 25, 2, 2, 2, 2));
     addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisSpinCommand(180, 50));
-    addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisSpinCommand(-180, 50));
-    addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisMovePid(0, 50, 2, 2, 2, 2));
+    addCommands(new AutoChassisMovePid(90, 20, 1.5, 1.5, 1.5, 1.5));
     addCommands(new ResetGyroCommand());
 
-    //Start at tower base, move 15 feet away in straight line, turn around 180 deg., turn around 180 deg. again, move back to tower.
-    //Get new code from GitHub.
 
     // To run multiple commands at the same time,
     // use addParallel()
