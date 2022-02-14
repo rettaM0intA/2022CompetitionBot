@@ -489,10 +489,10 @@ public class chassisSubsystem extends SubsystemBase {
 
 
     // Get the needed speed from the module state and convert it to the -1 to 1 value needed for percent output command of the CANTalon
-    double frontLeftSpeed = frontLeft.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
-    double frontRightSpeed = frontRight.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
-    double backLeftSpeed = backLeft.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
-    double backRightSpeed = backRight.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    // double frontLeftSpeed = frontLeft.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    // double frontRightSpeed = frontRight.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    // double backLeftSpeed = backLeft.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    // double backRightSpeed = backRight.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
 
     //The goal of these four uses of rotationOverflow is to have the wheels avoid a 350+ degree rotation
     rotationOverflow(fLrotationMotor, 0);

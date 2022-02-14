@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import frc.robot.commandGroups.Auton_1;
-import frc.robot.commandGroups.TestCommand;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -15,13 +13,11 @@ import frc.robot.commands.ControllerSwitchCommand;
 import frc.robot.commands.RandomDefaultCommand;
 // import frc.robot.commands.BButtonSpinCommand;
 import frc.robot.commands.IntakeDefaultCommand;
-import frc.robot.commands.TestShootingCommand;
 import frc.robot.subsystems.BButtonSpinSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.RandomSubsystem;
 import frc.robot.subsystems.chassisSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
