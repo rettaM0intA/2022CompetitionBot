@@ -56,10 +56,10 @@ public class chassisSubsystem extends SubsystemBase {
   public WPI_TalonFX bRrotationMotor = new WPI_TalonFX(3);
   public WPI_TalonFX bLrotationMotor = new WPI_TalonFX(1);
 
-  SlewRateLimiter frontLeftLimiter = new SlewRateLimiter(.72);
-  SlewRateLimiter frontRightLimiter = new SlewRateLimiter(.72);
-  SlewRateLimiter backLeftLimiter = new SlewRateLimiter(.72);
-  SlewRateLimiter backRightLimiter = new SlewRateLimiter(.72);
+  // SlewRateLimiter frontLeftLimiter = new SlewRateLimiter(.72);
+  // SlewRateLimiter frontRightLimiter = new SlewRateLimiter(.72);
+  // SlewRateLimiter backLeftLimiter = new SlewRateLimiter(.72);
+  // SlewRateLimiter backRightLimiter = new SlewRateLimiter(.72);
 
   ControllerInControl driver = ControllerInControl.flightStick;
 
@@ -259,10 +259,10 @@ public class chassisSubsystem extends SubsystemBase {
 
     
     // Set the speed in TalonFX to a percent output.
-    fLDriveMotor.set(frontLeftLimiter.calculate(frontLeftSpeed));
-    fRDriveMotor.set(frontRightLimiter.calculate(frontRightSpeed));
-    bLDriveMotor.set(backLeftLimiter.calculate(backLeftSpeed));
-    bRDriveMotor.set(backRightLimiter.calculate(backRightSpeed));
+    fLDriveMotor.set(frontLeftSpeed);
+    fRDriveMotor.set(frontRightSpeed);
+    bLDriveMotor.set(backLeftSpeed);
+    bRDriveMotor.set(backRightSpeed);
 
     // fLDriveMotor.set(0);
     // fRDriveMotor.set(0);
@@ -342,16 +342,16 @@ public class chassisSubsystem extends SubsystemBase {
     SwerveModuleState backRight = moduleStates[3];
 
     
-    // SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
-    // SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
-    // SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
-    // SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
 
     // Get the needed angle from the module state and convert it to the Cnts needed for the CanSparkMAx PID loop
-    fLAngle = (frontLeft.angle.getDegrees() / Constants.kChassisDegreetoMotor);
-    fRAngle = (frontRight.angle.getDegrees() / Constants.kChassisDegreetoMotor);
-    bLAngle = (backLeft.angle.getDegrees() / Constants.kChassisDegreetoMotor);
-    bRAngle = (backRight.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    fLAngle = (frontLeftOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    fRAngle = (frontRightOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    bLAngle = (backLeftOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    bRAngle = (backRightOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
 
 
     // Get the needed speed from the module state and convert it to the -1 to 1 value needed for percent output command of the CANTalon
@@ -362,9 +362,9 @@ public class chassisSubsystem extends SubsystemBase {
 
     //The goal of these four uses of rotationOverflow is to have the wheels avoid a 350+ degree rotation
     rotationOverflow(fLrotationMotor, 0);
-    // rotationOverflow(fRrotationMotor, 1);
+    rotationOverflow(fRrotationMotor, 1);
     rotationOverflow(bLrotationMotor, 2);
-    // rotationOverflow(bRrotationMotor, 3);
+    rotationOverflow(bRrotationMotor, 3);
     
     //TODO Fix PID stuff
 
@@ -511,10 +511,10 @@ public class chassisSubsystem extends SubsystemBase {
     // bRrotationMotor.getPIDController().setReference(TurnForever(bRrotationMotor, bRAngle), ControlType.kPosition);
     
     // Set the speed in TalonFX to a percent output.
-    fLDriveMotor.set(frontLeftLimiter.calculate(frontLeftSpeed));
-    fRDriveMotor.set(-frontRightLimiter.calculate(frontRightSpeed));
-    bLDriveMotor.set(backLeftLimiter.calculate(backLeftSpeed));
-    bRDriveMotor.set(-backRightLimiter.calculate(backRightSpeed));
+    fLDriveMotor.set(frontLeftSpeed);
+    fRDriveMotor.set(-frontRightSpeed);
+    bLDriveMotor.set(backLeftSpeed);
+    bRDriveMotor.set(-backRightSpeed);
     
     
 
