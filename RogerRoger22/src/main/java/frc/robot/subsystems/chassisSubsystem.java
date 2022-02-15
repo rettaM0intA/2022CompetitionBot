@@ -489,16 +489,16 @@ public class chassisSubsystem extends SubsystemBase {
 
 
     // Get the needed speed from the module state and convert it to the -1 to 1 value needed for percent output command of the CANTalon
-    // double frontLeftSpeed = frontLeft.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
-    // double frontRightSpeed = frontRight.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
-    // double backLeftSpeed = backLeft.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
-    // double backRightSpeed = backRight.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    double frontLeftSpeed = frontLeft.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    double frontRightSpeed = frontRight.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    double backLeftSpeed = backLeft.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    double backRightSpeed = backRight.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
 
     //The goal of these four uses of rotationOverflow is to have the wheels avoid a 350+ degree rotation
     rotationOverflow(fLrotationMotor, 0);
-    // rotationOverflow(fRrotationMotor, 1);
+    rotationOverflow(fRrotationMotor, 1);
     rotationOverflow(bLrotationMotor, 2);
-    // rotationOverflow(bRrotationMotor, 3);
+    rotationOverflow(bRrotationMotor, 3);
     
     //these lines tell the motor controller what poisition to set the motor to
     // fLrotationMotor.getPIDController().setReference(fLAngle, ControlType.kPosition);
@@ -704,9 +704,9 @@ public class chassisSubsystem extends SubsystemBase {
   
   // Creates the PID controllers for all 4 rotation motors.  Should only ever be called once
   public void SetPIDController(){
-    // fLrotationMotor.setSelectedSensorPosition(0);
+    fLrotationMotor.setSelectedSensorPosition(0);
     fRrotationMotor.setSelectedSensorPosition(0);
-    // bLrotationMotor.setSelectedSensorPosition(0);
+    bLrotationMotor.setSelectedSensorPosition(0);
     bRrotationMotor.setSelectedSensorPosition(0);
 
     fLrotationMotor.config_kP(0, 0.105);
@@ -748,6 +748,8 @@ public class chassisSubsystem extends SubsystemBase {
     }
     SmartDashboard.putNumber("frontleftPID", frontLeftOnPointCount);
     
+    // if(fRDriveMotor.)
+
     if(fRPidController.atSetpoint()){
       frontRightOnPointCount += 1;
     }else{

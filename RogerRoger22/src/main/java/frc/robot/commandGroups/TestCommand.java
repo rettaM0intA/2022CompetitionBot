@@ -21,13 +21,13 @@ public class TestCommand extends SequentialCommandGroup {
     addCommands(new ResetGyroCommand());
     
     addCommands(new AutoChassisMoveCommand(0, 50, 60));
-    addCommands(new AutoChassisMoveCommand(0, 10, 10));
+    // addCommands(new AutoChassisMoveCommand(0, 10, 10));
 
-    addCommands(new ResetGyroCommand());
+    // addCommands(new ResetGyroCommand());
 
-    addCommands(new AutoChassisMoveCommand(180, 20, 24));
-    addCommands(new AutoChassisMoveCommand(90, 50, 100));
-    addCommands(new AutoChassisSpinCommand(-90, 0.3));
+    // addCommands(new AutoChassisMoveCommand(180, 20, 24));
+    // addCommands(new AutoChassisMoveCommand(90, 50, 100));
+    // addCommands(new AutoChassisSpinCommand(-90, 0.3));
 
     addCommands(new ResetGyroCommand());
   }
