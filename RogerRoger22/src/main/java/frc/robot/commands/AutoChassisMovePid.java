@@ -70,7 +70,7 @@ public class AutoChassisMovePid extends CommandBase {
     waitBeforeStart += 1;
 
     if(waitBeforeStart > 10){
-      RobotContainer.m_chassisSubsystem.driveToPoint(0, 0.5, 0, distanceFrontLeft, distanceFrontRight, distanceBackLeft, distanceBackRight);
+      RobotContainer.m_chassisSubsystem.driveToPoint(fwd, strafe, 0, distanceFrontLeft, distanceFrontRight, distanceBackLeft, distanceBackRight);
     
     }
     //RobotContainer.m_chassisSubsystem.driveToPoint(0, 0, 0, 100000, -100000, 100000, -100000);
