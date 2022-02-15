@@ -110,13 +110,13 @@ public class AutoChassisMoveCommand extends CommandBase {
     //these if statements decide if the command is over.  if it is, then isFinished boolean becomes true
     if(distance != 0){
       if(Math.abs(travelDistance) > Math.abs(distance)){
-        RobotContainer.m_chassisSubsystem.driveAuton(0, 0, 0);
+        RobotContainer.m_chassisSubsystem.driveTeleop(0, 0, 0);
         isFinished = true;
       }else{
         isFinished = false;
       }
     }else{
-      RobotContainer.m_chassisSubsystem.driveAuton(0, 0, 0);
+      RobotContainer.m_chassisSubsystem.driveTeleop(0, 0, 0);
       isFinished = true;
     }
   }

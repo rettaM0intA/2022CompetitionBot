@@ -20,7 +20,7 @@ public class TestCommand extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     addCommands(new ResetGyroCommand());
     
-    addCommands(new AutoChassisMoveCommand(0, 50, 60));
+    addCommands(new AutoChassisMoveCommand(0, 50, 1));
     // addCommands(new AutoChassisMoveCommand(0, 10, 10));
 
     // addCommands(new ResetGyroCommand());

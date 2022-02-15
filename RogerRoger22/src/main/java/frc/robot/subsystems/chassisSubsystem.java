@@ -392,17 +392,30 @@ public class chassisSubsystem extends SubsystemBase {
     bLrotationMotor.set(TalonFXControlMode.Position, fLAngle);
     bRrotationMotor.set(TalonFXControlMode.Position, bRAngle);
 
-    fLDriveMotor.set(frontLeftSpeed);
-    fRDriveMotor.set(frontRightSpeed);
-    bLDriveMotor.set(backLeftSpeed);
-    bRDriveMotor.set(backRightSpeed);
+    fLDriveMotor.set(speedLimiter(frontLeftSpeed));
+    fRDriveMotor.set(speedLimiter(frontRightSpeed));
+    bLDriveMotor.set(speedLimiter(backLeftSpeed));
+    bRDriveMotor.set(speedLimiter(backRightSpeed));
 
 
-    lastSpeedfL = frontLeftSpeed;
-    lastSpeedfR = frontRightSpeed;
-    lastSpeedbL = backLeftSpeed;
-    lastSpeedbR = backRightSpeed;
+    // lastSpeedfL = frontLeftSpeed;
+    // lastSpeedfR = frontRightSpeed;
+    // lastSpeedbL = backLeftSpeed;
+    // lastSpeedbR = backRightSpeed;
 
+  }
+
+  private double speedLimiter(double input){
+    
+    if(Math.abs(input) > 0.6){
+      if(input > 0){
+        return 0.6;
+      }else{
+        return -0.6;
+      }
+    }
+
+    return 0;
   }
 
   
@@ -473,16 +486,16 @@ public class chassisSubsystem extends SubsystemBase {
     SwerveModuleState backLeft = moduleStates[2];
     SwerveModuleState backRight = moduleStates[3];
 
-    // SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
-    // SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
-    // SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
-    // SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
 
     // Get the needed angle from the module state and convert it to the Cnts needed for the CanSparkMAx PID loop
-    fLAngle = (frontLeft.angle.getDegrees()); // Constants.kChassisDegreetoMotor;
-    fRAngle = (frontRight.angle.getDegrees()); // Constants.kChassisDegreetoMotor;
-    bLAngle = (backLeft.angle.getDegrees()); // Constants.kChassisDegreetoMotor;
-    bRAngle = (backRight.angle.getDegrees()); // Constants.kChassisDegreetoMotor;
+    fLAngle = (frontLeftOptimize.angle.getDegrees()) / Constants.kChassisDegreetoMotor;
+    fRAngle = (frontRightOptimize.angle.getDegrees()) / Constants.kChassisDegreetoMotor;
+    bLAngle = (backLeftOptimize.angle.getDegrees()) / Constants.kChassisDegreetoMotor;
+    bRAngle = (backRightOptimize.angle.getDegrees()) / Constants.kChassisDegreetoMotor;
 
 
     // Get the needed speed from the module state and convert it to the -1 to 1 value needed for percent output command of the CANTalon
@@ -529,10 +542,10 @@ public class chassisSubsystem extends SubsystemBase {
     bLDriveMotor.set(ControlMode.Position, bLgoalPosition);
     bRDriveMotor.set(ControlMode.Position, bRgoalPosition);
 
-    lastSpeedfL = frontLeftSpeed;
-    lastSpeedfR = frontRightSpeed;
-    lastSpeedbL = backLeftSpeed;
-    lastSpeedbR = backRightSpeed;
+    // lastSpeedfL = frontLeftSpeed;
+    // lastSpeedfR = frontRightSpeed;
+    // lastSpeedbL = backLeftSpeed;
+    // lastSpeedbR = backRightSpeed;
 
   }
 
