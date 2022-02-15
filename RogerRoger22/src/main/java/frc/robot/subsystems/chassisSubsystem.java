@@ -260,10 +260,10 @@ public class chassisSubsystem extends SubsystemBase {
 
     
     // Set the speed in TalonFX to a percent output.
-    fLDriveMotor.set(frontLeftSpeed);
-    fRDriveMotor.set(frontRightSpeed);
-    bLDriveMotor.set(backLeftSpeed);
-    bRDriveMotor.set(backRightSpeed);
+    fLDriveMotor.set(speedLimiter(frontLeftSpeed));
+    fRDriveMotor.set(speedLimiter(frontRightSpeed));
+    bLDriveMotor.set(speedLimiter(backLeftSpeed));
+    bRDriveMotor.set(speedLimiter(backRightSpeed));
 
     // fLDriveMotor.set(0);
     // fRDriveMotor.set(0);
@@ -344,9 +344,9 @@ public class chassisSubsystem extends SubsystemBase {
 
     
     SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
-    SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
-    SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
-    SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fRrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((bLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((bRrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
 
     // Get the needed angle from the module state and convert it to the Cnts needed for the CanSparkMAx PID loop
     fLAngle = (frontLeftOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
@@ -392,10 +392,10 @@ public class chassisSubsystem extends SubsystemBase {
     bLrotationMotor.set(TalonFXControlMode.Position, fLAngle);
     bRrotationMotor.set(TalonFXControlMode.Position, bRAngle);
 
-    fLDriveMotor.set(speedLimiter(frontLeftSpeed));
-    fRDriveMotor.set(speedLimiter(frontRightSpeed));
-    bLDriveMotor.set(speedLimiter(backLeftSpeed));
-    bRDriveMotor.set(speedLimiter(backRightSpeed));
+    fLDriveMotor.set((frontLeftSpeed));
+    fRDriveMotor.set((frontRightSpeed));
+    bLDriveMotor.set((backLeftSpeed));
+    bRDriveMotor.set((backRightSpeed));
 
 
     // lastSpeedfL = frontLeftSpeed;

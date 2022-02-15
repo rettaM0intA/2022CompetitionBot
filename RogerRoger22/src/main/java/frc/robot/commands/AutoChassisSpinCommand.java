@@ -54,15 +54,15 @@ public class AutoChassisSpinCommand extends CommandBase {
     currentDegree = RobotContainer.m_chassisSubsystem.gyro.getAngle();
 
     if(goalDegree > 0){
-      if(buffer > 18){
+      if(buffer > 20){
         RobotContainer.m_chassisSubsystem.driveAuton(0, 0, -speed);
       }else{
         RobotContainer.m_chassisSubsystem.driveAuton(0, 0, -0.01);
       
       }
-     
+    
     } else {
-      if(buffer > 18){
+      if(buffer > 20){
         RobotContainer.m_chassisSubsystem.driveAuton(0, 0, speed);
       }else{
         RobotContainer.m_chassisSubsystem.driveAuton(0, 0, 0.01);
@@ -80,6 +80,12 @@ public class AutoChassisSpinCommand extends CommandBase {
       }
     } else {
       RobotContainer.m_chassisSubsystem.driveAuton(0, 0, 0);
+      isFinished = true;
+    }
+   
+    if (currentDegree != goalDegree) {
+      RobotContainer.m_chassisSubsystem.driveAuton(0, 0, 0.20);
+    } else {
       isFinished = true;
     }
   }
