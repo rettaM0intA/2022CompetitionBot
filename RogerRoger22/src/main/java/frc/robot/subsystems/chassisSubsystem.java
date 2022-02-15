@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -518,10 +519,15 @@ public class chassisSubsystem extends SubsystemBase {
     
     
 
-    fLDriveMotor.set(toPointSpeedLimit(fLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), fLgoalPosition)));
-    fRDriveMotor.set(toPointSpeedLimit(-fRPidController.calculate(fRDriveMotor.getSelectedSensorPosition(), -fRgoalPosition)));
-    bLDriveMotor.set(toPointSpeedLimit(bLPidController.calculate(bLDriveMotor.getSelectedSensorPosition(), bLgoalPosition)));
-    bRDriveMotor.set(toPointSpeedLimit(-bRPidController.calculate(bRDriveMotor.getSelectedSensorPosition(), -bRgoalPosition))); 
+    // fLDriveMotor.set(toPointSpeedLimit(fLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), fLgoalPosition)));
+    // fRDriveMotor.set(toPointSpeedLimit(-fRPidController.calculate(fRDriveMotor.getSelectedSensorPosition(), -fRgoalPosition)));
+    // bLDriveMotor.set(toPointSpeedLimit(bLPidController.calculate(bLDriveMotor.getSelectedSensorPosition(), bLgoalPosition)));
+    // bRDriveMotor.set(toPointSpeedLimit(-bRPidController.calculate(bRDriveMotor.getSelectedSensorPosition(), -bRgoalPosition))); 
+
+    fLDriveMotor.set(ControlMode.Position, fLgoalPosition);
+    fRDriveMotor.set(ControlMode.Position, fRgoalPosition);
+    bLDriveMotor.set(ControlMode.Position, bLgoalPosition);
+    bRDriveMotor.set(ControlMode.Position, bRgoalPosition);
 
     lastSpeedfL = frontLeftSpeed;
     lastSpeedfR = frontRightSpeed;
