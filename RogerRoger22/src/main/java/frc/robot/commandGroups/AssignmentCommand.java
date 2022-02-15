@@ -5,8 +5,8 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.ResetGyroCommand;
 import frc.robot.commands.AutoChassisMovePid;
+import frc.robot.commands.ResetGyroCommand;
 
 public class AssignmentCommand extends SequentialCommandGroup {
   /** Add your docs here. */
