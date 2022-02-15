@@ -35,7 +35,7 @@ public final class Constants {
 	public static final double kChassisMaxMetersPerSec = 5.67;
 	public static final double kChassisMaxRadiansPerSec = 18.59;
 
-	public static final double kChassisEstimatedRotationsToInches = 1146.43;
+	public static final double kChassisEstimatedRotationsToInches = 2048*7.45/4;
 
 	// The gear ratios for the serve turning motor
 	public static final double kChassisNeoToGearbox = 80;

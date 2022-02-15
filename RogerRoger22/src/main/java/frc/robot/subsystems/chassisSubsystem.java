@@ -697,9 +697,9 @@ public class chassisSubsystem extends SubsystemBase {
   
   // Creates the PID controllers for all 4 rotation motors.  Should only ever be called once
   public void SetPIDController(){
-    // fLrotationMotor.setSelectedSensorPosition(0);
+    fLrotationMotor.setSelectedSensorPosition(0);
     fRrotationMotor.setSelectedSensorPosition(0);
-    // bLrotationMotor.setSelectedSensorPosition(0);
+    bLrotationMotor.setSelectedSensorPosition(0);
     bRrotationMotor.setSelectedSensorPosition(0);
 
     fLrotationMotor.config_kP(0, 0.105);
@@ -741,6 +741,8 @@ public class chassisSubsystem extends SubsystemBase {
     }
     SmartDashboard.putNumber("frontleftPID", frontLeftOnPointCount);
     
+    // if(fRDriveMotor.)
+
     if(fRPidController.atSetpoint()){
       frontRightOnPointCount += 1;
     }else{
