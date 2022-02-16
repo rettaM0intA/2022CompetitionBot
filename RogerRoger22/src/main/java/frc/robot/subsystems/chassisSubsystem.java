@@ -556,7 +556,57 @@ public class chassisSubsystem extends SubsystemBase {
 
   }
 
+  public void spinToPoint(double rotation, double fwd, double strafe){
+    
+    double fwd_MpS = 0; 
+    SmartDashboard.putNumber("fwd", fwd);
+    SmartDashboard.putNumber("fwd_MpS", fwd_MpS);
 
+    double strafe_MpS = 0;
+    SmartDashboard.putNumber("strafe", strafe);
+    SmartDashboard.putNumber("strafe_MpS", strafe_MpS);
+
+    double rotation_RpS = -rotation * Constants.kChassisMaxRadiansPerSec;
+    SmartDashboard.putNumber("rotation", rotation);
+    SmartDashboard.putNumber("rotation_RpS", rotation_RpS);
+
+    ChassisSpeeds speeds = new ChassisSpeeds(fwd_MpS,strafe_MpS,rotation_RpS);
+
+    SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
+
+    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.kChassisMaxMetersPerSec);
+
+    SwerveModuleState frontLeft = moduleStates[0];
+    SwerveModuleState frontRight = moduleStates[1];
+    SwerveModuleState backLeft = moduleStates[2];
+    SwerveModuleState backRight = moduleStates[3];
+
+    SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+
+    fLAngle = (frontLeftOptimize.angle.getDegrees()) / Constants.kChassisDegreetoMotor;
+    fRAngle = (frontRightOptimize.angle.getDegrees()) / Constants.kChassisDegreetoMotor;
+    bLAngle = (backLeftOptimize.angle.getDegrees()) / Constants.kChassisDegreetoMotor;
+    bRAngle = (backRightOptimize.angle.getDegrees()) / Constants.kChassisDegreetoMotor;
+
+    double frontLeftSpeed = frontLeft.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    double frontRightSpeed = frontRight.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    double backLeftSpeed = backLeft.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    double backRightSpeed = backRight.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+
+    rotationOverflow(fLrotationMotor, 0);
+    rotationOverflow(fRrotationMotor, 1);
+    rotationOverflow(bLrotationMotor, 2);
+    rotationOverflow(bRrotationMotor, 3);
+
+    fLDriveMotor.set(frontLeftSpeed);
+    fRDriveMotor.set(-frontRightSpeed);
+    bLDriveMotor.set(backLeftSpeed);
+    bRDriveMotor.set(-backRightSpeed);
+    
+  }
   
   private double toPointSpeedLimit(double attemptSpeed){
     
