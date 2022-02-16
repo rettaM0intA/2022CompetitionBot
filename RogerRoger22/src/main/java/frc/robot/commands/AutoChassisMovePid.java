@@ -11,15 +11,11 @@ import frc.robot.RobotContainer;
 public class AutoChassisMovePid extends CommandBase {
 
   boolean isFinished;
-
   double goalRadian;
   double speed;
-  
   double fwd;
   double strafe;
-
   int waitBeforeStart;
-
   double distanceFrontRight;
   double distanceFrontLeft;
   double distanceBackRight;
@@ -46,9 +42,9 @@ public class AutoChassisMovePid extends CommandBase {
     fwd = (Math.sin(goalRadian) / 100) * speed;
     strafe = (Math.cos(goalRadian) / 100) * speed;
 
-    distanceFrontLeft = -m_distanceFrontLeft * Constants.kChassisEstimatedRotationsToInches * 12;
+    distanceFrontLeft = m_distanceFrontLeft * Constants.kChassisEstimatedRotationsToInches * 12;
     distanceFrontRight= m_distanceFrontRight * Constants.kChassisEstimatedRotationsToInches * 12;
-    distanceBackLeft = -m_distanceBackLeft * Constants.kChassisEstimatedRotationsToInches * 12;
+    distanceBackLeft = m_distanceBackLeft * Constants.kChassisEstimatedRotationsToInches * 12;
     distanceBackRight = m_distanceBackRight * Constants.kChassisEstimatedRotationsToInches * 12;
 
   }

@@ -415,7 +415,7 @@ public class chassisSubsystem extends SubsystemBase {
       }
     }
 
-    return 0;
+    return input;
   }
 
   
@@ -670,15 +670,6 @@ public class chassisSubsystem extends SubsystemBase {
     return goalPosition;
   }
 
-  public double optimizeDirection(WPI_TalonFX motor, double goalAngle){
-    
-    if(90 - (motor.getSelectedSensorPosition() / Constants.kChassisDegreetoMotor) < 90){
-
-    }
-
-
-    return 0;
-  }
 
   
 
@@ -690,6 +681,11 @@ public class chassisSubsystem extends SubsystemBase {
     fRDriveMotor.setNeutralMode(NeutralMode.Coast);
     bLDriveMotor.setNeutralMode(NeutralMode.Coast);
     bRDriveMotor.setNeutralMode(NeutralMode.Coast);
+
+    fLrotationMotor.setNeutralMode(NeutralMode.Brake);
+    bLrotationMotor.setNeutralMode(NeutralMode.Brake);
+    fRrotationMotor.setNeutralMode(NeutralMode.Brake);
+    bRrotationMotor.setNeutralMode(NeutralMode.Brake);
   }
 
   /**
@@ -741,10 +737,11 @@ public class chassisSubsystem extends SubsystemBase {
     bRrotationMotor.config_kD(0, 0);
     bRrotationMotor.config_kF(0, 0);
 
-    fLPidController.setTolerance(1, 0.0000001);
-    fRPidController.setTolerance(1, 0.0000001);
-    bLPidController.setTolerance(1, 0.0000001);
-    bRPidController.setTolerance(1, 0.0000001);
+    
+    fLDriveMotor.configClosedloopRamp(0);
+    fRDriveMotor.configClosedloopRamp(0);
+    bLDriveMotor.configClosedloopRamp(0);
+    bRDriveMotor.configClosedloopRamp(0);
     
     
 
