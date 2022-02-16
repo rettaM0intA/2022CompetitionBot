@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -424,8 +425,6 @@ public class chassisSubsystem extends SubsystemBase {
    * @param strafe Percent strafe.  Used to decide which direction the robot goes in with fwd
    * @param rotation Percent for rotating.  Will combine with the direction given by fwd and strafe to let the robot turn.
    */
-
-
   public void driveToPoint(double fwd, double strafe, double rotation, double fLgoalPosition, double fRgoalPosition, double bLgoalPosition, double bRgoalPosition){
 
     if(RobotContainer.operator.getYButton()){
@@ -498,7 +497,6 @@ public class chassisSubsystem extends SubsystemBase {
     bLAngle = (backLeftOptimize.angle.getDegrees()) / Constants.kChassisDegreetoMotor;
     bRAngle = (backRightOptimize.angle.getDegrees()) / Constants.kChassisDegreetoMotor;
 
-    //TODO new begining
 
     // Get the needed speed from the module state and convert it to the -1 to 1 value needed for percent output command of the CANTalon
     double frontLeftSpeed = frontLeft.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
@@ -527,10 +525,10 @@ public class chassisSubsystem extends SubsystemBase {
     // bRrotationMotor.getPIDController().setReference(TurnForever(bRrotationMotor, bRAngle), ControlType.kPosition);
     
     // Set the speed in TalonFX to a percent output.
-    fLDriveMotor.set(frontLeftSpeed);
-    fRDriveMotor.set(-frontRightSpeed);
-    bLDriveMotor.set(backLeftSpeed);
-    bRDriveMotor.set(-backRightSpeed);
+    fLrotationMotor.set(frontLeftSpeed);
+    fRrotationMotor.set(-frontRightSpeed);
+    bLrotationMotor.set(backLeftSpeed);
+    bRrotationMotor.set(-backRightSpeed);
 
     
     
@@ -557,6 +555,7 @@ public class chassisSubsystem extends SubsystemBase {
     // lastSpeedbR = backRightSpeed;
 
   }
+
 
   public void spinToPoint(double rotation, double fwd, double strafe){
     
@@ -870,7 +869,7 @@ public class chassisSubsystem extends SubsystemBase {
     return false;
   }
 
-// TODO end of this
+
 
   public void disablePids(){
     fLPidController.close();
