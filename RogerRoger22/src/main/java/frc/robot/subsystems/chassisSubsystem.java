@@ -529,6 +529,7 @@ public class chassisSubsystem extends SubsystemBase {
     fRDriveMotor.set(-frontRightSpeed);
     bLDriveMotor.set(backLeftSpeed);
     bRDriveMotor.set(-backRightSpeed);
+
     
     
 
@@ -537,9 +538,15 @@ public class chassisSubsystem extends SubsystemBase {
     // bLDriveMotor.set(toPointSpeedLimit(bLPidController.calculate(bLDriveMotor.getSelectedSensorPosition(), bLgoalPosition)));
     // bRDriveMotor.set(toPointSpeedLimit(-bRPidController.calculate(bRDriveMotor.getSelectedSensorPosition(), -bRgoalPosition))); 
 
-    fLDriveMotor.set(ControlMode.Position, fLgoalPosition);
-    fRDriveMotor.set(ControlMode.Position, fRgoalPosition);
-    bLDriveMotor.set(ControlMode.Position, bLgoalPosition);
+
+    fLPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), -fLgoalPosition);
+    fRPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), -fRgoalPosition);
+    bLPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), -bLgoalPosition);
+    bRPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), bRgoalPosition);
+
+    fLDriveMotor.set(ControlMode.Position, -fLgoalPosition);
+    fRDriveMotor.set(ControlMode.Position, -fRgoalPosition);
+    bLDriveMotor.set(ControlMode.Position, -bLgoalPosition);
     bRDriveMotor.set(ControlMode.Position, bRgoalPosition);
 
     // lastSpeedfL = frontLeftSpeed;
@@ -737,11 +744,30 @@ public class chassisSubsystem extends SubsystemBase {
     bRrotationMotor.config_kD(0, 0);
     bRrotationMotor.config_kF(0, 0);
 
+    fLDriveMotor.config_kP(0, 0.025);
+    fLDriveMotor.config_kI(0, 0);
+    fLDriveMotor.config_kD(0, 0);
+    fLDriveMotor.config_kF(0, 0);
     
-    fLDriveMotor.configClosedloopRamp(0);
-    fRDriveMotor.configClosedloopRamp(0);
-    bLDriveMotor.configClosedloopRamp(0);
-    bRDriveMotor.configClosedloopRamp(0);
+    fRDriveMotor.config_kP(0, 0.025);
+    fRDriveMotor.config_kI(0, 0);
+    fRDriveMotor.config_kD(0, 0);
+    fRDriveMotor.config_kF(0, 0);
+    
+    bLDriveMotor.config_kP(0, 0.025);
+    bLDriveMotor.config_kI(0, 0);
+    bLDriveMotor.config_kD(0, 0);
+    bLDriveMotor.config_kF(0, 0);
+    
+    bRDriveMotor.config_kP(0, 0.025);
+    bRDriveMotor.config_kI(0, 0);
+    bRDriveMotor.config_kD(0, 0);
+    bRDriveMotor.config_kF(0, 0);
+    
+    fLDriveMotor.configClosedloopRamp(0.01);
+    fRDriveMotor.configClosedloopRamp(0.01);
+    bLDriveMotor.configClosedloopRamp(0.01);
+    bRDriveMotor.configClosedloopRamp(0.01);
     
     
 

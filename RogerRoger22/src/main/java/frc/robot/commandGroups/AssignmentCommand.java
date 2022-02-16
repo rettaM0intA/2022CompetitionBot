@@ -25,7 +25,7 @@ public class AssignmentCommand extends SequentialCommandGroup {
     addCommands(new AutoChassisMovePid(0, 25, 12, 12, 12, 12));
     addCommands(new ResetGyroCommand());
 
-    //Start at tower base, move 15 feet away in straight line, turn around 180 deg., turn around 180 deg. again, move back to tower.
+    //Start at tower base, move 5 feet away in straight line, turn around 180 deg., turn around 180 deg. again, move back to tower.
 
     // To run multiple commands at the same time,
     // use addParallel()

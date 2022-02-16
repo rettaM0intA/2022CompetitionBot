@@ -4,6 +4,9 @@
 
 package frc.robot.commands;
 
+import java.util.Random;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -20,6 +23,9 @@ public class AutoChassisMovePid extends CommandBase {
   double distanceFrontLeft;
   double distanceBackRight;
   double distanceBackLeft;
+
+  double countsCorrect;
+  double averageDistance;
 
   /** Creates a new AutoChasssisMovePid.
    * 
@@ -47,6 +53,8 @@ public class AutoChassisMovePid extends CommandBase {
     distanceBackLeft = m_distanceBackLeft * Constants.kChassisEstimatedRotationsToInches * 12;
     distanceBackRight = m_distanceBackRight * Constants.kChassisEstimatedRotationsToInches * 12;
 
+    averageDistance = (distanceFrontLeft + distanceFrontRight + distanceBackLeft + distanceBackRight) / 4;
+
   }
 
   // Called when the command is initially scheduled.
@@ -71,7 +79,13 @@ public class AutoChassisMovePid extends CommandBase {
     }
     //RobotContainer.m_chassisSubsystem.driveToPoint(0, 0, 0, 100000, -100000, 100000, -100000);
 
-    if(RobotContainer.m_chassisSubsystem.checkPIDlocation()){
+    if(RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() == averageDistance){
+      countsCorrect += 1;
+    }else{
+      countsCorrect = 0;
+    }
+
+    if(countsCorrect > 5 && waitBeforeStart > 10){
       isFinished = true;
     }
 
@@ -89,8 +103,12 @@ public class AutoChassisMovePid extends CommandBase {
       RobotContainer.m_chassisSubsystem.zeroMotors();
       //RobotContainer.m_chassisSubsystem.disablePids();
 
+      SmartDashboard.putBoolean("gun", true);
+
       return true;
     }
+
+    SmartDashboard.putBoolean("gun", false);
     return false;
   }
 }
