@@ -82,7 +82,9 @@ public class AutoChassisSpinCommand extends CommandBase {
       RobotContainer.m_chassisSubsystem.driveAuton(0, 0, 0);
       isFinished = true;
     }
-   
+
+
+
     if (currentDegree != goalDegree) {
       RobotContainer.m_chassisSubsystem.driveAuton(0, 0, 0.20);
     } else {
