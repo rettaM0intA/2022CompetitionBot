@@ -10,6 +10,9 @@
 // "Had to include that last part, didn't you?" -Cody VanSnepson, February 18, 2022
 /** "'How's the command coming?' 
 'It's not.'" -Cody VanSnepson & Carter Davis, February 18, 2022 */
+// "You're not more than dead, you're alive!" -Cody VanSnepson, February 18, 2022
+// "Hay? That's for horses!" -Cody VanSnepson, February 18, 2022
+// "Doce trece or catorce, why not?" -Cody VanSnepson, February 18, 2022
 
 // Add inputs to the constructor. Done!
 // Add variables to copy inputs. Done!
@@ -53,10 +56,30 @@ public class AutoChassisSpinPID extends CommandBase {
   @Override
   public void execute() {
 
-    // RobotContainer.m_chassisSubsystem.driveToPoint(0, 0, .001, fLgoalPosition, fRgoalPosition, bLgoalPosition, bRgoalPosition);
+    buffer += 1;
 
-    RobotContainer.m_chassisSubsystem.spinToPoint(0, 0, 0);
+    currentDegree = RobotContainer.m_chassisSubsystem.gyro.getAngle();
 
+    if(goalDegree > 0){
+      if(buffer > 20){
+        RobotContainer.m_chassisSubsystem.spinToPoint(-speed, 0, 0);
+      }else{
+        RobotContainer.m_chassisSubsystem.spinToPoint(-0.01, 0, 0);
+      }
+    
+    } else {
+      if(buffer > 20){
+        RobotContainer.m_chassisSubsystem.spinToPoint(speed, 0, 0);
+      }else{
+        RobotContainer.m_chassisSubsystem.spinToPoint(0.01, 0, 0);
+      }
+
+      if (currentDegree != goalDegree) {
+        RobotContainer.m_chassisSubsystem.spinToPoint(0, 0, 0);
+      } else {
+        isFinished = true;
+      }
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -71,7 +94,6 @@ public class AutoChassisSpinPID extends CommandBase {
     if(isFinished){
       RobotContainer.m_chassisSubsystem.resetGyro();
       RobotContainer.m_chassisSubsystem.zeroMotors();
-      //RobotContainer.m_chassisSubsystem.disablePids();
       isFinished = false;
       return true;
     }

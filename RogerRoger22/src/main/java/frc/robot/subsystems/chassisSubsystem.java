@@ -420,7 +420,7 @@ public class chassisSubsystem extends SubsystemBase {
 
   
   /**
-   * This is the main driving function for the AgileRunner robot.
+   * THIS DESCRIPTION SUCKS. FIX IT. This is the main driving function for the AgileRunner robot.
    * @param fwd Percent forward.  Used to decide which direction the robot goes in with fwd
    * @param strafe Percent strafe.  Used to decide which direction the robot goes in with fwd
    * @param rotation Percent for rotating.  Will combine with the direction given by fwd and strafe to let the robot turn.
@@ -556,7 +556,12 @@ public class chassisSubsystem extends SubsystemBase {
 
   }
 
-
+  /**
+   * This is the main driving function for the AgileRunner robot.
+   * @param rotation Percent rotation. Will combine with the direction given by fwd and strafe to let the robot turn.
+   * @param fwd Percent forward. Used to decide which direction the robot goes in with fwd.
+   * @param strafe Percent strafe. Used to decide which direction the robot goes in with fwd.
+   */
   public void spinToPoint(double rotation, double fwd, double strafe){
     
     double fwd_MpS = 0; 
