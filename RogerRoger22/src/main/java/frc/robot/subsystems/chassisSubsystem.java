@@ -558,7 +558,7 @@ public class chassisSubsystem extends SubsystemBase {
 
   }
 
-  public void spinToPoint(double rotation, double fwd, double strafe){
+  public void spinToPoint(double fwd, double strafe, double rotation){
     
     double fwd_MpS = 0; 
     SmartDashboard.putNumber("fwd", fwd);

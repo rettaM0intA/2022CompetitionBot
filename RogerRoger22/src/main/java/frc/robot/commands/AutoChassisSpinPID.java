@@ -2,6 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+// "Nobody cares about laws and stuff." -Drew Jezowski, 2022
+
+// Add inputs to the constructor.
+// Add variables to copy inputs.
+// Add if statement that checks if is at right angle and sets isFinished to true.
+// Add movement logic (probably gonna be a bunch of if statements).
+
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -20,17 +27,20 @@ public class AutoChassisSpinPID extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    isFinished = false;
+
     RobotContainer.m_chassisSubsystem.resetGyro();
     RobotContainer.m_chassisSubsystem.driveAuton(0, 0, 0);
+     
   }
 
-  // // // // // Called every time the scheduler runs while the command is scheduled.
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
     // RobotContainer.m_chassisSubsystem.driveToPoint(0, 0, .001, fLgoalPosition, fRgoalPosition, bLgoalPosition, bRgoalPosition);
 
-    
+    RobotContainer.m_chassisSubsystem.spinToPoint(0, 0, 0);
 
   }
 
@@ -47,7 +57,7 @@ public class AutoChassisSpinPID extends CommandBase {
       RobotContainer.m_chassisSubsystem.resetGyro();
       RobotContainer.m_chassisSubsystem.zeroMotors();
       //RobotContainer.m_chassisSubsystem.disablePids();
-
+      isFinished = false;
       return true;
     }
     return false;
