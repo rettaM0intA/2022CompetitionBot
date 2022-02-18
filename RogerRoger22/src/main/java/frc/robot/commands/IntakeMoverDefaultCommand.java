@@ -7,11 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class TestShootingCommand extends CommandBase {
-  /** Creates a new TestShootingCommand. */
-  public TestShootingCommand() {
+public class IntakeMoverDefaultCommand extends CommandBase {
+  /** Creates a new IntakeMoverDefaultCommand. */
+  public IntakeMoverDefaultCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_IntakeSubsystem);
+    addRequirements(RobotContainer.m_intakeMoverSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -21,21 +21,15 @@ public class TestShootingCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    RobotContainer.m_IntakeSubsystem.shoot(1);
-
-    /* if(I can remember){
-     be suprised
-     }else{
-     be disapointed
-     }*/
+    //TODO add enum for switching between the two.
+    RobotContainer.m_intakeMoverSubsystem.Move(true);
+    
+    RobotContainer.m_intakeMoverSubsystem.Move(false);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    RobotContainer.m_RandomSubsystem.shoot(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

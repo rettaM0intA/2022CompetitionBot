@@ -12,10 +12,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ChassisDefaultCommand;
 import frc.robot.commands.ControllerSwitchCommand;
 import frc.robot.commands.IntakeDefaultCommand;
-import frc.robot.commands.RandomDefaultCommand;
-import frc.robot.subsystems.BButtonSpinSubsystem;
+import frc.robot.commands.IntakeMoverDefaultCommand;
+import frc.robot.subsystems.IntakeMoverSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.RandomSubsystem;
 import frc.robot.subsystems.chassisSubsystem;
 
 /**
@@ -28,14 +27,13 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   public static chassisSubsystem m_chassisSubsystem = new chassisSubsystem();
-  public static RandomSubsystem m_RandomSubsystem = new RandomSubsystem();
-  public static IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
-  public static BButtonSpinSubsystem m_BButtonSpinSubsystem = new BButtonSpinSubsystem();
+  public static IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  public static IntakeMoverSubsystem m_intakeMoverSubsystem = new IntakeMoverSubsystem();
 
   // private static ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  public static ChassisDefaultCommand chassisDefaultCommand = new ChassisDefaultCommand();
-  public static RandomDefaultCommand randomDefaultCommand = new RandomDefaultCommand();
-  public static IntakeDefaultCommand intakeDefaultCommand = new IntakeDefaultCommand();
+  public static ChassisDefaultCommand m_chassisDefaultCommand = new ChassisDefaultCommand();
+  public static IntakeDefaultCommand m_intakeDefaultCommand = new IntakeDefaultCommand();
+  public static IntakeMoverDefaultCommand m_intakeMoverDefaultCommand = new IntakeMoverDefaultCommand();
   // public static BButtonSpinDefaultCommand bButtonSpinDefaultCommand = new BButtonSpinDefaultCommand();
   // private static WheelsFaceForwardCommand m_wheelsFaceForwardCommand = new WheelsFaceForwardCommand();
 
@@ -51,9 +49,9 @@ public class RobotContainer {
   public RobotContainer() {
 
     // m_chassisSubsystem.setDefaultCommand(new m_exampleSubsystem());\
-    m_chassisSubsystem.setDefaultCommand(chassisDefaultCommand);
-    m_RandomSubsystem.setDefaultCommand(randomDefaultCommand);
-    m_IntakeSubsystem.setDefaultCommand(intakeDefaultCommand);
+    m_chassisSubsystem.setDefaultCommand(m_chassisDefaultCommand);
+    m_intakeSubsystem.setDefaultCommand(m_intakeDefaultCommand);
+    m_intakeMoverSubsystem.setDefaultCommand(m_intakeMoverDefaultCommand);
     // m_BButtonSpinSubsystem.setDefaultCommand(bButtonSpinDefaultCommand);
 
     // Configure the button bindings

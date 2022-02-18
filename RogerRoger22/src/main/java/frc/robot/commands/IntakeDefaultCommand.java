@@ -11,7 +11,7 @@ public class IntakeDefaultCommand extends CommandBase {
   /** Creates a new IntakeDefaultCommand. */
   public IntakeDefaultCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_IntakeSubsystem);
+    addRequirements(RobotContainer.m_intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -22,14 +22,14 @@ public class IntakeDefaultCommand extends CommandBase {
   @Override
   public void execute() {
 
-    RobotContainer.m_IntakeSubsystem.shoot(0);
+    RobotContainer.m_intakeSubsystem.Spin(0);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_RandomSubsystem.shoot(0);
+    RobotContainer.m_intakeSubsystem.Spin(0);
   }
 
   // Returns true when the command should end.
