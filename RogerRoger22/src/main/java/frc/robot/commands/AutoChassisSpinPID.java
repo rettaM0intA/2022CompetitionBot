@@ -2,12 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-// "Nobody cares about laws and stuff." -Drew Jezowski, 2022
+// "Nobody cares about laws and stuff." -Drew Jezowski, February 18, 2022
+// "Let 'em make mashed potatoes." -Drew Jezowski, February 18, 2022
+// "I don't know any other quotes." -Drew Jezowski, February 18, 2022
+// "Hey, I think he's infected with the quote virus." -Drew Jezowski, February 18, 2022
+// "Yeah, you guys are supposed to be helping each other make code, not quotes." -Cody VanSnepson, February 18, 2022
+// "Had to include that last part, didn't you?" -Cody VanSnepson, February 18, 2022
+/** "'How's the command coming?' 
+'It's not.'" -Cody VanSnepson & Carter Davis, February 18, 2022 */
 
-// Add inputs to the constructor.
-// Add variables to copy inputs.
+// Add inputs to the constructor. Done!
+// Add variables to copy inputs. Done!
 // Add if statement that checks if is at right angle and sets isFinished to true.
 // Add movement logic (probably gonna be a bunch of if statements).
+
+//made by Drew and Carter inc. Patent Pending
 
 package frc.robot.commands;
 
@@ -16,10 +25,15 @@ import frc.robot.RobotContainer;
 
 public class AutoChassisSpinPID extends CommandBase {
 
-  boolean isFinished;
+  boolean isFinished = false;
+  boolean isInit = false;
+  double speed = 0; // Corresponds with input.
+  double goalDegree = 0; // Corresponds with input.
+  double currentDegree = 0;
+  int buffer = 0;
 
   /** Creates a new AutoChassisSpinPID. */
-  public AutoChassisSpinPID() {
+  public AutoChassisSpinPID(double m_goalDegree, double m_speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_chassisSubsystem);
   }
@@ -27,11 +41,12 @@ public class AutoChassisSpinPID extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    isFinished = false;
 
     RobotContainer.m_chassisSubsystem.resetGyro();
     RobotContainer.m_chassisSubsystem.driveAuton(0, 0, 0);
-     
+    buffer = 0;
+    isFinished = false;
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
