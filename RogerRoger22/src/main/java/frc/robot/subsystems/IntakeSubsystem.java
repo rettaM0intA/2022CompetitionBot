@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-  WPI_TalonSRX IntakeMotor = new WPI_TalonSRX(9);
+  WPI_TalonSRX IntakeMotor = new WPI_TalonSRX(10);
 
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {

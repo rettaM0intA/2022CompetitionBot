@@ -13,6 +13,7 @@ import frc.robot.commands.ChassisDefaultCommand;
 import frc.robot.commands.ControllerSwitchCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeMoverDefaultCommand;
+import frc.robot.commands.IntakeSpinCommand;
 import frc.robot.subsystems.IntakeMoverSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.chassisSubsystem;
@@ -69,8 +70,8 @@ public class RobotContainer {
     JoystickButton padControllSwitchButton = new JoystickButton(operator, 6);
     padControllSwitchButton.whenPressed(new ControllerSwitchCommand());
 
-    // JoystickButton testShootingButton = new JoystickButton(operator, 1);
-    // testShootingButton.whenHeld(new TestShootingCommand());
+    JoystickButton testShootingButton = new JoystickButton(driver, 1);
+    testShootingButton.whenHeld(new IntakeSpinCommand());
     
     // JoystickButton testIntakeButton = new JoystickButton(operator, 3);
     // testIntakeButton.whenHeld(new TestShootingCommand());

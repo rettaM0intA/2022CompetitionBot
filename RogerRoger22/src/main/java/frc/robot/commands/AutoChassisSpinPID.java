@@ -13,6 +13,7 @@
 // "You're not more than dead, you're alive!" -Cody VanSnepson, February 18, 2022
 // "Hay? That's for horses!" -Cody VanSnepson, February 18, 2022
 // "Doce trece or catorce, why not?" -Cody VanSnepson, February 18, 2022
+// "It's not bad, it's not good, it's just not done." -Cody VanSnepson, February 21, 2022
 
 // Add inputs to the constructor. Done!
 // Add variables to copy inputs. Done!

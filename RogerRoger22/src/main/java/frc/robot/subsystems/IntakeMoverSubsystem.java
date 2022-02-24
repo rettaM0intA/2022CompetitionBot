@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeMoverSubsystem extends SubsystemBase {
 
-  CANSparkMax motor = new CANSparkMax(10, MotorType.kBrushless);
+  CANSparkMax motor = new CANSparkMax(9, MotorType.kBrushless);
   DigitalInput topLimit = new DigitalInput(0);
   DigitalInput bottomLimit = new DigitalInput(1);
 
