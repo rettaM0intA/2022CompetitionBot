@@ -19,6 +19,14 @@ public class IntakeSubsystem extends SubsystemBase {
 
   }
 
+  public void Spin(boolean in){
+    if(in){
+      IntakeMotor.set(ControlMode.PercentOutput, 0.50); //50% intake
+    }else{
+      IntakeMotor.set(ControlMode.PercentOutput, -0.68);
+    }
+  }
+
   public void Spin(double speed){
     IntakeMotor.set(ControlMode.PercentOutput, speed);
   }
@@ -28,4 +36,3 @@ public class IntakeSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 }
-//There; now this line is used, and the total number of lines is a multiple of ten.

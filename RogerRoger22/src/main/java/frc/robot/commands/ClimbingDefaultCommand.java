@@ -7,11 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class IntakeMoverDefaultCommand extends CommandBase {
-  /** Creates a new IntakeMoverDefaultCommand. */
-  public IntakeMoverDefaultCommand() {
+public class ClimbingDefaultCommand extends CommandBase {
+  /** Creates a new ClimbingDefaultCommand. */
+  public ClimbingDefaultCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_intakeMoverSubsystem);
+    addRequirements(RobotContainer.m_climbingSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -21,7 +21,7 @@ public class IntakeMoverDefaultCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_intakeMoverSubsystem.Move(true, 0); //0.05
+    RobotContainer.m_climbingSubsystem.Hold();
   }
 
   // Called once the command ends or is interrupted.

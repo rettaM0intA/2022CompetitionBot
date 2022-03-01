@@ -8,26 +8,33 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
 public class IntakeSpinCommand extends CommandBase {
+
+  boolean direction;
+
   /** Creates a new IntakeSpinCommand. */
-  public IntakeSpinCommand() {
+  public IntakeSpinCommand(boolean spinIn) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_intakeSubsystem);
+
+    direction = spinIn;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    RobotContainer.m_intakeSubsystem.Spin(0);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_intakeSubsystem.Spin(0.1);
+    RobotContainer.m_intakeSubsystem.Spin(direction);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_intakeSubsystem.Spin(0);
+    // RobotContainer.m_intakeSubsystem.Spin(0);
   }
 
   // Returns true when the command should end.

@@ -10,10 +10,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ChassisDefaultCommand;
+import frc.robot.commands.ClimbingDefaultCommand;
 import frc.robot.commands.ControllerSwitchCommand;
 import frc.robot.commands.IntakeDefaultCommand;
+import frc.robot.commands.IntakeDirectionChangeCommand;
 import frc.robot.commands.IntakeMoverDefaultCommand;
+import frc.robot.commands.IntakeMoverMoveCommand;
 import frc.robot.commands.IntakeSpinCommand;
+import frc.robot.subsystems.ClimbingSubsystem;
 import frc.robot.subsystems.IntakeMoverSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.chassisSubsystem;
@@ -30,11 +34,13 @@ public class RobotContainer {
   public static chassisSubsystem m_chassisSubsystem = new chassisSubsystem();
   public static IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   public static IntakeMoverSubsystem m_intakeMoverSubsystem = new IntakeMoverSubsystem();
+  public static ClimbingSubsystem m_climbingSubsystem = new ClimbingSubsystem();
 
   // private static ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   public static ChassisDefaultCommand m_chassisDefaultCommand = new ChassisDefaultCommand();
   public static IntakeDefaultCommand m_intakeDefaultCommand = new IntakeDefaultCommand();
   public static IntakeMoverDefaultCommand m_intakeMoverDefaultCommand = new IntakeMoverDefaultCommand();
+  public static ClimbingDefaultCommand m_climbingDefaultCommand = new ClimbingDefaultCommand();
   // public static BButtonSpinDefaultCommand bButtonSpinDefaultCommand = new BButtonSpinDefaultCommand();
   // private static WheelsFaceForwardCommand m_wheelsFaceForwardCommand = new WheelsFaceForwardCommand();
 
@@ -43,6 +49,7 @@ public class RobotContainer {
   public static XboxController operator = new XboxController(1);
 
   public static ControllerInControl gamepadDriver = ControllerInControl.flightStick;
+  public static IntakeDirection intakeDirection = IntakeDirection.still;
 
   public static boolean fullSpeed = false;
 
@@ -53,6 +60,7 @@ public class RobotContainer {
     m_chassisSubsystem.setDefaultCommand(m_chassisDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_intakeDefaultCommand);
     m_intakeMoverSubsystem.setDefaultCommand(m_intakeMoverDefaultCommand);
+    m_climbingSubsystem.setDefaultCommand(m_climbingDefaultCommand);
     // m_BButtonSpinSubsystem.setDefaultCommand(bButtonSpinDefaultCommand);
 
     // Configure the button bindings
@@ -70,17 +78,21 @@ public class RobotContainer {
     JoystickButton padControllSwitchButton = new JoystickButton(operator, 6);
     padControllSwitchButton.whenPressed(new ControllerSwitchCommand());
 
-    JoystickButton testShootingButton = new JoystickButton(driver, 1);
-    testShootingButton.whenHeld(new IntakeSpinCommand());
+    JoystickButton outputButton = new JoystickButton(operator, 1);
+    outputButton.whenHeld(new IntakeSpinCommand(false));
     
-    // JoystickButton testIntakeButton = new JoystickButton(operator, 3);
-    // testIntakeButton.whenHeld(new TestShootingCommand());
+    JoystickButton moveIntakeButton = new JoystickButton(operator, 2);
+    moveIntakeButton.whenHeld(new IntakeMoverMoveCommand());
 
-    // JoystickButton bButtonSpin = new JoystickButton(operator, 2);
-    // bButtonSpin.whenPressed(new BButtonSpinCommand());
+    JoystickButton moveIntakeDirectionButton = new JoystickButton(operator, 3);
+    moveIntakeDirectionButton.whenPressed(new IntakeDirectionChangeCommand());
+
+    JoystickButton intakeButton = new JoystickButton(operator, 4);
+    intakeButton.whenHeld(new IntakeSpinCommand(true));
 
     JoystickButton joyControllSwitchButton = new JoystickButton(driver, 6);
     joyControllSwitchButton.whenPressed(new ControllerSwitchCommand());
+    
     
     if(gamepadDriver == ControllerInControl.gamepad){
       // JoystickButton padSpinButton = new JoystickButton(operator, 2);
@@ -88,7 +100,20 @@ public class RobotContainer {
       // JoystickButton padGyroSet0Button = new JoystickButton(operator, 2);
       // padGyroSet0Button.whenPressed(new ResetGyroCommand());
 
+      // JoystickButton intakeToggleButton = new JoystickButton(operator, 1);
+      // intakeToggleButton.whenActive(new IntakeSpinCommand());
+
+      // JoystickButton directionSwitchButton = new JoystickButton(operator, 2);
+      // directionSwitchButton.whenPressed(new IntakeDirectionChangeCommand());
+
+      // JoystickButton moveIntakeButon = new JoystickButton(operator, 1);
+      // moveIntakeButon.whenActive(new IntakeMoverMoveCommand());
+
     }else{
+
+      // JoystickButton intakeToggleButton = new JoystickButton(driver, 1);
+      // intakeToggleButton.whenActive(new IntakeSpinCommand());
+
       // JoystickButton joyGyroSet0Button = new JoystickButton(driver, 9);
       // joyGyroSet0Button.whenPressed(new GyroSet0Command());
 
