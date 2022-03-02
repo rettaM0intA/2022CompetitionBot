@@ -137,9 +137,9 @@ public class chassisSubsystem extends SubsystemBase {
   
   /**
    * This is the main driving function for the AgileRunner robot.
-   * @param fwd Percent forward.  Used to decide which direction the robot goes in with fwd
-   * @param strafe Percent strafe.  Used to decide which direction the robot goes in with fwd
-   * @param rotation Percent for rotating.  Will combine with the direction given by fwd and strafe to let the robot turn.
+   * @param fwd Percent forward; used to decide which direction the robot goes in with fwd.
+   * @param strafe Percent strafe; used to decide which direction the robot goes in with fwd.
+   * @param rotation Percent for rotating; will combine with the direction given by fwd and strafe to let the robot turn.
    */
   public void driveTeleop(double fwd, double strafe, double rotation){
 
@@ -277,9 +277,9 @@ public class chassisSubsystem extends SubsystemBase {
   
   /**
    * This is the main driving function for the AgileRunner robot.
-   * @param fwd Percent forward.  Used to decide which direction the robot goes in with fwd
-   * @param strafe Percent strafe.  Used to decide which direction the robot goes in with fwd
-   * @param rotation Percent for rotating.  Will combine with the direction given by fwd and strafe to let the robot turn.
+   * @param fwd Percent forward; used to decide which direction the robot goes in with fwd.
+   * @param strafe Percent strafe; used to decide which direction the robot goes in with fwd.
+   * @param rotation Percent for rotating; will combine with the direction given by fwd and strafe to let the robot turn.
    */
   public void driveAuton(double fwd, double strafe, double rotation){
 
@@ -557,10 +557,10 @@ public class chassisSubsystem extends SubsystemBase {
   }
 
   /**
-   * This is the main driving function for the AgileRunner robot.
-   * @param rotation Percent rotation. Will combine with the direction given by fwd and strafe to let the robot turn.
-   * @param fwd Percent forward. Used to decide which direction the robot goes in with fwd.
-   * @param strafe Percent strafe. Used to decide which direction the robot goes in with fwd.
+   * This is the main turning function for the AgileRunner robot.
+   * @param rotation Percent for rotating; will combine with the direction given by fwd and strafe to let the robot turn.
+   * @param fwd Percent forward; used to decide which direction the robot goes in with fwd.
+   * @param strafe Percent strafe; used to decide which direction the robot goes in with fwd.
    */
   public void spinToPoint(double rotation, double fwd, double strafe){
     
@@ -649,8 +649,8 @@ public class chassisSubsystem extends SubsystemBase {
 
   /**
    * A function made to avoid going to 0 or 360 degrees in rotation.
-   * @param rotationMotor Used to check a motor's position to avoid doing a full rotation
-   * @param angleNumber input an integer based on which motor is being used.  FL = 0, FR = 1, BL = 2, BR = 3
+   * @param rotationMotor Used to check a motor's position to avoid doing a full rotation.
+   * @param angleNumber Input an integer based on which motor is being used.  FL = 0, FR = 1, BL = 2, BR = 3
    */
   public void rotationOverflow(WPI_TalonFX rotationMotor, int angleNumber){
     double currentRotation = rotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor;
@@ -690,9 +690,9 @@ public class chassisSubsystem extends SubsystemBase {
 
   /**
    * Attempt at fixing the inablity to go past a full rotoation with the wheel
-   * @param motor the rotation moter
-   * @param goalAngle the angle that the rotoation moter should be at
-   * @return returns the new goal angle that will allow the rotation motors to go past a full rotation
+   * @param motor The rotation motor.
+   * @param goalAngle The angle that the rotoation moter should be at.
+   * @return Returns the new goal angle that will allow the rotation motors to go past a full rotation.
    */
   // public double TurnForever(CANSparkMax motor, double goalAngle){
 
