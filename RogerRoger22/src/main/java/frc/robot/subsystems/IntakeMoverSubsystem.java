@@ -44,9 +44,6 @@ public class IntakeMoverSubsystem extends SubsystemBase {
     if(!moveUp)
     motor.getPIDController().setReference(-55, ControlType.kPosition);
 
-    if(highestPower < motor.getBusVoltage()){
-      highestPower = motor.getBusVoltage();
-    }
     // if(moveUp){
     //   if(motor.getEncoder().getPosition() > -10){
     //     motor.set(0.05);
@@ -87,7 +84,7 @@ public class IntakeMoverSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // SmartDashboard.putNumber("IntakeMover Position", motor.getEncoder().getPosition());
+    SmartDashboard.putNumber("IntakeMover Position", motor.getEncoder().getPosition());
     // SmartDashboard.putNumber("highest speed", highestPower);
   }
 }
