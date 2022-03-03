@@ -62,7 +62,7 @@ public class chassisSubsystem extends SubsystemBase {
   // SlewRateLimiter backLeftLimiter = new SlewRateLimiter(.72);
   // SlewRateLimiter backRightLimiter = new SlewRateLimiter(.72);
 
-  ControllerInControl driver = ControllerInControl.SecondaryController;
+  ControllerInControl driver = ControllerInControl.flightStick;
 
   public AHRS gyro = new AHRS(I2C.Port.kOnboard);
   

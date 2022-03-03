@@ -6,6 +6,6 @@ package frc.robot;
 
 /** Add your docs here. */
 public enum ControllerInControl {
-    MainController,
-    SecondaryController
+    gamepad,
+    flightStick
 }

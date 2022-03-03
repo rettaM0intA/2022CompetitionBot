@@ -5,8 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.ControllerInControl;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class ClimbingDefaultCommand extends CommandBase {
@@ -23,15 +21,7 @@ public class ClimbingDefaultCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(RobotContainer.gamepadDriver == ControllerInControl.MainController){
-      if(RobotContainer.operator.getRightY() > 0.05){
-        RobotContainer.m_climbingSubsystem.Climb(true);
-      }else if(RobotContainer.operator.getRightY() < -0.05){
-        RobotContainer.m_climbingSubsystem.Climb(false);
-      }
-    }else{
-      RobotContainer.m_climbingSubsystem.Hold();
-    }
+    RobotContainer.m_climbingSubsystem.Hold();
   }
 
   // Called once the command ends or is interrupted.

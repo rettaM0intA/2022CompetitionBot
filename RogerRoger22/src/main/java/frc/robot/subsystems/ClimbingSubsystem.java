@@ -14,28 +14,26 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ClimbingSubsystem extends SubsystemBase {
 
   CANSparkMax rightClimbMotor = new CANSparkMax(12, MotorType.kBrushless);
-  CANSparkMax leftClimbMotor = new CANSparkMax(13, MotorType.kBrushless);
+  // CANSparkMax leftClimbMotor = new CANSparkMax(13, MotorType.kBrushless);
   
 
   /** Creates a new ClimbingSubsystem. */
   public ClimbingSubsystem() {
     rightClimbMotor.setIdleMode(IdleMode.kBrake);
-    leftClimbMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public void Climb(boolean isUp){
     if(isUp){
       rightClimbMotor.set(0.1);
-      leftClimbMotor.set(0.1);
+      // leftClimbMotor.set(0);
     }else{
-      rightClimbMotor.set(-0.3);
-      rightClimbMotor.set(-0.3);
+      rightClimbMotor.set(-0.1);
     }
   }
 
   public void Hold(){
     rightClimbMotor.set(0);
-    leftClimbMotor.set(0);
+    // leftClimbMotor.set(0);
   }
 
   @Override

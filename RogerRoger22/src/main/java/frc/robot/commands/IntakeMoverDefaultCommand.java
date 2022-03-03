@@ -5,14 +5,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.IntakeDirection;
 import frc.robot.RobotContainer;
 
 public class IntakeMoverDefaultCommand extends CommandBase {
   /** Creates a new IntakeMoverDefaultCommand. */
   public IntakeMoverDefaultCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_intakeMoverSubsystem);
+    // addRequirements(RobotContainer.m_intakeMoverSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -22,25 +21,11 @@ public class IntakeMoverDefaultCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if(RobotContainer.intakeDirection == IntakeDirection.up){
-    //   RobotContainer.m_intakeMoverSubsystem.Move(true);
-    // }else{
-    //   RobotContainer.m_intakeMoverSubsystem.Move(false);
-    // }
-    
-    if(RobotContainer.intakeDirection != IntakeDirection.still){
-      if(RobotContainer.intakeDirection == IntakeDirection.up){
-        if(RobotContainer.m_intakeMoverSubsystem.Move(true)){
-          RobotContainer.intakeDirection = IntakeDirection.still;
-        }
-      }else{
-        if(RobotContainer.m_intakeMoverSubsystem.Move(false)){
-          RobotContainer.intakeDirection = IntakeDirection.still;
-        }
-      }
-    }else{
-      RobotContainer.m_intakeMoverSubsystem.Move(true, 0.05);
-    }
+    RobotContainer.m_intakeMoverSubsystem.Move(true, 0); //0.05
+    //TODO add enum for switching between the two.
+    // RobotContainer.m_intakeMoverSubsystem.Move(true);
+    // 
+    // RobotContainer.m_intakeMoverSubsystem.Move(false);
   }
 
   // Called once the command ends or is interrupted.
