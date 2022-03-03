@@ -51,6 +51,7 @@ public class RobotContainer {
 
   public static ControllerInControl gamepadDriver = ControllerInControl.SecondaryController;
   public static IntakeDirection intakeDirection = IntakeDirection.still;
+  public static IntakeDirection chosenDirection = IntakeDirection.still;
 
   public static boolean fullSpeed = false;
 
@@ -98,6 +99,11 @@ public class RobotContainer {
 
     intakeButton = new JoystickButton(operator, 4);
 
+    outputButton.whenHeld(new IntakeSpinCommand(false));
+
+    moveIntakeDirectionButton.whenPressed(new IntakeDirectionChangeCommand());
+    
+    intakeButton.whenHeld(new IntakeSpinCommand(true));
       // JoystickButton padSpinButton = new JoystickButton(operator, 2);
       // padSpinButton.whenActive(new SpinCommand());
       // JoystickButton padGyroSet0Button = new JoystickButton(operator, 2);
@@ -111,12 +117,17 @@ public class RobotContainer {
 
     }else{
       
-    outputButton = new JoystickButton(driver, 1);
+    outputButton = new JoystickButton(operator, 1);
 
-    moveIntakeDirectionButton = new JoystickButton(driver, 2);
+    moveIntakeDirectionButton = new JoystickButton(operator, 2);
 
-    intakeButton = new JoystickButton(driver, 4);
+    intakeButton = new JoystickButton(operator, 4);
 
+    outputButton.whenHeld(new IntakeSpinCommand(false));
+
+    moveIntakeDirectionButton.whenPressed(new IntakeDirectionChangeCommand());
+    
+    intakeButton.whenHeld(new IntakeSpinCommand(true));
       // JoystickButton intakeToggleButton = new JoystickButton(driver, 1);
       // intakeToggleButton.whenActive(new IntakeSpinCommand());
 
@@ -130,11 +141,6 @@ public class RobotContainer {
       // }
     }
 
-    outputButton.whenHeld(new IntakeSpinCommand(false));
-
-    moveIntakeDirectionButton.whenPressed(new IntakeDirectionChangeCommand());
-    
-    intakeButton.whenHeld(new IntakeSpinCommand(true));
 
   }
 

@@ -23,11 +23,13 @@ public class ClimbingDefaultCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(RobotContainer.gamepadDriver == ControllerInControl.MainController){
+    if(RobotContainer.gamepadDriver == ControllerInControl.SecondaryController){
       if(RobotContainer.operator.getRightY() > 0.05){
-        RobotContainer.m_climbingSubsystem.Climb(true);
-      }else if(RobotContainer.operator.getRightY() < -0.05){
         RobotContainer.m_climbingSubsystem.Climb(false);
+      }else if(RobotContainer.operator.getRightY() < -0.05){
+        RobotContainer.m_climbingSubsystem.Climb(true);
+      }else{
+        RobotContainer.m_climbingSubsystem.Hold();
       }
     }else{
       RobotContainer.m_climbingSubsystem.Hold();

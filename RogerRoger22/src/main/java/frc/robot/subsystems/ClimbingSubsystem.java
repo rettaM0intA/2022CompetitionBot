@@ -25,11 +25,11 @@ public class ClimbingSubsystem extends SubsystemBase {
 
   public void Climb(boolean isUp){
     if(isUp){
-      rightClimbMotor.set(0.1);
-      leftClimbMotor.set(0.1);
+      rightClimbMotor.set(1);
+      leftClimbMotor.set(-1);
     }else{
-      rightClimbMotor.set(-0.3);
-      rightClimbMotor.set(-0.3);
+      rightClimbMotor.set(-0.5);
+      leftClimbMotor.set(0.5);
     }
   }
 

@@ -20,10 +20,12 @@ public class IntakeDirectionChangeCommand extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(RobotContainer.intakeDirection != IntakeDirection.up){
+    if(RobotContainer.chosenDirection != IntakeDirection.up){
       RobotContainer.intakeDirection = IntakeDirection.up;
+      RobotContainer.chosenDirection = IntakeDirection.up;
     }else{
       RobotContainer.intakeDirection = IntakeDirection.down;
+      RobotContainer.chosenDirection = IntakeDirection.down;
     }
   }
 }
