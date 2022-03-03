@@ -260,10 +260,10 @@ public class chassisSubsystem extends SubsystemBase {
 
     
     // Set the speed in TalonFX to a percent output.
-    fLDriveMotor.set(speedLimiter(frontLeftSpeed));
-    fRDriveMotor.set(speedLimiter(frontRightSpeed));
-    bLDriveMotor.set(speedLimiter(backLeftSpeed));
-    bRDriveMotor.set(speedLimiter(backRightSpeed));
+    fLDriveMotor.set(frontLeftSpeed);
+    fRDriveMotor.set(frontRightSpeed);
+    bLDriveMotor.set(backLeftSpeed);
+    bRDriveMotor.set(backRightSpeed);
 
     // fLDriveMotor.set(0);
     // fRDriveMotor.set(0);
