@@ -5,8 +5,13 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+<<<<<<< Updated upstream
 import frc.robot.commands.ResetGyroCommand;
 import frc.robot.commands.AutoChassisSpinPID;
+=======
+import frc.robot.commands.AutoChassisSpinPID;
+import frc.robot.commands.ResetGyroCommand;
+>>>>>>> Stashed changes
 
 public class TurnNDegreesImproved extends SequentialCommandGroup {
   /** Add your docs here. */
@@ -16,7 +21,12 @@ public class TurnNDegreesImproved extends SequentialCommandGroup {
     // addSequential(new Command2());
     // these will run in order.
 
+<<<<<<< Updated upstream
     // The goal of this is to make the robot turn 90 degrees at 25% power.
+=======
+    // This should make the robot turn 90 degrees.
+
+>>>>>>> Stashed changes
     addCommands(new ResetGyroCommand());
     addCommands(new AutoChassisSpinPID(90, 25));
     addCommands(new ResetGyroCommand());

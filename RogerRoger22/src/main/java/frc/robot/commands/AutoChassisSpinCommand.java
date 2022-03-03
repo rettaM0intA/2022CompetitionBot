@@ -22,8 +22,8 @@ public class AutoChassisSpinCommand extends CommandBase {
   double currentDegree = 0;
  
   /**
-   * @param m_degree   What direction you want to go to in degrees
-   * @param m_speed    How fast you want to move in percent
+   * @param m_degree   What direction you want to go to in degrees.
+   * @param m_speed    How fast you want to move in percent.
    */
   public AutoChassisSpinCommand(double m_goalDegree, double m_speed) {
     // Use addRequirements() here to declare subsystem dependencies.
