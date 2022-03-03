@@ -29,6 +29,11 @@ public class IntakeMoverMoveCommand extends CommandBase {
     }else if(RobotContainer.intakeDirection == IntakeDirection.down){
       RobotContainer.m_intakeMoverSubsystem.Move(false);
     }
+
+    if(RobotContainer.m_intakeMoverSubsystem.Move(true)){
+
+    }
+
   }
 
   // Called once the command ends or is interrupted.

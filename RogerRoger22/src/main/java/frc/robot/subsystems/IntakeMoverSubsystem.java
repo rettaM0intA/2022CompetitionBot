@@ -37,16 +37,26 @@ public class IntakeMoverSubsystem extends SubsystemBase {
 
   }
 
-  public void Move(boolean moveUp){
+  public boolean Move(boolean moveUp){
     
-    if(moveUp)
-    motor.getPIDController().setReference(0, ControlType.kPosition);
-    if(!moveUp)
-    motor.getPIDController().setReference(-55, ControlType.kPosition);
-
-    if(highestPower < motor.getBusVoltage()){
-      highestPower = motor.getBusVoltage();
+    if(moveUp){
+      motor.getPIDController().setReference(0, ControlType.kPosition);
+      if(motor.getEncoder().getPosition() > -1){
+        return true;
+      }
     }
+    if(!moveUp){
+      motor.getPIDController().setReference(-56, ControlType.kPosition);
+      if(motor.getEncoder().getPosition() < -55){
+        return true;
+      }
+    }
+
+
+
+    // if(highestPower < motor.getBusVoltage()){
+    //   highestPower = motor.getBusVoltage();
+    // }
     // if(moveUp){
     //   if(motor.getEncoder().getPosition() > -10){
     //     motor.set(0.05);
@@ -57,6 +67,7 @@ public class IntakeMoverSubsystem extends SubsystemBase {
     // }else{
     //   motor.set(-0.15);
     // }
+    return false;
   }
 
   public void Move(boolean moveUp, double speed){
