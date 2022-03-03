@@ -15,14 +15,11 @@ import frc.robot.commands.ControllerSwitchCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeDirectionChangeCommand;
 import frc.robot.commands.IntakeMoverDefaultCommand;
-<<<<<<< Updated upstream
 import frc.robot.commands.IntakeMoverMoveCommand;
 import frc.robot.commands.IntakeSpinCommand;
 import frc.robot.subsystems.ClimbingSubsystem;
 import frc.robot.subsystems.IntakeMoverSubsystem;
-=======
 // import frc.robot.subsystems.IntakeMoverSubsystem;
->>>>>>> Stashed changes
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.chassisSubsystem;
 
@@ -37,12 +34,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static chassisSubsystem m_chassisSubsystem = new chassisSubsystem();
   public static IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-<<<<<<< Updated upstream
   public static IntakeMoverSubsystem m_intakeMoverSubsystem = new IntakeMoverSubsystem();
   public static ClimbingSubsystem m_climbingSubsystem = new ClimbingSubsystem();
-=======
-  // public static IntakeMoverSubsystem m_intakeMoverSubsystem = new IntakeMoverSubsystem();
->>>>>>> Stashed changes
 
   // private static ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   public static ChassisDefaultCommand m_chassisDefaultCommand = new ChassisDefaultCommand();
@@ -67,12 +60,9 @@ public class RobotContainer {
     // m_chassisSubsystem.setDefaultCommand(new m_exampleSubsystem());\
     m_chassisSubsystem.setDefaultCommand(m_chassisDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_intakeDefaultCommand);
-<<<<<<< Updated upstream
     m_intakeMoverSubsystem.setDefaultCommand(m_intakeMoverDefaultCommand);
     m_climbingSubsystem.setDefaultCommand(m_climbingDefaultCommand);
-=======
-    // m_intakeMoverSubsystem.setDefaultCommand(m_intakeMoverDefaultCommand);
->>>>>>> Stashed changes
+    m_intakeMoverSubsystem.setDefaultCommand(m_intakeMoverDefaultCommand);
     // m_BButtonSpinSubsystem.setDefaultCommand(bButtonSpinDefaultCommand);
 
     // Configure the button bindings

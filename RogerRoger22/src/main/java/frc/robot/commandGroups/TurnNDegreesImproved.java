@@ -5,13 +5,8 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-<<<<<<< Updated upstream
 import frc.robot.commands.ResetGyroCommand;
 import frc.robot.commands.AutoChassisSpinPID;
-=======
-import frc.robot.commands.AutoChassisSpinPID;
-import frc.robot.commands.ResetGyroCommand;
->>>>>>> Stashed changes
 
 public class TurnNDegreesImproved extends SequentialCommandGroup {
   /** Add your docs here. */
