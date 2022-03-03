@@ -39,6 +39,10 @@ public class AutoChassisSpinPID extends CommandBase {
   int buffer = 0;
 
   /** Creates a new AutoChassisSpinPID. */
+  /**
+   * @param m_degree   What direction you want to go to in degrees
+   * @param m_speed    How fast you want to move in percent
+   */
   public AutoChassisSpinPID(double m_goalDegree, double m_speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_chassisSubsystem);
@@ -104,7 +108,7 @@ public class AutoChassisSpinPID extends CommandBase {
   }
 }
 
-// Below is the code for AutoChassisSpinCommand.
+// TODO Below is the code for AutoChassisSpinCommand.
 
 // // Copyright (c) FIRST and other WPILib contributors.
 // // Open Source Software; you can modify and/or share it under the terms of

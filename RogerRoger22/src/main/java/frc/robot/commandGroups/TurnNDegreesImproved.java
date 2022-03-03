@@ -4,15 +4,22 @@
 
 package frc.robot.commandGroups;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.ResetGyroCommand;
+import frc.robot.commands.AutoChassisSpinPID;
 
-public class TurnNDegreesImproved extends CommandGroup {
+public class TurnNDegreesImproved extends SequentialCommandGroup {
   /** Add your docs here. */
   public TurnNDegreesImproved() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
+
+    // The goal of this is to make the robot turn 90 degrees at 25% power.
+    addCommands(new ResetGyroCommand());
+    addCommands(new AutoChassisSpinPID(90, 25));
+    addCommands(new ResetGyroCommand());
 
     // To run multiple commands at the same time,
     // use addParallel()
