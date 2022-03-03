@@ -11,7 +11,7 @@ public class IntakeMoverDefaultCommand extends CommandBase {
   /** Creates a new IntakeMoverDefaultCommand. */
   public IntakeMoverDefaultCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_intakeMoverSubsystem);
+    // addRequirements(RobotContainer.m_intakeMoverSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -21,7 +21,14 @@ public class IntakeMoverDefaultCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+<<<<<<< Updated upstream
     RobotContainer.m_intakeMoverSubsystem.Move(true, 0); //0.05
+=======
+    //TODO add enum for switching between the two.
+    // RobotContainer.m_intakeMoverSubsystem.Move(true);
+    // 
+    // RobotContainer.m_intakeMoverSubsystem.Move(false);
+>>>>>>> Stashed changes
   }
 
   // Called once the command ends or is interrupted.
