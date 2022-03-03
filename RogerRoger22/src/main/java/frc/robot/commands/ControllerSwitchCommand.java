@@ -19,11 +19,11 @@ public class ControllerSwitchCommand extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(RobotContainer.gamepadDriver == ControllerInControl.flightStick){
+    if(RobotContainer.gamepadDriver == ControllerInControl.SecondaryController){
 
-      RobotContainer.gamepadDriver = ControllerInControl.gamepad;
+      RobotContainer.gamepadDriver = ControllerInControl.MainController;
     }else{
-      RobotContainer.gamepadDriver = ControllerInControl.flightStick;
+      RobotContainer.gamepadDriver = ControllerInControl.SecondaryController;
     }
   }
 }
