@@ -16,12 +16,8 @@ public class TurnNDegreesImproved extends SequentialCommandGroup {
     // addSequential(new Command2());
     // these will run in order.
 
-<<<<<<< Updated upstream
     // The goal of this is to make the robot turn 90 degrees at 25% power.
-=======
     // This should make the robot turn 90 degrees.
-
->>>>>>> Stashed changes
     addCommands(new ResetGyroCommand());
     addCommands(new AutoChassisSpinPID(90, 25));
     addCommands(new ResetGyroCommand());

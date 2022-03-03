@@ -62,7 +62,6 @@ public class RobotContainer {
     m_intakeSubsystem.setDefaultCommand(m_intakeDefaultCommand);
     m_intakeMoverSubsystem.setDefaultCommand(m_intakeMoverDefaultCommand);
     m_climbingSubsystem.setDefaultCommand(m_climbingDefaultCommand);
-    m_intakeMoverSubsystem.setDefaultCommand(m_intakeMoverDefaultCommand);
     // m_BButtonSpinSubsystem.setDefaultCommand(bButtonSpinDefaultCommand);
 
     // Configure the button bindings
@@ -83,10 +82,10 @@ public class RobotContainer {
     JoystickButton outputButton = new JoystickButton(operator, 1);
     outputButton.whenHeld(new IntakeSpinCommand(false));
     
-    JoystickButton moveIntakeButton = new JoystickButton(operator, 2);
-    moveIntakeButton.whenHeld(new IntakeMoverMoveCommand());
+    // JoystickButton moveIntakeButton = new JoystickButton(operator, 2);
+    // moveIntakeButton.whenHeld(new IntakeMoverMoveCommand());
 
-    JoystickButton moveIntakeDirectionButton = new JoystickButton(operator, 3);
+    JoystickButton moveIntakeDirectionButton = new JoystickButton(operator, 2);
     moveIntakeDirectionButton.whenPressed(new IntakeDirectionChangeCommand());
 
     JoystickButton intakeButton = new JoystickButton(operator, 4);

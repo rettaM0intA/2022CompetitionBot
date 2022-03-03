@@ -2,24 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-// "Nobody cares about laws and stuff." -Drew Jezowski, February 18, 2022
-// "Let 'em make mashed potatoes." -Drew Jezowski, February 18, 2022
-// "I don't know any other quotes." -Drew Jezowski, February 18, 2022
-// "Hey, I think he's infected with the quote virus." -Drew Jezowski, February 18, 2022
-// "Yeah, you guys are supposed to be helping each other make code, not quotes." -Cody VanSnepson, February 18, 2022
-// "Had to include that last part, didn't you?" -Cody VanSnepson, February 18, 2022
-/** "'How's the command coming?' 
-'It's not.'" -Cody VanSnepson & Carter Davis, February 18, 2022 */
-// "You're not more than dead, you're alive!" -Cody VanSnepson, February 18, 2022
-// "Hay? That's for horses!" -Cody VanSnepson, February 18, 2022
-// "Doce trece or catorce, why not?" -Cody VanSnepson, February 18, 2022
-<<<<<<< Updated upstream
-// "It's not bad, it's not good, it's just not done." -Cody VanSnepson, February 21, 2022
-// "Drew almost died." -Carter Davis, March 1, 2022
-// "I didn't know what that was. It was death." -Drew Jezowski, March 1, 2022
-=======
-// "He is too dead. He is alive!" -Google Translate, March 1, 2022
->>>>>>> Stashed changes
 
 // Add inputs to the constructor. Done!
 // Add variables to copy inputs. Done!
