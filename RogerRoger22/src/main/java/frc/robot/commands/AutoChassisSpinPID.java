@@ -13,9 +13,13 @@
 // "You're not more than dead, you're alive!" -Cody VanSnepson, February 18, 2022
 // "Hay? That's for horses!" -Cody VanSnepson, February 18, 2022
 // "Doce trece or catorce, why not?" -Cody VanSnepson, February 18, 2022
+<<<<<<< Updated upstream
 // "It's not bad, it's not good, it's just not done." -Cody VanSnepson, February 21, 2022
 // "Drew almost died." -Carter Davis, March 1, 2022
 // "I didn't know what that was. It was death." -Drew Jezowski, March 1, 2022
+=======
+// "He is too dead. He is alive!" -Google Translate, March 1, 2022
+>>>>>>> Stashed changes
 
 // Add inputs to the constructor. Done!
 // Add variables to copy inputs. Done!
