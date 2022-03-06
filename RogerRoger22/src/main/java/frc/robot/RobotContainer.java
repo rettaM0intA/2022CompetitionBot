@@ -14,6 +14,7 @@ import frc.robot.commands.ClimbingDefaultCommand;
 import frc.robot.commands.ControllerSwitchCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeDirectionChangeCommand;
+import frc.robot.commands.IntakeFarCommand;
 import frc.robot.commands.IntakeMoverDefaultCommand;
 import frc.robot.commands.IntakeMoverMoveCommand;
 import frc.robot.commands.IntakeSpinCommand;
@@ -85,6 +86,7 @@ public class RobotContainer {
     // JoystickButton moveIntakeButton = new JoystickButton(operator, 2);
     // moveIntakeButton.whenHeld(new IntakeMoverMoveCommand());
 
+<<<<<<< Updated upstream
     JoystickButton moveIntakeDirectionButton = new JoystickButton(operator, 2);
     moveIntakeDirectionButton.whenPressed(new IntakeDirectionChangeCommand());
 
@@ -96,6 +98,30 @@ public class RobotContainer {
     
     
     if(gamepadDriver == ControllerInControl.gamepad){
+=======
+    // JoystickButton joyControllSwitchButton = new JoystickButton(driver, 6);
+    // joyControllSwitchButton.whenPressed(new ControllerSwitchCommand());
+    
+    JoystickButton outputButton;
+    JoystickButton moveIntakeDirectionButton;
+    JoystickButton intakeButton;
+    JoystickButton intakeFarButton;
+    
+    // if(gamepadDriver == ControllerInControl.MainController){
+
+    outputButton = new JoystickButton(operator, 3);
+    outputButton.whenHeld(new IntakeSpinCommand(false));
+
+    intakeButton = new JoystickButton(operator, 2);
+    intakeButton.whenHeld(new IntakeSpinCommand(true));
+
+    moveIntakeDirectionButton = new JoystickButton(operator, 1);
+    moveIntakeDirectionButton.whenPressed(new IntakeDirectionChangeCommand());
+
+    intakeFarButton = new JoystickButton(operator, 4);
+    intakeFarButton.whenHeld(new IntakeFarCommand());
+
+>>>>>>> Stashed changes
       // JoystickButton padSpinButton = new JoystickButton(operator, 2);
       // padSpinButton.whenActive(new SpinCommand());
       // JoystickButton padGyroSet0Button = new JoystickButton(operator, 2);
@@ -110,8 +136,24 @@ public class RobotContainer {
       // JoystickButton moveIntakeButon = new JoystickButton(operator, 1);
       // moveIntakeButon.whenActive(new IntakeMoverMoveCommand());
 
+<<<<<<< Updated upstream
     }else{
 
+=======
+    // }else{
+      
+    // outputButton = new JoystickButton(operator, 1);
+
+    // moveIntakeDirectionButton = new JoystickButton(operator, 2);
+
+    // intakeButton = new JoystickButton(operator, 4);
+
+    // outputButton.whenHeld(new IntakeSpinCommand(false));
+
+    // moveIntakeDirectionButton.whenPressed(new IntakeDirectionChangeCommand());
+    
+    // intakeButton.whenHeld(new IntakeSpinCommand(true));
+>>>>>>> Stashed changes
       // JoystickButton intakeToggleButton = new JoystickButton(driver, 1);
       // intakeToggleButton.whenActive(new IntakeSpinCommand());
 
@@ -123,7 +165,13 @@ public class RobotContainer {
       // }else{
       //   fullSpeed = false;
       // }
+<<<<<<< Updated upstream
     }
+=======
+    // }
+
+
+>>>>>>> Stashed changes
   }
 
   /**

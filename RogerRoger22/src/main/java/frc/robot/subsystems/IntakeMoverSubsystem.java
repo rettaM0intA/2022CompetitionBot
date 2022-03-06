@@ -47,7 +47,11 @@ public class IntakeMoverSubsystem extends SubsystemBase {
     }
     if(!moveUp){
       motor.getPIDController().setReference(-56, ControlType.kPosition);
+<<<<<<< Updated upstream
       if(motor.getEncoder().getPosition() < -55){
+=======
+      if(motor.getEncoder().getPosition() < -55.5){
+>>>>>>> Stashed changes
         return true;
       }
     }

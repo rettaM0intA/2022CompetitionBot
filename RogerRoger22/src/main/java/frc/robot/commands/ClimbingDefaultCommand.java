@@ -21,7 +21,27 @@ public class ClimbingDefaultCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+<<<<<<< Updated upstream
     RobotContainer.m_climbingSubsystem.Hold();
+=======
+      if(RobotContainer.operator.getLeftBumper()){
+        RobotContainer.m_climbingSubsystem.Climb(false);
+      }else if(RobotContainer.operator.getRightBumper()){
+        RobotContainer.m_climbingSubsystem.Climb(true);
+      }else{
+        RobotContainer.m_climbingSubsystem.Hold();
+      }
+      // Uncomment code if driver controlls the hooks
+      // if(RobotContainer.operator.getRightY() > 0.05){
+      //   RobotContainer.m_climbingSubsystem.Climb(false);
+      // }else if(RobotContainer.operator.getRightY() < -0.05){
+      //   RobotContainer.m_climbingSubsystem.Climb(true);
+      // }else{
+      //   RobotContainer.m_climbingSubsystem.Hold();
+      // }
+      // RobotContainer.m_climbingSubsystem.Hold();
+    
+>>>>>>> Stashed changes
   }
 
   // Called once the command ends or is interrupted.

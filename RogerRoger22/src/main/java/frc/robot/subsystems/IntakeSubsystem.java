@@ -19,11 +19,15 @@ public class IntakeSubsystem extends SubsystemBase {
 
   }
 
+  public void SpinFar(){
+    IntakeMotor.set(ControlMode.PercentOutput, -1);
+  }
+
   public void Spin(boolean in){
     if(in){
-      IntakeMotor.set(ControlMode.PercentOutput, 0.50); //50% intake
+      IntakeMotor.set(ControlMode.PercentOutput, 0.90); //90% intake
     }else{
-      IntakeMotor.set(ControlMode.PercentOutput, -0.68);
+      IntakeMotor.set(ControlMode.PercentOutput, -0.68); //68%
     }
   }
 

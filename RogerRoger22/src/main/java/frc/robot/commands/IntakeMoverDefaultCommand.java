@@ -21,11 +21,39 @@ public class IntakeMoverDefaultCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+<<<<<<< Updated upstream
     RobotContainer.m_intakeMoverSubsystem.Move(true, 0); //0.05
     //TODO add enum for switching between the two.
     // RobotContainer.m_intakeMoverSubsystem.Move(true);
     // 
     // RobotContainer.m_intakeMoverSubsystem.Move(false);
+=======
+    // if(RobotContainer.intakeDirection == IntakeDirection.up){
+    //   RobotContainer.m_intakeMoverSubsystem.Move(true);
+    // }else{
+    //   RobotContainer.m_intakeMoverSubsystem.Move(false);
+    // }
+    
+    if(RobotContainer.intakeDirection != IntakeDirection.still){
+      if(RobotContainer.intakeDirection == IntakeDirection.up){
+        if(RobotContainer.m_intakeMoverSubsystem.Move(true)){
+          RobotContainer.intakeDirection = IntakeDirection.still;
+        }
+      }else{
+        if(RobotContainer.m_intakeMoverSubsystem.Move(false)){
+          RobotContainer.intakeDirection = IntakeDirection.still;
+        }
+      }
+    }else{
+      if(RobotContainer.chosenDirection == IntakeDirection.down){
+        RobotContainer.m_intakeMoverSubsystem.Move(false, 0.03);
+      }else{
+
+      RobotContainer.m_intakeMoverSubsystem.Move(true, 0.05);
+
+      }
+    }
+>>>>>>> Stashed changes
   }
 
   // Called once the command ends or is interrupted.
