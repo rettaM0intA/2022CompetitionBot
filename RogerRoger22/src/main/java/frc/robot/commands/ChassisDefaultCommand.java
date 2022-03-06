@@ -25,15 +25,6 @@ public class ChassisDefaultCommand extends CommandBase {
   @Override
   public void execute() {
     //Checks which controller is currently driver
-<<<<<<< Updated upstream
-    if(RobotContainer.gamepadDriver == ControllerInControl.gamepad){
-    //XBox controller
-    RobotContainer.m_chassisSubsystem.driveTeleop(-RobotContainer.operator.getLeftY(), -RobotContainer.operator.getLeftX(), -RobotContainer.operator.getRightX()*.25);
-    }else{
-    //Joystick
-    RobotContainer.m_chassisSubsystem.driveTeleop(-RobotContainer.driver.getY(), -RobotContainer.driver.getX(), -RobotContainer.driver.getTwist() * .25);
-    }
-=======
     // if(RobotContainer.gamepadDriver == ControllerInControl.MainController){
     // //XBox controller
     // RobotContainer.m_chassisSubsystem.driveTeleop(-RobotContainer.operator.getLeftY(), -RobotContainer.operator.getLeftX(), -RobotContainer.operator.getRightX()*.25);
@@ -41,7 +32,6 @@ public class ChassisDefaultCommand extends CommandBase {
     //XBox controller
     RobotContainer.m_chassisSubsystem.driveTeleop(-RobotContainer.driver.getLeftY(), -RobotContainer.driver.getLeftX(), -RobotContainer.driver.getRightX() * .25);
     // }
->>>>>>> Stashed changes
 
 
     

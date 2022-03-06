@@ -47,11 +47,12 @@ public class RobotContainer {
   // private static WheelsFaceForwardCommand m_wheelsFaceForwardCommand = new WheelsFaceForwardCommand();
 
   
-  public static Joystick driver = new Joystick(0);
+  public static XboxController driver = new XboxController(0);
   public static XboxController operator = new XboxController(1);
 
   public static ControllerInControl gamepadDriver = ControllerInControl.flightStick;
   public static IntakeDirection intakeDirection = IntakeDirection.still;
+  public static IntakeDirection chosenDirection = IntakeDirection.still;
 
   public static boolean fullSpeed = false;
 
@@ -77,28 +78,15 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    JoystickButton padControllSwitchButton = new JoystickButton(operator, 6);
-    padControllSwitchButton.whenPressed(new ControllerSwitchCommand());
+    // JoystickButton padControllSwitchButton = new JoystickButton(operator, 6);
+    // padControllSwitchButton.whenPressed(new ControllerSwitchCommand());
 
-    JoystickButton outputButton = new JoystickButton(operator, 1);
-    outputButton.whenHeld(new IntakeSpinCommand(false));
+    // JoystickButton outputButton = new JoystickButton(operator, 1);
+    // outputButton.whenHeld(new IntakeSpinCommand(false));
     
     // JoystickButton moveIntakeButton = new JoystickButton(operator, 2);
     // moveIntakeButton.whenHeld(new IntakeMoverMoveCommand());
 
-<<<<<<< Updated upstream
-    JoystickButton moveIntakeDirectionButton = new JoystickButton(operator, 2);
-    moveIntakeDirectionButton.whenPressed(new IntakeDirectionChangeCommand());
-
-    JoystickButton intakeButton = new JoystickButton(operator, 4);
-    intakeButton.whenHeld(new IntakeSpinCommand(true));
-
-    JoystickButton joyControllSwitchButton = new JoystickButton(driver, 6);
-    joyControllSwitchButton.whenPressed(new ControllerSwitchCommand());
-    
-    
-    if(gamepadDriver == ControllerInControl.gamepad){
-=======
     // JoystickButton joyControllSwitchButton = new JoystickButton(driver, 6);
     // joyControllSwitchButton.whenPressed(new ControllerSwitchCommand());
     
@@ -121,7 +109,6 @@ public class RobotContainer {
     intakeFarButton = new JoystickButton(operator, 4);
     intakeFarButton.whenHeld(new IntakeFarCommand());
 
->>>>>>> Stashed changes
       // JoystickButton padSpinButton = new JoystickButton(operator, 2);
       // padSpinButton.whenActive(new SpinCommand());
       // JoystickButton padGyroSet0Button = new JoystickButton(operator, 2);
@@ -136,10 +123,6 @@ public class RobotContainer {
       // JoystickButton moveIntakeButon = new JoystickButton(operator, 1);
       // moveIntakeButon.whenActive(new IntakeMoverMoveCommand());
 
-<<<<<<< Updated upstream
-    }else{
-
-=======
     // }else{
       
     // outputButton = new JoystickButton(operator, 1);
@@ -153,7 +136,6 @@ public class RobotContainer {
     // moveIntakeDirectionButton.whenPressed(new IntakeDirectionChangeCommand());
     
     // intakeButton.whenHeld(new IntakeSpinCommand(true));
->>>>>>> Stashed changes
       // JoystickButton intakeToggleButton = new JoystickButton(driver, 1);
       // intakeToggleButton.whenActive(new IntakeSpinCommand());
 
@@ -165,13 +147,9 @@ public class RobotContainer {
       // }else{
       //   fullSpeed = false;
       // }
-<<<<<<< Updated upstream
-    }
-=======
     // }
 
 
->>>>>>> Stashed changes
   }
 
   /**
