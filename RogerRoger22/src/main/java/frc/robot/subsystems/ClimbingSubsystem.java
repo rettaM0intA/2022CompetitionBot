@@ -21,6 +21,7 @@ public class ClimbingSubsystem extends SubsystemBase {
   /** Creates a new ClimbingSubsystem. */
   public ClimbingSubsystem() {
     rightClimbMotor.setIdleMode(IdleMode.kBrake);
+    leftClimbMotor.setIdleMode(IdleMode.kBrake);
   }
 
   //right max 202 but motor limit should be 190. momentum
@@ -54,13 +55,13 @@ public class ClimbingSubsystem extends SubsystemBase {
 
   public void Hold(){
     rightClimbMotor.set(0);
-    // leftClimbMotor.set(0);
+    leftClimbMotor.set(0);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("climber rotations", leftClimbMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("climber rotations", rightClimbMotor.getEncoder().getPosition());
     
   }
 }
