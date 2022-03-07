@@ -6,6 +6,7 @@ package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AutoChassisMoveCommand;
+import frc.robot.commands.AutoIntakeCommand;
 import frc.robot.commands.IntakeDirectionChangeCommand;
 import frc.robot.commands.ResetGyroCommand;
 
@@ -28,7 +29,9 @@ public class TestCommand extends SequentialCommandGroup {
     // addCommands(new ResetGyroCommand());
     // addCommands(new AutoChassisMoveCommand(0, -25, -1));
     // addCommands(new ResetGyroCommand());
-    addCommands(new IntakeDirectionChangeCommand());
+    // addCommands(new IntakeDirectionChangeCommand(), new IntakeDirectionChangeCommand());
+    addCommands(new AutoIntakeCommand(true, 3));
+    // addCommands(new AutoIntakeCommand(true, 3));
 
   }
 }
