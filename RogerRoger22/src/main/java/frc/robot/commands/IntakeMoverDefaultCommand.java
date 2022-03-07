@@ -12,7 +12,7 @@ public class IntakeMoverDefaultCommand extends CommandBase {
   /** Creates a new IntakeMoverDefaultCommand. */
   public IntakeMoverDefaultCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-    // addRequirements(RobotContainer.m_intakeMoverSubsystem);
+    addRequirements(RobotContainer.m_intakeMoverSubsystem);
   }
 
   // Called when the command is initially scheduled.
