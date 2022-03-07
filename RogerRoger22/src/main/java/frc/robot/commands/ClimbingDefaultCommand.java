@@ -21,9 +21,6 @@ public class ClimbingDefaultCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-<<<<<<< Updated upstream
-    RobotContainer.m_climbingSubsystem.Hold();
-=======
       if(RobotContainer.operator.getLeftBumper()){
         RobotContainer.m_climbingSubsystem.Climb(false);
       }else if(RobotContainer.operator.getRightBumper()){
@@ -41,7 +38,6 @@ public class ClimbingDefaultCommand extends CommandBase {
       // }
       // RobotContainer.m_climbingSubsystem.Hold();
     
->>>>>>> Stashed changes
   }
 
   // Called once the command ends or is interrupted.

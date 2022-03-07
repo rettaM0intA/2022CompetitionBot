@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.IntakeDirection;
 import frc.robot.RobotContainer;
 
 public class IntakeMoverDefaultCommand extends CommandBase {
@@ -21,13 +22,6 @@ public class IntakeMoverDefaultCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-<<<<<<< Updated upstream
-    RobotContainer.m_intakeMoverSubsystem.Move(true, 0); //0.05
-    //TODO add enum for switching between the two.
-    // RobotContainer.m_intakeMoverSubsystem.Move(true);
-    // 
-    // RobotContainer.m_intakeMoverSubsystem.Move(false);
-=======
     // if(RobotContainer.intakeDirection == IntakeDirection.up){
     //   RobotContainer.m_intakeMoverSubsystem.Move(true);
     // }else{
@@ -53,7 +47,6 @@ public class IntakeMoverDefaultCommand extends CommandBase {
 
       }
     }
->>>>>>> Stashed changes
   }
 
   // Called once the command ends or is interrupted.

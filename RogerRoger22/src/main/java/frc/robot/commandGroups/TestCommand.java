@@ -6,6 +6,7 @@ package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AutoChassisMoveCommand;
+import frc.robot.commands.IntakeDirectionChangeCommand;
 import frc.robot.commands.ResetGyroCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -18,15 +19,16 @@ public class TestCommand extends SequentialCommandGroup {
   public TestCommand() {
     // Add your commands in the addCommands() call, e.g.
 
-    addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisMoveCommand(0, 50, 2));
-    addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisMoveCommand(0, 25, 1));
-    addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisMoveCommand(0, -50, -2));
-    addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisMoveCommand(0, -25, -1));
-    addCommands(new ResetGyroCommand());
+    // addCommands(new ResetGyroCommand());
+    // addCommands(new AutoChassisMoveCommand(0, 50, 2));
+    // addCommands(new ResetGyroCommand());
+    // addCommands(new AutoChassisMoveCommand(0, 25, 1));
+    // addCommands(new ResetGyroCommand());
+    // addCommands(new AutoChassisMoveCommand(0, -50, -2));
+    // addCommands(new ResetGyroCommand());
+    // addCommands(new AutoChassisMoveCommand(0, -25, -1));
+    // addCommands(new ResetGyroCommand());
+    addCommands(new IntakeDirectionChangeCommand());
 
   }
 }
