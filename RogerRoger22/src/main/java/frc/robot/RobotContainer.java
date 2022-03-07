@@ -14,13 +14,13 @@ import frc.robot.commands.ClimbingDefaultCommand;
 import frc.robot.commands.ControllerSwitchCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeDirectionChangeCommand;
-import frc.robot.commands.IntakeFarCommand;
 import frc.robot.commands.IntakeMoverDefaultCommand;
 import frc.robot.commands.IntakeMoverMoveCommand;
 import frc.robot.commands.IntakeSpinCommand;
 import frc.robot.subsystems.ClimbingSubsystem;
 import frc.robot.subsystems.IntakeMoverSubsystem;
-// import frc.robot.subsystems.IntakeMoverSubsystem;
+import frc.robot.subsystems.IntakeMoverSubsystem;
+import frc.robot.commands.IntakeFarCommand;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.chassisSubsystem;
 

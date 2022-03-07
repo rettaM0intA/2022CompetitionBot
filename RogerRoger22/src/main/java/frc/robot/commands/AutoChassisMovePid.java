@@ -4,8 +4,6 @@
 
 package frc.robot.commands;
 
-import java.util.Random;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -31,10 +29,10 @@ public class AutoChassisMovePid extends CommandBase {
    * 
    * @param m_degree What direction you want to go in degrees.
    * @param m_speed How fast you want to move in percent.
-   * @param m_distanceFrontLeft How far the robot will travel in feet.
-   * @param m_distanceFrontRight How far the robot will travel in feet.
-   * @param m_distanceBackLeft How far the robot will travel in feet.
-   * @param m_distanceBackRight How far the robot will travel in feet.
+   * @param m_distanceFrontLeft How far the robot will travel in inches.
+   * @param m_distanceFrontRight How far the robot will travel in inches.
+   * @param m_distanceBackLeft How far the robot will travel in inches.
+   * @param m_distanceBackRight How far the robot will travel in inches.
    * 
    */
   public AutoChassisMovePid(double m_degree, double m_speed, double m_distanceFrontLeft, double m_distanceFrontRight, double m_distanceBackLeft, double m_distanceBackRight) {
@@ -74,7 +72,7 @@ public class AutoChassisMovePid extends CommandBase {
     waitBeforeStart += 1;
 
     if(waitBeforeStart > 10){
-      RobotContainer.m_chassisSubsystem.driveToPoint(fwd, strafe, 0, distanceFrontLeft, distanceFrontRight, distanceBackLeft, distanceBackRight);
+      RobotContainer.m_chassisSubsystem.driveToPoint(0.5, 0, 0, distanceFrontLeft, distanceFrontRight, distanceBackLeft, distanceBackRight);
     
     }
     //RobotContainer.m_chassisSubsystem.driveToPoint(0, 0, 0, 100000, -100000, 100000, -100000);
