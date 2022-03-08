@@ -425,7 +425,7 @@ public class chassisSubsystem extends SubsystemBase {
    * @param strafe Percent strafe.  Used to decide which direction the robot goes in with fwd
    * @param rotation Percent for rotating.  Will combine with the direction given by fwd and strafe to let the robot turn.
    */
-  public void driveToPoint(double fwd, double strafe, double rotation, double fLgoalPosition, double fRgoalPosition, double bLgoalPosition, double bRgoalPosition){
+  public void driveToPoint(double fwd, double strafe, double rotation, double goalPosition){
 
     if(RobotContainer.operator.getYButton()){
       resetGyro();
@@ -543,15 +543,15 @@ public class chassisSubsystem extends SubsystemBase {
     // bRDriveMotor.set(toPointSpeedLimit(-bRPidController.calculate(bRDriveMotor.getSelectedSensorPosition(), -bRgoalPosition))); 
 
 
-    // fLPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), -fLgoalPosition);
-    // fRPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), -fRgoalPosition);
-    // bLPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), -bLgoalPosition);
-    // bRPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), bRgoalPosition);
+    fLPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), goalPosition);
+    fRPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), -goalPosition);
+    bLPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), goalPosition);
+    bRPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), goalPosition);
 
-    fLDriveMotor.set(ControlMode.Position, fLgoalPosition);
-    fRDriveMotor.set(ControlMode.Position, fRgoalPosition);
-    bLDriveMotor.set(ControlMode.Position, bLgoalPosition);
-    bRDriveMotor.set(ControlMode.Position, -bRgoalPosition);
+    fLDriveMotor.set(ControlMode.Position, goalPosition);
+    fRDriveMotor.set(ControlMode.Position, -goalPosition);
+    bLDriveMotor.set(ControlMode.Position, goalPosition);
+    bRDriveMotor.set(ControlMode.Position, goalPosition);
 
     // lastSpeedfL = frontLeftSpeed;
     // lastSpeedfR = frontRightSpeed;
@@ -804,25 +804,33 @@ public class chassisSubsystem extends SubsystemBase {
     bRrotationMotor.config_kD(0, 0);
     bRrotationMotor.config_kF(0, 0);
 
-    fLDriveMotor.config_kP(0, 0.025);
-    fLDriveMotor.config_kI(0, 0);
+    fLDriveMotor.config_kP(0, 0.020);
+    fLDriveMotor.config_kI(0, 0.000000006);
     fLDriveMotor.config_kD(0, 0);
     fLDriveMotor.config_kF(0, 0);
+    fLDriveMotor.configPeakOutputForward(0.6);
+    fLDriveMotor.configPeakOutputReverse(-0.6);
     
-    fRDriveMotor.config_kP(0, 0.025);
-    fRDriveMotor.config_kI(0, 0);
+    fRDriveMotor.config_kP(0, 0.020);
+    fRDriveMotor.config_kI(0, 0.000000006);
     fRDriveMotor.config_kD(0, 0);
     fRDriveMotor.config_kF(0, 0);
+    fRDriveMotor.configPeakOutputForward(0.6);
+    fRDriveMotor.configPeakOutputReverse(-0.6);
     
-    bLDriveMotor.config_kP(0, 0.025);
-    bLDriveMotor.config_kI(0, 0);
+    bLDriveMotor.config_kP(0, 0.020);
+    bLDriveMotor.config_kI(0, 0.000000006);
     bLDriveMotor.config_kD(0, 0);
     bLDriveMotor.config_kF(0, 0);
+    bLDriveMotor.configPeakOutputForward(0.6);
+    bLDriveMotor.configPeakOutputReverse(-0.6);
     
-    bRDriveMotor.config_kP(0, 0.025);
-    bRDriveMotor.config_kI(0, 0);
+    bRDriveMotor.config_kP(0, 0.020);
+    bRDriveMotor.config_kI(0, 0.000000006);
     bRDriveMotor.config_kD(0, 0);
     bRDriveMotor.config_kF(0, 0);
+    bRDriveMotor.configPeakOutputForward(0.6);
+    bRDriveMotor.configPeakOutputReverse(-0.6);
     
     fLDriveMotor.configClosedloopRamp(0.01);
     fRDriveMotor.configClosedloopRamp(0.01);
@@ -842,7 +850,7 @@ public class chassisSubsystem extends SubsystemBase {
       frontLeftOnPointCount = 0;
     }
     SmartDashboard.putNumber("frontleftPID", frontLeftOnPointCount);
-    
+
     // if(fRDriveMotor.)
 
     if(fRPidController.atSetpoint()){

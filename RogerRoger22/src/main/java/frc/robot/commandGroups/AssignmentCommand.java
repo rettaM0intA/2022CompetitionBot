@@ -16,13 +16,13 @@ public class AssignmentCommand extends SequentialCommandGroup {
     // addSequential(new Command2());
     // these will run in order.
     addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisMovePid(0, -25, -12, -12, -12, -12));
+    addCommands(new AutoChassisMovePid(0, -25, -12));
     addCommands(new ResetGyroCommand());
     // addCommands(new AutoChassisSpinCommand(180, 50));
     // addCommands(new ResetGyroCommand());
     // addCommands(new AutoChassisSpinCommand(-180, 50));
     // addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisMovePid(0, 25, 12, 12, 12, 12));
+    addCommands(new AutoChassisMovePid(0, 25, 12));
     addCommands(new ResetGyroCommand());
 
     //Start at tower base, move 5 feet away in straight line, turn around 180 deg., turn around 180 deg. again, move back to tower.

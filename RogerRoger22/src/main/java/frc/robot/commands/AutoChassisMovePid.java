@@ -17,10 +17,7 @@ public class AutoChassisMovePid extends CommandBase {
   double fwd;
   double strafe;
   int waitBeforeStart;
-  double distanceFrontRight;
-  double distanceFrontLeft;
-  double distanceBackRight;
-  double distanceBackLeft;
+  double goalDistance;
 
   double countsCorrect;
   double averageDistance;
@@ -29,13 +26,10 @@ public class AutoChassisMovePid extends CommandBase {
    * 
    * @param m_degree What direction you want to go in degrees.
    * @param m_speed How fast you want to move in percent.
-   * @param m_distanceFrontLeft How far the robot will travel in feet.
-   * @param m_distanceFrontRight How far the robot will travel in feet.
-   * @param m_distanceBackLeft How far the robot will travel in feet.
-   * @param m_distanceBackRight How far the robot will travel in feet.
+   * @param m_distance
    * 
    */
-  public AutoChassisMovePid(double m_degree, double m_speed, double m_distanceFrontLeft, double m_distanceFrontRight, double m_distanceBackLeft, double m_distanceBackRight) {
+  public AutoChassisMovePid(double m_degree, double m_speed, double m_distance) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_chassisSubsystem);
 
@@ -49,13 +43,7 @@ public class AutoChassisMovePid extends CommandBase {
     fwd = 0.1;
     strafe = 0;
 
-    distanceFrontLeft = m_distanceFrontLeft * Constants.kChassisEstimatedRotationsToInches * 12;
-    distanceFrontRight= m_distanceFrontRight * Constants.kChassisEstimatedRotationsToInches * 12;
-    distanceBackLeft = m_distanceBackLeft * Constants.kChassisEstimatedRotationsToInches * 12;
-    distanceBackRight = m_distanceBackRight * Constants.kChassisEstimatedRotationsToInches * 12;
-
-    averageDistance = (distanceFrontLeft + distanceFrontRight + distanceBackLeft + distanceBackRight) / 4;
-
+    goalDistance = m_distance * Constants.kChassisEstimatedRotationsToInches * 12;
   }
 
   // Called when the command is initially scheduled.
@@ -75,12 +63,11 @@ public class AutoChassisMovePid extends CommandBase {
     waitBeforeStart += 1;
 
     if(waitBeforeStart > 10){
-      RobotContainer.m_chassisSubsystem.driveToPoint(0.5, 0, 0, distanceFrontLeft, distanceFrontRight, distanceBackLeft, distanceBackRight);
+      RobotContainer.m_chassisSubsystem.driveToPoint(0.5, 0, 0, goalDistance);
     
     }
-    //RobotContainer.m_chassisSubsystem.driveToPoint(0, 0, 0, 100000, -100000, 100000, -100000);
 
-    if(RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() == averageDistance){
+    if(RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() == goalDistance || (RobotContainer.m_chassisSubsystem.checkPIDlocation() && waitBeforeStart > 11)){
       countsCorrect += 1;
     }else{
       countsCorrect = 0;

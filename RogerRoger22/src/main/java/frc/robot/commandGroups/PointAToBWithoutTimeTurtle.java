@@ -15,7 +15,7 @@ public class PointAToBWithoutTimeTurtle extends SequentialCommandGroup {
   public PointAToBWithoutTimeTurtle() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new AutoChassisMovePid(0, 50, 36, 36, 36, 36));
-    addCommands(new AutoChassisMovePid(0, 50, 36, 36, 36, 36));
+    addCommands(new AutoChassisMovePid(0, 50, 36));
+    addCommands(new AutoChassisMovePid(0, 50, 36));
   }
 }
