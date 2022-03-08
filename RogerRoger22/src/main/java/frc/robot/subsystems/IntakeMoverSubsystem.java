@@ -25,6 +25,7 @@ public class IntakeMoverSubsystem extends SubsystemBase {
   CANSparkMax motor = new CANSparkMax(14, MotorType.kBrushless);
 
   boolean pidSet = false;
+  boolean directionUp = true;
   double highestPower;
 
   /** Creates a new IntakeMoverSubsystem. */
@@ -32,7 +33,8 @@ public class IntakeMoverSubsystem extends SubsystemBase {
     motor.setIdleMode(IdleMode.kBrake);
 
     if(!pidSet){
-      SetPID();
+      SetPID(true);
+      directionUp = true;
     }
 
   }
@@ -41,12 +43,20 @@ public class IntakeMoverSubsystem extends SubsystemBase {
     
     if(moveUp){
       motor.getPIDController().setReference(0, ControlType.kPosition);
+      if(!directionUp){
+        SetPID(true);
+        directionUp = true;
+      }
       if(motor.getEncoder().getPosition() > -1){
         return true;
       }
     }
     if(!moveUp){
       motor.getPIDController().setReference(-56, ControlType.kPosition);
+      if(directionUp){
+        SetPID(true);
+        directionUp = false;
+      }
       if(motor.getEncoder().getPosition() < -55.5){
         return true;
       }
@@ -89,10 +99,20 @@ public class IntakeMoverSubsystem extends SubsystemBase {
     }
   }
 
-  public void SetPID(){
-    motor.getPIDController().setP(0.066);
-    motor.getPIDController().setI(0.0000005);
-    motor.getPIDController().setD(0);
+  public void SetPID(boolean up){
+    if(up){
+
+      motor.getPIDController().setP(0.055); //old 0.066
+      motor.getPIDController().setI(0.0000005);
+      motor.getPIDController().setD(0);
+
+    }else{
+
+      motor.getPIDController().setP(0.060); //old 0.066
+      // motor.getPIDController().setI(0.0000005);
+      motor.getPIDController().setD(0);
+
+    }
   }
 
   @Override
