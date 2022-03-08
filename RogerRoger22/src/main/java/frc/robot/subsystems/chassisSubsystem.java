@@ -11,7 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.filter.SlewRateLimiter;
+// import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -450,7 +450,7 @@ public class chassisSubsystem extends SubsystemBase {
     }
 
     // convert fwd from flight stick y of (-1 to 1) to MetersPerSecond for ChassisSpeeds
-    double fwd_MpS = -fwd * Constants.kChassisMaxMetersPerSec; 
+    double fwd_MpS = -fwd * Constants.kChassisMaxMetersPerSec;
     SmartDashboard.putNumber("fwd", fwd);
     SmartDashboard.putNumber("fwd_MpS", fwd_MpS);
 
@@ -485,17 +485,17 @@ public class chassisSubsystem extends SubsystemBase {
     SwerveModuleState frontRight = moduleStates[1];
     SwerveModuleState backLeft = moduleStates[2];
     SwerveModuleState backRight = moduleStates[3];
-
-    SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
-    SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
-    SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
-    SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    
+    // SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    // SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    // SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
+    // SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor) * 0.0174533));
 
     // Get the needed angle from the module state and convert it to the Cnts needed for the CanSparkMAx PID loop
-    fLAngle = (frontLeftOptimize.angle.getDegrees()) / Constants.kChassisDegreetoMotor;
-    fRAngle = (frontRightOptimize.angle.getDegrees()) / Constants.kChassisDegreetoMotor;
-    bLAngle = (backLeftOptimize.angle.getDegrees()) / Constants.kChassisDegreetoMotor;
-    bRAngle = (backRightOptimize.angle.getDegrees()) / Constants.kChassisDegreetoMotor;
+    fLAngle = (frontLeft.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    fRAngle = (frontRight.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    bLAngle = (backLeft.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    bRAngle = (backRight.angle.getDegrees() / Constants.kChassisDegreetoMotor);
 
 
     // Get the needed speed from the module state and convert it to the -1 to 1 value needed for percent output command of the CANTalon
@@ -505,10 +505,14 @@ public class chassisSubsystem extends SubsystemBase {
     double backRightSpeed = backRight.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
 
     //The goal of these four uses of rotationOverflow is to have the wheels avoid a 350+ degree rotation
-    rotationOverflow(fLrotationMotor, 0);
-    rotationOverflow(fRrotationMotor, 1);
-    rotationOverflow(bLrotationMotor, 2);
-    rotationOverflow(bRrotationMotor, 3);
+    
+    fLrotationMotor.set(TalonFXControlMode.Position, (int)fLAngle);
+    
+    fRrotationMotor.set(TalonFXControlMode.Position, (int)fRAngle);
+
+    bLrotationMotor.set(TalonFXControlMode.Position, (int)bLAngle);
+
+    bRrotationMotor.set(TalonFXControlMode.Position, (int)bRAngle);
     
     //these lines tell the motor controller what poisition to set the motor to
     // fLrotationMotor.getPIDController().setReference(fLAngle, ControlType.kPosition);
@@ -525,10 +529,10 @@ public class chassisSubsystem extends SubsystemBase {
     // bRrotationMotor.getPIDController().setReference(TurnForever(bRrotationMotor, bRAngle), ControlType.kPosition);
     
     // Set the speed in TalonFX to a percent output.
-    fLrotationMotor.set(frontLeftSpeed);
-    fRrotationMotor.set(-frontRightSpeed);
-    bLrotationMotor.set(backLeftSpeed);
-    bRrotationMotor.set(-backRightSpeed);
+    // fLrotationMotor.set(frontLeftSpeed);
+    // fRrotationMotor.set(-frontRightSpeed);
+    // bLrotationMotor.set(backLeftSpeed);
+    // bRrotationMotor.set(-backRightSpeed);
 
     
     
@@ -539,15 +543,15 @@ public class chassisSubsystem extends SubsystemBase {
     // bRDriveMotor.set(toPointSpeedLimit(-bRPidController.calculate(bRDriveMotor.getSelectedSensorPosition(), -bRgoalPosition))); 
 
 
-    fLPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), -fLgoalPosition);
-    fRPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), -fRgoalPosition);
-    bLPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), -bLgoalPosition);
-    bRPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), bRgoalPosition);
+    // fLPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), -fLgoalPosition);
+    // fRPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), -fRgoalPosition);
+    // bLPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), -bLgoalPosition);
+    // bRPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), bRgoalPosition);
 
-    fLDriveMotor.set(ControlMode.Position, -fLgoalPosition);
-    fRDriveMotor.set(ControlMode.Position, -fRgoalPosition);
-    bLDriveMotor.set(ControlMode.Position, -bLgoalPosition);
-    bRDriveMotor.set(ControlMode.Position, bRgoalPosition);
+    fLDriveMotor.set(ControlMode.Position, fLgoalPosition);
+    fRDriveMotor.set(ControlMode.Position, fRgoalPosition);
+    bLDriveMotor.set(ControlMode.Position, bLgoalPosition);
+    bRDriveMotor.set(ControlMode.Position, -bRgoalPosition);
 
     // lastSpeedfL = frontLeftSpeed;
     // lastSpeedfR = frontRightSpeed;

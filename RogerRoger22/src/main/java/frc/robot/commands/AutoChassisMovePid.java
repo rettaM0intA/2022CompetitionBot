@@ -29,22 +29,25 @@ public class AutoChassisMovePid extends CommandBase {
    * 
    * @param m_degree What direction you want to go in degrees.
    * @param m_speed How fast you want to move in percent.
-   * @param m_distanceFrontLeft How far the robot will travel in inches.
-   * @param m_distanceFrontRight How far the robot will travel in inches.
-   * @param m_distanceBackLeft How far the robot will travel in inches.
-   * @param m_distanceBackRight How far the robot will travel in inches.
+   * @param m_distanceFrontLeft How far the robot will travel in feet.
+   * @param m_distanceFrontRight How far the robot will travel in feet.
+   * @param m_distanceBackLeft How far the robot will travel in feet.
+   * @param m_distanceBackRight How far the robot will travel in feet.
    * 
    */
   public AutoChassisMovePid(double m_degree, double m_speed, double m_distanceFrontLeft, double m_distanceFrontRight, double m_distanceBackLeft, double m_distanceBackRight) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_chassisSubsystem);
 
-    goalRadian = ((m_degree + 90) * Math.PI / 180); //The math requires radians, so translate degree input to radians
-    speed = m_speed;
+    // goalRadian = ((m_degree + 90) * Math.PI / 180); //The math requires radians, so translate degree input to radians
+    // speed = m_speed;
 
     
-    fwd = (Math.sin(goalRadian) / 100) * speed;
-    strafe = (Math.cos(goalRadian) / 100) * speed;
+    // fwd = (Math.sin(goalRadian) / 100) * speed;
+    // strafe = (Math.cos(goalRadian) / 100) * speed;
+
+    fwd = 0.1;
+    strafe = 0;
 
     distanceFrontLeft = m_distanceFrontLeft * Constants.kChassisEstimatedRotationsToInches * 12;
     distanceFrontRight= m_distanceFrontRight * Constants.kChassisEstimatedRotationsToInches * 12;
