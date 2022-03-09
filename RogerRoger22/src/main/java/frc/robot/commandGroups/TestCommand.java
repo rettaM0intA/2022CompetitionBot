@@ -33,7 +33,7 @@ public class TestCommand extends SequentialCommandGroup {
     // addCommands(new IntakeDirectionChangeCommand(), new IntakeDirectionChangeCommand());
     // addCommands(new AutoIntakeCommand(true, 3));
     // addCommands(new AutoIntakeCommand(true, 3));
-    addCommands(new AutoChassisMovePid(0, 50, 3));
+    addCommands(new AutoChassisMovePid(0, -50, -3));
 
   }
 }

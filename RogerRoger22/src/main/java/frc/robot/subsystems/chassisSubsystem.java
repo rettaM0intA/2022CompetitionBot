@@ -111,7 +111,7 @@ public class chassisSubsystem extends SubsystemBase {
   /** Creates a new chassisSubsystem. */
   public chassisSubsystem() {
 
-    wheelBrakesMode();
+    wheelCoastMode();
   
   // Locations for the swerve drive modules relative to the robot center.
   Translation2d frontLeftLocation = new Translation2d(0.238125, 0.2365375);
@@ -253,7 +253,7 @@ public class chassisSubsystem extends SubsystemBase {
 
     bRrotationMotor.set(TalonFXControlMode.Position, (int)bRAngle);
 
-    SmartDashboard.putNumber("fRAngle", bRAngle);
+    // SmartDashboard.putNumber("fRAngle", bRAngle);
 
     
     // fLrotationMotor.set(0.2);
@@ -264,6 +264,11 @@ public class chassisSubsystem extends SubsystemBase {
     fRDriveMotor.set(frontRightSpeed);
     bLDriveMotor.set(backLeftSpeed);
     bRDriveMotor.set(backRightSpeed);
+
+    SmartDashboard.putNumber("FLSpeed", frontLeftSpeed);
+    SmartDashboard.putNumber("FRSpeed", frontRightSpeed);
+    SmartDashboard.putNumber("BLSpeed", backLeftSpeed);
+    SmartDashboard.putNumber("BRSpeed", backRightSpeed);
 
     // fLDriveMotor.set(0);
     // fRDriveMotor.set(0);
@@ -425,7 +430,7 @@ public class chassisSubsystem extends SubsystemBase {
    * @param strafe Percent strafe.  Used to decide which direction the robot goes in with fwd
    * @param rotation Percent for rotating.  Will combine with the direction given by fwd and strafe to let the robot turn.
    */
-  public void driveToPoint(double fwd, double strafe, double rotation, double goalPosition){
+  public void driveToPoint(double fwd, double strafe, double rotation, double fLspeed, double fRspeed, double bLspeed, double bRspeed){
 
     if(RobotContainer.operator.getYButton()){
       resetGyro();
@@ -543,21 +548,34 @@ public class chassisSubsystem extends SubsystemBase {
     // bRDriveMotor.set(toPointSpeedLimit(-bRPidController.calculate(bRDriveMotor.getSelectedSensorPosition(), -bRgoalPosition))); 
 
 
-    fLPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), goalPosition);
-    fRPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), -goalPosition);
-    bLPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), goalPosition);
-    bRPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), goalPosition);
+    // fLPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), fLgoalPosition);
+    // fRPidController.calculate(fRrotationMotor.getSelectedSensorPosition(), -fRgoalPosition);
+    // bLPidController.calculate(bLrotationMotor.getSelectedSensorPosition(), bLgoalPosition);
+    // bRPidController.calculate(bRrotationMotor.getSelectedSensorPosition(), bRgoalPosition);
 
-    fLDriveMotor.set(ControlMode.Position, goalPosition);
-    fRDriveMotor.set(ControlMode.Position, -goalPosition);
-    bLDriveMotor.set(ControlMode.Position, goalPosition);
-    bRDriveMotor.set(ControlMode.Position, goalPosition);
+    // fLDriveMotor.set(ControlMode.Position, fLgoalPosition);
+    // fRDriveMotor.set(ControlMode.Position, -fRgoalPosition);
+    // bLDriveMotor.set(ControlMode.Position, bLgoalPosition);
+    // bRDriveMotor.set(ControlMode.Position, bRgoalPosition);
+
+    fLDriveMotor.set(fLspeed);
+    fRDriveMotor.set(-fRspeed);
+    bLDriveMotor.set(bLspeed);
+    bRDriveMotor.set(bRspeed);
 
     // lastSpeedfL = frontLeftSpeed;
     // lastSpeedfR = frontRightSpeed;
     // lastSpeedbL = backLeftSpeed;
     // lastSpeedbR = backRightSpeed;
 
+  }
+
+  /** */
+  public void SetPIDCheckerGoals(double fLposition, double fRposition, double bLposition, double bRposition){
+    fLPidController.calculate(fLrotationMotor.getSelectedSensorPosition(), fLposition);
+    fRPidController.calculate(fRrotationMotor.getSelectedSensorPosition(), fRposition);
+    bLPidController.calculate(bLrotationMotor.getSelectedSensorPosition(), bLposition);
+    bRPidController.calculate(bRrotationMotor.getSelectedSensorPosition(), bRposition);
   }
 
   /**
@@ -743,11 +761,23 @@ public class chassisSubsystem extends SubsystemBase {
   /**
    * Makes the drive motors go in coast mode
    */
-  public void wheelBrakesMode(){
+  public void wheelCoastMode(){
     fLDriveMotor.setNeutralMode(NeutralMode.Coast);
     fRDriveMotor.setNeutralMode(NeutralMode.Coast);
     bLDriveMotor.setNeutralMode(NeutralMode.Coast);
     bRDriveMotor.setNeutralMode(NeutralMode.Coast);
+
+    fLrotationMotor.setNeutralMode(NeutralMode.Brake);
+    bLrotationMotor.setNeutralMode(NeutralMode.Brake);
+    fRrotationMotor.setNeutralMode(NeutralMode.Brake);
+    bRrotationMotor.setNeutralMode(NeutralMode.Brake);
+  }
+
+  public void wheelBrakeMode(){
+    fLDriveMotor.setNeutralMode(NeutralMode.Brake);
+    fRDriveMotor.setNeutralMode(NeutralMode.Brake);
+    bLDriveMotor.setNeutralMode(NeutralMode.Brake);
+    bRDriveMotor.setNeutralMode(NeutralMode.Brake);
 
     fLrotationMotor.setNeutralMode(NeutralMode.Brake);
     bLrotationMotor.setNeutralMode(NeutralMode.Brake);
@@ -760,10 +790,10 @@ public class chassisSubsystem extends SubsystemBase {
    */
   public double wheelMotorCountAverage(){
     return (
-    -fRDriveMotor.getSelectedSensorPosition() +
-     fLDriveMotor.getSelectedSensorPosition() +
-    -bRDriveMotor.getSelectedSensorPosition() +
-     bLDriveMotor.getSelectedSensorPosition())/ 4;
+    Math.abs(fRDriveMotor.getSelectedSensorPosition()) +
+    Math.abs(fLDriveMotor.getSelectedSensorPosition()) +
+    Math.abs(bRDriveMotor.getSelectedSensorPosition()) +
+    Math.abs(bLDriveMotor.getSelectedSensorPosition()))/ 4;
   }
 
 
@@ -936,10 +966,10 @@ public class chassisSubsystem extends SubsystemBase {
     //  SmartDashboard.putNumber("bR Rotation", bRrotationMotor.getSelectedSensorPosition() / Constants.kChassisFalconToWheelRatio * 360);
      SmartDashboard.putNumber("bL Rotation", bLrotationMotor.getSelectedSensorPosition());
  
-     SmartDashboard.putNumber("FrontLeftEncoder", fLAnalogEncoder.get());   
-     SmartDashboard.putNumber("FrontRightEncoder", fRAnalogEncoder.get());
-     SmartDashboard.putNumber("BackLeftEncoder", bLAnalogEncoder.get());
-     SmartDashboard.putNumber("BackRightEncoder", bRAnalogEncoder.get());
+    //  SmartDashboard.putNumber("FrontLeftEncoder", fLAnalogEncoder.get());
+    //  SmartDashboard.putNumber("FrontRightEncoder", fRAnalogEncoder.get());
+    //  SmartDashboard.putNumber("BackLeftEncoder", bLAnalogEncoder.get());
+    //  SmartDashboard.putNumber("BackRightEncoder", bRAnalogEncoder.get());
  
      SmartDashboard.putNumber("rotations traveled", (-fRDriveMotor.getSelectedSensorPosition() + fLDriveMotor.getSelectedSensorPosition() - bRDriveMotor.getSelectedSensorPosition() + bLDriveMotor.getSelectedSensorPosition()) / 4);
      SmartDashboard.putNumber("Fr", fRDriveMotor.getSelectedSensorPosition());
