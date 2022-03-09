@@ -585,7 +585,8 @@ public class chassisSubsystem extends SubsystemBase {
    * @param strafe Percent strafe; used to decide which direction the robot goes in with fwd.
    */
   public void spinToPoint(double rotation, double fwd, double strafe){
-    
+    // fwd and strafe need to be here.
+
     double fwd_MpS = 0; 
     SmartDashboard.putNumber("fwd", fwd);
     SmartDashboard.putNumber("fwd_MpS", fwd_MpS);
@@ -598,7 +599,8 @@ public class chassisSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("rotation", rotation);
     SmartDashboard.putNumber("rotation_RpS", rotation_RpS);
 
-    ChassisSpeeds speeds = new ChassisSpeeds(fwd_MpS,strafe_MpS,rotation_RpS);
+    ChassisSpeeds speeds = new ChassisSpeeds(fwd_MpS, strafe_MpS, rotation_RpS);
+    // fwd_MpS and strafe_MpS need to be here for the math.
 
     SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
 
@@ -620,20 +622,24 @@ public class chassisSubsystem extends SubsystemBase {
     bRAngle = (backRightOptimize.angle.getDegrees()) / Constants.kChassisDegreetoMotor;
 
     double frontLeftSpeed = frontLeft.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
-    double frontRightSpeed = frontRight.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    double frontRightSpeed = -frontRight.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
     double backLeftSpeed = backLeft.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
     double backRightSpeed = backRight.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
-
+    
     rotationOverflow(fLrotationMotor, 0);
     rotationOverflow(fRrotationMotor, 1);
     rotationOverflow(bLrotationMotor, 2);
     rotationOverflow(bRrotationMotor, 3);
 
+    fLrotationMotor.set(TalonFXControlMode.Position, (int)fLAngle);
+    fRrotationMotor.set(TalonFXControlMode.Position, (int)fRAngle);
+    bLrotationMotor.set(TalonFXControlMode.Position, (int)bLAngle);
+    bRrotationMotor.set(TalonFXControlMode.Position, (int)bRAngle);
+
     fLDriveMotor.set(frontLeftSpeed);
-    fRDriveMotor.set(-frontRightSpeed);
+    fRDriveMotor.set(frontRightSpeed);
     bLDriveMotor.set(backLeftSpeed);
-    bRDriveMotor.set(-backRightSpeed);
-    
+    bRDriveMotor.set(backRightSpeed);
   }
   
   private double toPointSpeedLimit(double attemptSpeed){
