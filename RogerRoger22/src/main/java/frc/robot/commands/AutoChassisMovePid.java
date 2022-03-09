@@ -13,7 +13,7 @@ import frc.robot.RobotContainer;
 
 public class AutoChassisMovePid extends CommandBase {
 
-  boolean forward;
+  boolean forward = true;
   boolean isFinished = false;
   double goalRadian;
   double speed;
@@ -36,9 +36,10 @@ public class AutoChassisMovePid extends CommandBase {
   double fRspeed; 
   double bLspeed;
   double bRspeed;
-
-  double smallChange = 0.00000001;
-  double bigChange = 0.000001;
+  //move right one decimal
+  double microChange = 0.00001;
+  double smallChange = 0.0001;
+  double bigChange = 0.001;
 
   int direction = 1;
   int timesTurned = 0;
@@ -76,8 +77,9 @@ public class AutoChassisMovePid extends CommandBase {
       forward = true;
     }else{
       forward = false;
-      smallChange *= -1;
-      bigChange *= -1;
+    //   microChange *= -1;
+    //   smallChange *= -1;
+    //   bigChange *= -1;
     }
 
   }
@@ -88,7 +90,7 @@ public class AutoChassisMovePid extends CommandBase {
 
     RobotContainer.m_chassisSubsystem.SetPIDCheckerGoals(fLgoalDistance, fRgoalDistance, bLgoalDistance, bRgoalDistance);
     RobotContainer.m_chassisSubsystem.zeroMotors();
-    RobotContainer.m_chassisSubsystem.resetGyro();
+    // RobotContainer.m_chassisSubsystem.resetGyro();
     RobotContainer.m_chassisSubsystem.wheelBrakeMode();
     isFinished = false;
     waitBeforeStart = 0;
@@ -111,108 +113,114 @@ public class AutoChassisMovePid extends CommandBase {
     }else{
       RobotContainer.m_chassisSubsystem.driveToPoint(fwd, strafe, 0, 0, 0, 0, 0);
     }
-    
-    // if((RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() > goalDistance && goalDistance > 0) || (RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() < goalDistance && goalDistance < 0)){
 
-    //   speed *= 0.001;
-    //   fLspeed = -speed;
-    //   fRspeed = -speed;
-    //   bLspeed = -speed;
-    //   bRspeed = -speed;
+    // if(forward){
 
-    //   timesTurned += 1;
-    //   bigChange *= -1;
-    //   smallChange *= -1;
-
-    // }
-
-    if(forward){
-
+    if(gyro.getAngle() > 0.5){
     if(gyro.getAngle() > 1){
       if(gyro.getAngle() > 3){
         fRspeed += bigChange;
         bRspeed += bigChange;
 
-        fLspeed -= bigChange / 2;
-        bLspeed -= bigChange / 2;
+        fLspeed -= bigChange;
+        bLspeed -= bigChange;
       }else{
         fRspeed += smallChange;
         bRspeed += smallChange;
 
-        fLspeed -= smallChange / 2;
-        bLspeed -= smallChange / 2;
+        fLspeed -= smallChange;
+        bLspeed -= smallChange;
       }
-    }else if(gyro.getAngle() < -1){
+    }else{
+
+      fRspeed += microChange;
+      bRspeed += microChange;
+
+      fLspeed -= microChange;
+      bLspeed -= microChange;
+
+    }
+    }else if(gyro.getAngle() < -0.5){
+    if(gyro.getAngle() < -1){
       if(gyro.getAngle() < -3){
 
         fLspeed += bigChange;
         bLspeed += bigChange;
 
-        fRspeed -= bigChange / 2;
-        bRspeed -= bigChange / 2;
+        fRspeed -= bigChange;
+        bRspeed -= bigChange;
 
       }else{
 
         fLspeed += smallChange;
         bLspeed += smallChange;
 
-        fRspeed -= smallChange / 2;
-        bRspeed -= smallChange / 2;
+        fRspeed -= smallChange;
+        bRspeed -= smallChange;
 
       }
-    }
-
     }else{
+
+      fLspeed += microChange;
+      bLspeed += microChange;
+
+      fRspeed -= microChange;
+      bRspeed -= microChange;
+
+    }
+  }
+
+    // }else{
 
       //TODO, switch motor pairs
 
-      if(gyro.getAngle() > 1 * direction){
-        if(gyro.getAngle() > 3 * direction){
-          fRspeed -= bigChange;
-          bRspeed -= bigChange;
+    //   if(gyro.getAngle() > 1 * direction){
+    //     if(gyro.getAngle() > 3 * direction){
+    //       fRspeed -= bigChange;
+    //       bRspeed -= bigChange;
   
-          fLspeed += bigChange / 2;
-          bLspeed += bigChange / 2;
-        }else{
-          fRspeed -= smallChange;
-          bRspeed -= smallChange;
+    //       fLspeed += bigChange / 2;
+    //       bLspeed += bigChange / 2;
+    //     }else{
+    //       fRspeed -= smallChange;
+    //       bRspeed -= smallChange;
   
-          fLspeed += smallChange / 2;
-          bLspeed += smallChange / 2;
-        }
-      }else if(gyro.getAngle() < -1 * direction){
-        if(gyro.getAngle() < -3 * direction){
+    //       fLspeed += smallChange / 2;
+    //       bLspeed += smallChange / 2;
+    //     }
+    //   }else if(gyro.getAngle() < -1 * direction){
+    //     if(gyro.getAngle() < -3 * direction){
   
-          fLspeed -= bigChange;
-          bLspeed -= bigChange;
+    //       fLspeed -= bigChange;
+    //       bLspeed -= bigChange;
   
-          fRspeed += bigChange / 2;
-          bRspeed += bigChange / 2;
+    //       fRspeed += bigChange / 2;
+    //       bRspeed += bigChange / 2;
   
-        }else{
+    //     }else{
   
-          fLspeed -= smallChange;
-          bLspeed -= smallChange;
+    //       fLspeed -= smallChange;
+    //       bLspeed -= smallChange;
   
-          fRspeed += smallChange / 2;
-          bRspeed += smallChange / 2;
+    //       fRspeed += smallChange / 2;
+    //       bRspeed += smallChange / 2;
   
-        }
-      }
+    //     }
+    //   }
       
-    }
+    // }
 
-    if(forward && RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() > goalDistance - (Constants.kChassisEstimatedRotationsToInches * 12)){
+    if(forward && RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() > Math.abs(goalDistance - (Constants.kChassisEstimatedRotationsToInches * 12))){
       fLspeed *= 0.99;
       fRspeed *= 0.99;
       bLspeed *= 0.99;
       bRspeed *= 0.99;
-    }else if(RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() < goalDistance + (Constants.kChassisEstimatedRotationsToInches * 12)){
-      fLspeed *= 0.99;
-      fRspeed *= 0.99;
-      bLspeed *= 0.99;
-      bRspeed *= 0.99;
-    }
+    } //else if(!forward && RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() < goalDistance + (Constants.kChassisEstimatedRotationsToInches * 12)){
+    //   fLspeed *= 0.99;
+    //   fRspeed *= 0.99;
+    //   bLspeed *= 0.99;
+    //   bRspeed *= 0.99;
+    // }
 
     // if((RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() == goalDistance || (RobotContainer.m_chassisSubsystem.checkPIDlocation() && waitBeforeStart > 31)) && timesTurned >= 4){
     //   countsCorrect += 1;
@@ -220,11 +228,16 @@ public class AutoChassisMovePid extends CommandBase {
     //   countsCorrect = 0;
     // }
 
-    if(forward && RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() > goalDistance){
+    SmartDashboard.putNumber("fLSpeed", fLspeed);
+    SmartDashboard.putNumber("fRSpeed", fRspeed);
+    SmartDashboard.putNumber("bLSpeed", bLspeed);
+    SmartDashboard.putNumber("bRSpeed", bRspeed);
+
+    if(RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() > Math.abs(goalDistance)){
       isFinished = true;
-    }else if(!forward && RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() < goalDistance){
-      isFinished = true;
-    }
+    }//else if(!forward && RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() < goalDistance){
+    //   isFinished = true;
+    // }
 
     // if(countsCorrect > 5 && waitBeforeStart > 30){
     //   isFinished = true;
@@ -247,6 +260,10 @@ public class AutoChassisMovePid extends CommandBase {
       RobotContainer.m_chassisSubsystem.zeroMotors();
       //RobotContainer.m_chassisSubsystem.disablePids();
       SmartDashboard.putBoolean("gun", true);
+      
+      microChange = 0.00001;
+      smallChange = 0.0001;
+      bigChange = 0.001;
 
       return true;
     }

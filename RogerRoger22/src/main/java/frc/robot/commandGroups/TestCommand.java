@@ -10,6 +10,7 @@ import frc.robot.commands.AutoChassisMovePid;
 import frc.robot.commands.AutoIntakeCommand;
 import frc.robot.commands.IntakeDirectionChangeCommand;
 import frc.robot.commands.ResetGyroCommand;
+import frc.robot.commands.ResetWheelPositionCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -21,19 +22,8 @@ public class TestCommand extends SequentialCommandGroup {
   public TestCommand() {
     // Add your commands in the addCommands() call, e.g.
 
-    // addCommands(new ResetGyroCommand());
-    // addCommands(new AutoChassisMoveCommand(0, 50, 2));
-    // addCommands(new ResetGyroCommand());
-    // addCommands(new AutoChassisMoveCommand(0, 25, 1));
-    // addCommands(new ResetGyroCommand());
-    // addCommands(new AutoChassisMoveCommand(0, -50, -2));
-    // addCommands(new ResetGyroCommand());
-    // addCommands(new AutoChassisMoveCommand(0, -25, -1));
-    // addCommands(new ResetGyroCommand());
-    // addCommands(new IntakeDirectionChangeCommand(), new IntakeDirectionChangeCommand());
-    // addCommands(new AutoIntakeCommand(true, 3));
-    // addCommands(new AutoIntakeCommand(true, 3));
-    addCommands(new AutoChassisMovePid(0, -50, -3));
+    addCommands(new ResetGyroCommand(), new ResetWheelPositionCommand());
+    addCommands(new AutoChassisMovePid(0, -35, -3));
 
   }
 }

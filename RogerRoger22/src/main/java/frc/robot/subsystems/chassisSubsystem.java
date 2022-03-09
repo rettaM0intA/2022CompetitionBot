@@ -265,10 +265,10 @@ public class chassisSubsystem extends SubsystemBase {
     bLDriveMotor.set(backLeftSpeed);
     bRDriveMotor.set(backRightSpeed);
 
-    SmartDashboard.putNumber("FLSpeed", frontLeftSpeed);
-    SmartDashboard.putNumber("FRSpeed", frontRightSpeed);
-    SmartDashboard.putNumber("BLSpeed", backLeftSpeed);
-    SmartDashboard.putNumber("BRSpeed", backRightSpeed);
+    // SmartDashboard.putNumber("FLSpeed", frontLeftSpeed);
+    // SmartDashboard.putNumber("FRSpeed", frontRightSpeed);
+    // SmartDashboard.putNumber("BLSpeed", backLeftSpeed);
+    // SmartDashboard.putNumber("BRSpeed", backRightSpeed);
 
     // fLDriveMotor.set(0);
     // fRDriveMotor.set(0);
@@ -942,6 +942,13 @@ public class chassisSubsystem extends SubsystemBase {
    */
   public void resetGyro(){
     gyro.reset();
+  }
+
+  public void resetDriveWheelPositions(){
+    fLDriveMotor.setSelectedSensorPosition(0);
+    fRDriveMotor.setSelectedSensorPosition(0);
+    bLDriveMotor.setSelectedSensorPosition(0);
+    bRDriveMotor.setSelectedSensorPosition(0);
   }
 
 
