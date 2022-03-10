@@ -78,8 +78,12 @@ public class IntakeMoverSubsystem extends SubsystemBase {
     //   motor.set(-0.15);
     // }
     return false;
-  }
-
+    }
+  /**
+   * Move the intake
+   * @param moveUp Boolean true = up
+   * @param speed
+   */
   public void Move(boolean moveUp, double speed){
     if(moveUp){
       motor.set(speed);

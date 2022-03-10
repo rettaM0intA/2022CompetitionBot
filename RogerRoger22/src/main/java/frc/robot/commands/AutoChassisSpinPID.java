@@ -34,6 +34,7 @@ public class AutoChassisSpinPID extends CommandBase {
 
   /** Creates a new AutoChassisSpinPID. */
   /**
+   * How we turn the robot
    * @param m_goalDegree What direction you want to go to in degrees.
    * @param m_speed How fast you want to move in percent.
    */

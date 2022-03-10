@@ -28,6 +28,8 @@ public class IntakeMoverDefaultCommand extends CommandBase {
     //   RobotContainer.m_intakeMoverSubsystem.Move(false);
     // }
     
+
+
     if(RobotContainer.intakeDirection != IntakeDirection.still){
       if(RobotContainer.intakeDirection == IntakeDirection.up){
         if(RobotContainer.m_intakeMoverSubsystem.Move(true)){
