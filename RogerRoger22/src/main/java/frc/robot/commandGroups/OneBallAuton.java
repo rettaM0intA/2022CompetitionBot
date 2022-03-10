@@ -6,19 +6,41 @@ package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.ResetGyroCommand;
+import frc.robot.commands.AutoChassisMovePid;
 import frc.robot.commands.AutoChassisSpinPID;
+import frc.robot.commands.IntakeMoverMoveCommand;
+import frc.robot.commands.IntakeSpinCommand;
 
-public class TurnNDegreesImproved extends SequentialCommandGroup {
+public class OneBallAuton extends SequentialCommandGroup {
   /** Add your docs here. */
-  public TurnNDegreesImproved() {
+  public OneBallAuton() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
 
-    // The goal of this is to make the robot turn 90 degrees at 30% power.
     addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisSpinPID(90, 30));
+    // Robot shoots ball held at the beginning.
+    addCommands(new IntakeSpinCommand(false));
+    // Robot moves backward out to ball.
+    addCommands(new AutoChassisMovePid(0, -30, -3));
+    addCommands(new ResetGyroCommand());
+    // Robot rotates 180 degrees.
+    addCommands(new AutoChassisSpinPID(180, 25));
+    addCommands(new ResetGyroCommand());
+    // Intake is lowered.
+    addCommands(new Move(false, speedHere));
+    // Intake captures ball.
+    addCommands(new IntakeSpinCommand(true));
+    // Intake is raised.
+    addCommands(new Move(true, speedHere));
+    // Robot turns 180 degrees.
+    addCommands(new AutoChassisSpinPID(180, 25));
+    addCommands(new ResetGyroCommand());
+    // Robot moves back to the goal.
+    addCommands(new AutoChassisMovePid(0, 30, 3));
+    // Ball is deposited.
+    addCommands(new IntakeSpinCommand(false));
     addCommands(new ResetGyroCommand());
 
     // To run multiple commands at the same time,
