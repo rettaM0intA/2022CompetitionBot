@@ -13,4 +13,5 @@ By: Carter Davis and Drew Jezowski
 "Hay? That's for horses!" -Cody VanSnepson, February 18, 2022
 "Doce trece or catorce, why not?" -Cody VanSnepson, February 18, 2022
 "He is too dead. He is alive!" -Google Translate, March 1, 2022
-"What's a thing?" -Random Student, March 1, 2022
+"ARE YOU TWO FAMILIAR WITH VIDEO GAMES??" -Cody VanSnepson, March 8, 2022
+
