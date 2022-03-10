@@ -7,6 +7,7 @@ package frc.robot.commandGroups;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AutoChassisMoveCommand;
 import frc.robot.commands.AutoChassisMovePid;
+import frc.robot.commands.AutoChassisSpinPID;
 import frc.robot.commands.AutoIntakeCommand;
 import frc.robot.commands.IntakeDirectionChangeCommand;
 import frc.robot.commands.ResetGyroCommand;
@@ -23,7 +24,8 @@ public class TestCommand extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
 
     addCommands(new ResetGyroCommand(), new ResetWheelPositionCommand());
-    addCommands(new AutoChassisMovePid(0, -35, -3));
+    // addCommands(new AutoChassisMovePid(0, -35, -3));
+    addCommands(new AutoChassisSpinPID(90, 25));
 
   }
 }

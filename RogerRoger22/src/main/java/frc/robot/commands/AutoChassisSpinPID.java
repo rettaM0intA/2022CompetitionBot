@@ -16,17 +16,21 @@ spinToPoint(speed, 0, 0)*/
 
 package frc.robot.commands;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
 public class AutoChassisSpinPID extends CommandBase {
 
   boolean isFinished = false;
-  boolean isInit = false;
+  // boolean isInit = false;
   double speed = 0; // Corresponds with input.
   double goalDegree = 0; // Corresponds with input.
   double currentDegree = 0;
   int buffer = 0;
+  
+  AHRS gyro;
 
   /** Creates a new AutoChassisSpinPID. */
   /**
@@ -43,6 +47,7 @@ public class AutoChassisSpinPID extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    gyro = RobotContainer.m_chassisSubsystem.gyro;
 
     RobotContainer.m_chassisSubsystem.resetGyro();
     RobotContainer.m_chassisSubsystem.driveAuton(0, 0, 0);
@@ -60,30 +65,24 @@ public class AutoChassisSpinPID extends CommandBase {
 
     currentDegree = RobotContainer.m_chassisSubsystem.gyro.getAngle();
 
-    if(goalDegree > currentDegree){
+    // if(goalDegree > 0){
       if(buffer > 20){
-        RobotContainer.m_chassisSubsystem.spinToPoint(speed, 0, 0);
+        RobotContainer.m_chassisSubsystem.driveTeleop(0, 0, -speed);
       }else{
-        RobotContainer.m_chassisSubsystem.spinToPoint(0.01, 0, 0);
+        RobotContainer.m_chassisSubsystem.driveTeleop(0, 0, 0.03);
       }
     
-    } else {
-      if(buffer > 20){
-        RobotContainer.m_chassisSubsystem.spinToPoint(-speed, 0, 0);
-      }else{
-        RobotContainer.m_chassisSubsystem.spinToPoint(-0.01, 0, 0);
+      if(gyro.getAngle() > goalDegree -35 && speed > 0.03){
+        speed *= 0.5;
       }
+
+      if(gyro.getAngle() >= goalDegree){
+        isFinished = true;
+      }
+
     }
-    // Swapped speed for -speed and vice versa. Did the same with 0.01 and -0.01.
 
-    // if (goalDegree + 1 > currentDegree && currentDegree > goalDegree - 1){
-    //   isFinished = true;
-    // }
-    // Code to end the command^.
 
-    // goalDegree - 1 = 89
-    // goalDegree + 1 = 91
-  }
     // This^ still needs to be tested.
 
       // if (currentDegree < goalDegree) {
@@ -108,7 +107,7 @@ public class AutoChassisSpinPID extends CommandBase {
   @Override
   public boolean isFinished() {
     if(isFinished){
-      RobotContainer.m_chassisSubsystem.resetGyro();
+      // RobotContainer.m_chassisSubsystem.resetGyro();
       RobotContainer.m_chassisSubsystem.zeroMotors();
       isFinished = false;
       return true;

@@ -210,6 +210,7 @@ public class AutoChassisMovePid extends CommandBase {
       
     // }
 
+    //TODO
     if(forward && RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() > Math.abs(goalDistance - (Constants.kChassisEstimatedRotationsToInches * 12))){
       fLspeed *= 0.99;
       fRspeed *= 0.99;
