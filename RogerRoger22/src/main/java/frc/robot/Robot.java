@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commandGroups.Auton_1;
 import frc.robot.commandGroups.Auton_2;
+import frc.robot.commandGroups.OneBallAuton;
 import frc.robot.commandGroups.TestCommand;
 import frc.robot.commandGroups.TurnNDegrees;
-import frc.robot.commandGroups.TurnNDegreesImproved;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("test", new TestCommand());
     m_chooser.addOption("auton_2", new Auton_2());
     m_chooser.addOption("test_spin", new TurnNDegrees());
-    m_chooser.addOption("test_better_spin", new TurnNDegreesImproved());
+    m_chooser.addOption("OneBallAuton", new OneBallAuton());
     
     // m_chooser.addOption(name, object);
 

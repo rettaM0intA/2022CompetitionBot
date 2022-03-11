@@ -23,8 +23,8 @@ public class TwoBallAuton extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new ResetGyroCommand());
     //Put intake down
-    addCommands(new Move(false, speedHere));
-    addCommands(new ResetGyroCommand());
+    //addCommands(new Move(false, speedHere));
+    //addCommands(new ResetGyroCommand());
     //Go to ball closest to white tape and turn to other ball
     addCommands(new AutoChassisMovePid(0, 45, 4.5));
     addCommands(new ResetGyroCommand());

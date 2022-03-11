@@ -4,27 +4,18 @@
 
 package frc.robot.commandGroups;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.AutoChassisMoveCommand;
 import frc.robot.commands.AutoChassisMovePid;
-import frc.robot.commands.AutoChassisSpinPID;
 import frc.robot.commands.AutoIntakeCommand;
-import frc.robot.commands.IntakeDirectionChangeCommand;
-import frc.robot.commands.IntakeSpinCommand;
 import frc.robot.commands.ResetGyroCommand;
 import frc.robot.commands.ResetWheelPositionCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TestCommand extends SequentialCommandGroup {
-  /**
-   * Creates a new TestCommand.  This is meant to test commands for Autonomous mode.  Do not use this as an actual CommandGroup for competition.
-   */
-  public TestCommand() {
-    // Add your commands in the addCommands() call, e.g.
-
+public class NicksAutonSimple extends SequentialCommandGroup {
+  /** Creates a new NicksAutonSimple. */
+  public NicksAutonSimple() {
     addCommands(new ResetGyroCommand(), new ResetWheelPositionCommand());
     // addCommands(new AutoChassisMovePid(0, -35, -3));
     //addCommands(new ParallelCommandGroup(new IntakeSpinCommand(true, 5.0), new ResetWheelPositionCommand()));
@@ -33,9 +24,5 @@ public class TestCommand extends SequentialCommandGroup {
     addCommands(new AutoIntakeCommand(false, 1));
     //Move backwards
     addCommands(new AutoChassisMovePid(0, -30, 2));
-
-    
-
-    
   }
 }

@@ -21,7 +21,7 @@ public class OneBallAuton extends SequentialCommandGroup {
 
     addCommands(new ResetGyroCommand());
     // Robot shoots ball held at the beginning.
-    addCommands(new IntakeSpinCommand(false));
+    //addCommands(new IntakeSpinCommand(false));
     // Robot moves backward out to ball.
     addCommands(new AutoChassisMovePid(0, -30, -3));
     addCommands(new ResetGyroCommand());
@@ -29,18 +29,18 @@ public class OneBallAuton extends SequentialCommandGroup {
     addCommands(new AutoChassisSpinPID(180, 25));
     addCommands(new ResetGyroCommand());
     // Intake is lowered.
-    addCommands(new Move(false, speedHere));
+    //addCommands(new Move(false, speedHere));
     // Intake captures ball.
-    addCommands(new IntakeSpinCommand(true));
+    //addCommands(new IntakeSpinCommand(true));
     // Intake is raised.
-    addCommands(new Move(true, speedHere));
+    //addCommands(new Move(true, speedHere));
     // Robot turns 180 degrees.
     addCommands(new AutoChassisSpinPID(180, 25));
     addCommands(new ResetGyroCommand());
     // Robot moves back to the goal.
     addCommands(new AutoChassisMovePid(0, 30, 3));
     // Ball is deposited.
-    addCommands(new IntakeSpinCommand(false));
+    //addCommands(new IntakeSpinCommand(false));
     addCommands(new ResetGyroCommand());
 
     // To run multiple commands at the same time,
