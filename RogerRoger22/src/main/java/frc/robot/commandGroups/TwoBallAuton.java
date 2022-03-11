@@ -7,6 +7,7 @@ package frc.robot.commandGroups;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AutoChassisMovePid;
 import frc.robot.commands.AutoChassisSpinPID;
+import frc.robot.commands.AutoIntakeCommand;
 import frc.robot.commands.IntakeMoverMoveCommand;
 import frc.robot.commands.ResetGyroCommand;
 
@@ -25,17 +26,25 @@ public class TwoBallAuton extends SequentialCommandGroup {
     //Put intake down
     //addCommands(new Move(false, speedHere));
     //addCommands(new ResetGyroCommand());
+    // Deposit initially held ball
+    addCommands(new AutoIntakeCommand(false, 1));
     //Go to ball closest to white tape and turn to other ball
     addCommands(new AutoChassisMovePid(0, 45, 4.5));
     addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisSpinPID(70, 25));
+    addCommands(new AutoChassisSpinPID(180, 25));
     addCommands(new ResetGyroCommand());
-    //Move to other ball, then turn to main hub thingamabob
+    // Add command to lower intake.
+    // Intake needs to move while driving forward to capture ball
+    addCommands(new AutoIntakeCommand(true, 1));
+    addCommands(new AutoChassisMovePid(0, 25, 0.5));
+    // Add command to raise intake
+    //Turn, then move to other ball
+    addCommands(new AutoChassisSpinPID(90, 25));
+    addCommands(new ResetGyroCommand());
     addCommands(new AutoChassisMovePid(0, 30, 6));
     addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisSpinPID(130, 25));
-    addCommands(new ResetGyroCommand());
-    //Move to main hub thingamabob
+    // Add code to capture second ball
+    // Turn and move to main hub thingamabob    
     addCommands(new AutoChassisMovePid(0, 30, 5));
     addCommands(new ResetGyroCommand());
   }

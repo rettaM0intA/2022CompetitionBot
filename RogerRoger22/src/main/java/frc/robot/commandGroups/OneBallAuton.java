@@ -8,8 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.ResetGyroCommand;
 import frc.robot.commands.AutoChassisMovePid;
 import frc.robot.commands.AutoChassisSpinPID;
-import frc.robot.commands.IntakeMoverMoveCommand;
-import frc.robot.commands.IntakeSpinCommand;
+// import frc.robot.commands.AutoIntakeCommand;
 
 public class OneBallAuton extends SequentialCommandGroup {
   /** Add your docs here. */
@@ -21,26 +20,32 @@ public class OneBallAuton extends SequentialCommandGroup {
 
     addCommands(new ResetGyroCommand());
     // Robot shoots ball held at the beginning.
-    //addCommands(new IntakeSpinCommand(false));
+    // addCommands(new AutoIntakeCommand(false, 1));
     // Robot moves backward out to ball.
     addCommands(new AutoChassisMovePid(0, -30, -3));
     addCommands(new ResetGyroCommand());
     // Robot rotates 180 degrees.
     addCommands(new AutoChassisSpinPID(180, 25));
     addCommands(new ResetGyroCommand());
+
     // Intake is lowered.
     //addCommands(new Move(false, speedHere));
+
+    // Intake starts running; must not stop moving. Add command.
+    // Need to add a "move forward" command here.
     // Intake captures ball.
-    //addCommands(new IntakeSpinCommand(true));
+    // Intake stops running.
+
     // Intake is raised.
     //addCommands(new Move(true, speedHere));
+
     // Robot turns 180 degrees.
     addCommands(new AutoChassisSpinPID(180, 25));
     addCommands(new ResetGyroCommand());
     // Robot moves back to the goal.
     addCommands(new AutoChassisMovePid(0, 30, 3));
     // Ball is deposited.
-    //addCommands(new IntakeSpinCommand(false));
+    // addCommands(new AutoIntakeCommand(false, 1));
     addCommands(new ResetGyroCommand());
 
     // To run multiple commands at the same time,
