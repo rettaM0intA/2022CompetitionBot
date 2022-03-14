@@ -19,7 +19,9 @@ public class ChassisDefaultCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    RobotContainer.m_chassisSubsystem.turnWheelsStraight();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

@@ -129,7 +129,6 @@ public class chassisSubsystem extends SubsystemBase {
 
   if(setPid){
     SetPIDController();
-    RobotContainer.m_chassisSubsystem.turnWheelsStraight();
   }
 
   m_kinematics = new SwerveDriveKinematics(frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation);

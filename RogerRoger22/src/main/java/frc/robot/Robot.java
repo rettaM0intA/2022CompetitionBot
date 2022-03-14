@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commandGroups.Auton_1;
 import frc.robot.commandGroups.Auton_2;
+import frc.robot.commandGroups.NicksAutonSimple;
 // import frc.robot.commandGroups.NicksAutonSimple;
 import frc.robot.commandGroups.TestCommand;
 import frc.robot.commandGroups.TurnNDegrees;
@@ -45,8 +46,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    m_chooser.setDefaultOption("auton", new Auton_1());
+    m_chooser.setDefaultOption("dropAndReverse", new Auton_1());
     m_chooser.addOption("test", new TestCommand());
+    m_chooser.addOption("nick", new NicksAutonSimple());
     m_chooser.addOption("auton_2", new Auton_2());
     m_chooser.addOption("test_spin", new TurnNDegrees());
     m_chooser.addOption("test_better_spin", new OneBallAuton());

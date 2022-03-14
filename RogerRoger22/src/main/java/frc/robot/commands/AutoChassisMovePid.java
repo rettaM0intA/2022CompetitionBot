@@ -32,10 +32,10 @@ public class AutoChassisMovePid extends CommandBase {
   double countsCorrect;
   double averageDistance;
 
-  double fLspeed;
-  double fRspeed; 
-  double bLspeed;
-  double bRspeed;
+  double fLspeed = 0;
+  double fRspeed = 0; 
+  double bLspeed = 0;
+  double bRspeed = 0;
   //move right one decimal
   double microChange = 0.00001;
   double smallChange = 0.0001;

@@ -6,6 +6,7 @@ package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AutoChassisMoveCommand;
+import frc.robot.commands.AutoChassisMovePid;
 import frc.robot.commands.ResetGyroCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -16,9 +17,13 @@ public class Auton_2 extends SequentialCommandGroup {
   public Auton_2() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+
     addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisMoveCommand(0, 30, 48));
+    addCommands(new AutoChassisMovePid(0, 30, 4));
     addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisMoveCommand(90, 30, -48));
+
+    //12.5 ft
+    
+
   }
 }

@@ -5,7 +5,9 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.AutoChassisMovePid;
 import frc.robot.commands.AutoChassisSpinPID;
+import frc.robot.commands.AutoIntakeCommand;
 import frc.robot.commands.ResetGyroCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -16,12 +18,12 @@ public class Auton_1 extends SequentialCommandGroup {
   public Auton_1() {   
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+    
+    //Resets Gyro
     addCommands(new ResetGyroCommand());
-    //addCommands(new AutoChassisMoveCommand(0, 50, -190));
-    addCommands(new AutoChassisSpinPID(90, 50));
-    addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisSpinPID(0, -50));
-    addCommands(new ResetGyroCommand());
-    // addCommands(new AutoChassisSpinCommand(180, 50));
+    //Spit first ball
+    addCommands(new AutoIntakeCommand(false, 1));
+    //Move backwards
+    addCommands(new AutoChassisMovePid(0, -30, 3));
   }
 }
