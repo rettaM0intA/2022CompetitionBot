@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -18,13 +17,10 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.AnalogEncoder;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.ControllerInControl;
 import frc.robot.RobotContainer;
 
 public class chassisSubsystem extends SubsystemBase {
@@ -138,7 +134,7 @@ public class chassisSubsystem extends SubsystemBase {
 
   
   /**
-   * This is the main driving function for the AgileRunner robot.
+   * How we tell the Robot how fast to go forward, angle of strafe, and direction to rotate in Teleop.
    * @param fwd Percent forward; used to decide which direction the robot goes in with fwd.
    * @param strafe Percent strafe; used to decide which direction the robot goes in with fwd.
    * @param rotation Percent for rotating; will combine with the direction given by fwd and strafe to let the robot turn.
@@ -285,7 +281,7 @@ public class chassisSubsystem extends SubsystemBase {
 
   
   /**
-   * This is the main driving function for the AgileRunner robot.
+   * This is the main driving function for the Robot. How we tell it how fast to go forward, what direction to strafe, and what direction to turn in Auton.
    * @param fwd Percent forward; used to decide which direction the robot goes in with fwd.
    * @param strafe Percent strafe; used to decide which direction the robot goes in with fwd.
    * @param rotation Percent for rotating; will combine with the direction given by fwd and strafe to let the robot turn.
@@ -429,7 +425,7 @@ public class chassisSubsystem extends SubsystemBase {
 
   
   /**
-   * THIS DESCRIPTION SUCKS. FIX IT. This is the main driving function for the AgileRunner robot.
+   * How we tell the Robot where to go and how.
    * @param fwd Percent forward.  Used to decide which direction the robot goes in with fwd
    * @param strafe Percent strafe.  Used to decide which direction the robot goes in with fwd
    * @param rotation Percent for rotating.  Will combine with the direction given by fwd and strafe to let the robot turn.
@@ -583,7 +579,7 @@ public class chassisSubsystem extends SubsystemBase {
   }
 
   /**
-   * This is the main turning function for the AgileRunner robot.
+   * This is the main turning function for the Robot.
    * @param rotation Percent for rotating; will combine with the direction given by fwd and strafe to let the robot turn.
    * @param fwd Percent forward; used to decide which direction the robot goes in with fwd.
    * @param strafe Percent strafe; used to decide which direction the robot goes in with fwd.
@@ -680,7 +676,7 @@ public class chassisSubsystem extends SubsystemBase {
 // }
 
   /**
-   * A function made to avoid going to 0 or 360 degrees in rotation.
+   * A function that stops the wheel from getting 0 or 360.
    * @param rotationMotor Used to check a motor's position to avoid doing a full rotation.
    * @param angleNumber Input an integer based on which motor is being used.  FL = 0, FR = 1, BL = 2, BR = 3
    */

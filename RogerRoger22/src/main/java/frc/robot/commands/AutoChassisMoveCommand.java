@@ -24,12 +24,10 @@ public class AutoChassisMoveCommand extends CommandBase {
   boolean isFinished = false; //boolean used to end the command.  is necessary since the isFinished function is called immediatly.
 
   /**
-   * 
+   * Makes the chassis move in a desired direction at a desired speed.
    * @param m_degree What direction you want to go in degrees
    * @param m_speed How fast you want to move in percent
    * @param m_distance How far the robot will travel in feet
-   * 
-   * Makes the chassis move in a desired direction at a desired speed.
    */
   public AutoChassisMoveCommand(double m_degree, double m_speed, double m_distance) {
     addRequirements(RobotContainer.m_chassisSubsystem);

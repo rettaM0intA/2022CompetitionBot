@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commandGroups.Auton_1;
 import frc.robot.commandGroups.Auton_2;
+import frc.robot.commandGroups.OneBallAuton;
 // import frc.robot.commandGroups.NicksAutonSimple;
 import frc.robot.commandGroups.TestCommand;
 import frc.robot.commandGroups.TurnNDegrees;
-import frc.robot.commandGroups.OneBallAuton;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to

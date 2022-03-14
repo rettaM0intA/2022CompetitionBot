@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AutoChassisMovePid;
 import frc.robot.commands.AutoChassisSpinPID;
 import frc.robot.commands.AutoIntakeCommand;
-import frc.robot.commands.IntakeMoverMoveCommand;
 import frc.robot.commands.ResetGyroCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more

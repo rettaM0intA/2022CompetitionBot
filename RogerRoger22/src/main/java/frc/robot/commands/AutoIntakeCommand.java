@@ -4,11 +4,9 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.IntakeDirection;
 import frc.robot.RobotContainer;
 
 public class AutoIntakeCommand extends CommandBase {
@@ -19,7 +17,9 @@ public class AutoIntakeCommand extends CommandBase {
   double goalTime;
   Timer timer = new Timer();
 
-  /** Creates a new AutoIntakeCommand. 
+  /** Creates a new AutoIntakeCommand. */
+  /**
+   * How we tell the Robot's intake which direction it should go, and how long it should stay.
    * @param direction IntakeDirection either up or down
    * @param goalTime amount of seconds it should be on for
   */

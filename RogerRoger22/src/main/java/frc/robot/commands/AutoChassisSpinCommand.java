@@ -22,6 +22,7 @@ public class AutoChassisSpinCommand extends CommandBase {
   double currentDegree = 0;
  
   /**
+   * How we tell the Robot where to spin to, and how fast.
    * @param m_degree   What direction you want to go to in degrees.
    * @param m_speed    How fast you want to move in percent.
    */

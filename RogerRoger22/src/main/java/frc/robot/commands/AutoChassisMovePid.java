@@ -45,7 +45,7 @@ public class AutoChassisMovePid extends CommandBase {
   int timesTurned = 0;
 
   /**
-   * How we move the Robot
+   * How we tell the Robot which way to move, how fast to move, and where to move.
    * @param m_degree What direction you want to go in degrees.
    * @param m_speed How fast you want to move in percent.
    * @param m_distance How far you want to go in feet

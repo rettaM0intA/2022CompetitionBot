@@ -5,23 +5,19 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ChassisDefaultCommand;
 import frc.robot.commands.ClimbingDefaultCommand;
-import frc.robot.commands.ControllerSwitchCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeDirectionChangeCommand;
+import frc.robot.commands.IntakeFarCommand;
 import frc.robot.commands.IntakeMoverDefaultCommand;
-import frc.robot.commands.IntakeMoverMoveCommand;
 import frc.robot.commands.IntakeSpinCommand;
 import frc.robot.commands.turnWheelsStraight;
 import frc.robot.subsystems.ClimbingSubsystem;
 import frc.robot.subsystems.IntakeMoverSubsystem;
-import frc.robot.subsystems.IntakeMoverSubsystem;
-import frc.robot.commands.IntakeFarCommand;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.chassisSubsystem;
 
