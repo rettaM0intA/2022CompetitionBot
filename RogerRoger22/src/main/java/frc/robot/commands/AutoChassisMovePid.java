@@ -46,9 +46,9 @@ public class AutoChassisMovePid extends CommandBase {
 
   /**
    * How we move the Robot
-   * @param m_degree What direction you want to go in degrees.
-   * @param m_speed How fast you want to move in percent.
-   * @param m_distance How far you want to go in feet
+   * @param m_degree What direction you want to go in degrees. Do not make 180 to go backwards, make speed negative.
+   * @param m_speed How fast you want to move in percent. Make negaitve to go backwards.
+   * @param m_distance How far you want to go in feet. Always have as positive.
    * 
    */
   public AutoChassisMovePid(double m_degree, double m_speed, double m_distance) {
@@ -210,7 +210,6 @@ public class AutoChassisMovePid extends CommandBase {
       
     // }
 
-    //TODO
     if(forward && RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() > Math.abs(goalDistance - (Constants.kChassisEstimatedRotationsToInches * 12))){
       fLspeed *= 0.99;
       fRspeed *= 0.99;

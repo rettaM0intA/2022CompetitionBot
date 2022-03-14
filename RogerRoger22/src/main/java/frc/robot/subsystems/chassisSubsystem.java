@@ -414,6 +414,145 @@ public class chassisSubsystem extends SubsystemBase {
 
   }
 
+  /**
+   * drives the chassis with the given fwd and strafe for the direction and the velocity for speeds.
+   * @param fwd How much priority to facing forward/backward.
+   * @param strafe How much priority to facing left or right.
+   * @param fL Velocity for FrontLeft driving moter.
+   * @param fR Velocity for FrontRight driving moter.
+   * @param bR Velocity for BackRight driving moter.
+   * @param bL Velocity for BackLeft driving moter.
+   */  
+  public void driveVelocity(double fwd, double strafe, double fL, double fR, double bR, double bL){
+    
+    int rotation = 0;
+
+    //The following if statements are to set controller deadzones.
+    if(fwd < Constants.kDirectionalDeadzone && fwd > -Constants.kDirectionalDeadzone){
+      fwd = 0;
+    }
+    if(strafe < Constants.kDirectionalDeadzone && strafe > -Constants.kDirectionalDeadzone){
+      strafe = 0;
+    }
+
+    // convert fwd from flight stick y of (-1 to 1) to MetersPerSecond for ChassisSpeeds
+    double fwd_MpS = -fwd * Constants.kChassisMaxMetersPerSec; 
+    SmartDashboard.putNumber("fwd", fwd);
+    SmartDashboard.putNumber("fwd_MpS", fwd_MpS);
+
+    // convert strafe from flight stick x of (-1 to 1) to MetersPerSecond for ChassisSpeeds
+    double strafe_MpS = -strafe * Constants.kChassisMaxMetersPerSec;
+    SmartDashboard.putNumber("strafe", strafe);
+    SmartDashboard.putNumber("strafe_MpS", strafe_MpS);
+
+    // convert rotation from flight stick twist of (-1 to 1) to MetersPerSecond for ChassisSpeeds
+    double rotation_RpS = -rotation * Constants.kChassisMaxRadiansPerSec;
+    SmartDashboard.putNumber("rotation", rotation);
+    SmartDashboard.putNumber("rotation_RpS", rotation_RpS);
+
+    // Calculate the module speeds based on what the requested chassis speeds are.
+    ChassisSpeeds speeds = new ChassisSpeeds(fwd_MpS,strafe_MpS,rotation_RpS);
+
+    /**The desired field relative speed here is 2 meters per second
+    // toward the opponent's alliance station wall, and 2 meters per
+    // second toward the left field boundary. The desired rotation
+    // is a quarter of a rotation per second counterclockwise. The current
+    // robot angle is 45 degrees.
+    // ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(fwd_MpS, strafe_MpS, rotation_RpS, Rotation2d.fromDegrees(gyro.getAngle()));
+    */
+    // Get a reference to the module states for a swerve drive system
+    SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
+
+    // Normalize the speeds in case one wants to be higher that the max speed
+    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.kChassisMaxMetersPerSec);
+
+    // Get a reference to each module states
+    SwerveModuleState frontLeft = moduleStates[0];
+    SwerveModuleState frontRight = moduleStates[1];
+    SwerveModuleState backLeft = moduleStates[2];
+    SwerveModuleState backRight = moduleStates[3];
+
+    // calcAngleQuadrant(frontLeft.angle.getDegrees());
+    // calcAngleQuadrant(frontRight.angle.getDegrees());
+    // calcAngleQuadrant(backLeft.angle.getDegrees());
+    // calcAngleQuadrant(backRight.angle.getDegrees());
+
+    
+
+    SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor * (Math.PI/180))));
+    SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fRrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor * (Math.PI/180))));
+    SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((bLrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor * (Math.PI/180))));
+    SwerveModuleState backRightOptimize = SwerveModuleState.optimize(backRight, new Rotation2d((bRrotationMotor.getSelectedSensorPosition() * Constants.kChassisDegreetoMotor * (Math.PI/180))));
+  
+
+    // Get the needed angle from the module state and convert it to the Cnts needed for the CanSparkMax PID loop
+    fLAngle = (frontLeftOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    fRAngle = (frontRightOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    bLAngle = (backLeftOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+    bRAngle = (backRightOptimize.angle.getDegrees() / Constants.kChassisDegreetoMotor);
+
+
+    // Get the needed speed from the module state and convert it to the -1 to 1 value needed for percent output command of the CANTalon
+    double frontLeftSpeed = frontLeftOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    double frontRightSpeed = -frontRightOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    double backLeftSpeed = backLeftOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+    double backRightSpeed = backRightOptimize.speedMetersPerSecond / Constants.kChassisMotorSpeedLower;
+
+    //The goal of these four uses of rotationOverflow is to have the wheels avoid a 350+ degree rotation
+    // rotationOverflow(fLrotationMotor, 0);
+    // rotationOverflow(fRrotationMotor, 1);
+    // rotationOverflow(bLrotationMotor, 2);
+    // rotationOverflow(bRrotationMotor, 3);
+    
+    //these lines tell the motor controller what position to set the motor to
+    // fLrotationMotor.getPIDController().setReference(fLAngle, ControlType.kPosition);
+    // fRrotationMotor.getPIDController().setReference(fRAngle, ControlType.kPosition);
+    // bLrotationMotor.getPIDController().setReference(bLAngle, ControlType.kPosition);
+    // bRrotationMotor.getPIDController().setReference(bRAngle, ControlType.kPosition);
+
+    // fLPidController.setSetpoint(fLAngle);
+    // fRPidController.setSetpoint(fRAngle);
+    // bLPidController.setSetpoint(bLAngle);
+    // bRPidController.setSetpoint(bRAngle);
+
+    fLrotationMotor.set(TalonFXControlMode.Position, (int)fLAngle);
+    
+    fRrotationMotor.set(TalonFXControlMode.Position, (int)fRAngle);
+
+    bLrotationMotor.set(TalonFXControlMode.Position, (int)bLAngle);
+
+    bRrotationMotor.set(TalonFXControlMode.Position, (int)bRAngle);
+
+    // SmartDashboard.putNumber("fRAngle", bRAngle);
+
+    
+    // fLrotationMotor.set(0.2);
+
+    
+    // Set the speed in TalonFX to a percent output.
+    // fLDriveMotor.set(frontLeftSpeed);
+    // fRDriveMotor.set(frontRightSpeed);
+    // bLDriveMotor.set(backLeftSpeed);
+    // bRDriveMotor.set(backRightSpeed);
+    fLDriveMotor.set(ControlMode.Velocity, fL);
+    fRDriveMotor.set(ControlMode.Velocity, fR);
+    bLDriveMotor.set(ControlMode.Velocity, bL);
+    bRDriveMotor.set(ControlMode.Velocity, bR);
+
+    // SmartDashboard.putNumber("FLSpeed", frontLeftSpeed);
+    // SmartDashboard.putNumber("FRSpeed", frontRightSpeed);
+    // SmartDashboard.putNumber("BLSpeed", backLeftSpeed);
+    // SmartDashboard.putNumber("BRSpeed", backRightSpeed);
+
+    // fLDriveMotor.set(0);
+    // fRDriveMotor.set(0);
+    // bLDriveMotor.set(0);
+    // bRDriveMotor.set(0);
+
+    //fLDriveMotor.set(fLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), 1000));
+
+  }
+
   private double speedLimiter(double input){
     
     if(Math.abs(input) > 0.6){

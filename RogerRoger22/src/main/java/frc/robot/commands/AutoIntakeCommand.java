@@ -20,7 +20,7 @@ public class AutoIntakeCommand extends CommandBase {
   Timer timer = new Timer();
 
   /** Creates a new AutoIntakeCommand. 
-   * @param direction IntakeDirection either up or down
+   * @param direction IntakeDirection either in (true) or out (false)
    * @param goalTime amount of seconds it should be on for
   */
   public AutoIntakeCommand(Boolean SpinIn, int m_time) {
