@@ -17,6 +17,7 @@ import frc.robot.commands.IntakeDirectionChangeCommand;
 import frc.robot.commands.IntakeMoverDefaultCommand;
 import frc.robot.commands.IntakeMoverMoveCommand;
 import frc.robot.commands.IntakeSpinCommand;
+import frc.robot.commands.turnWheelsStraight;
 import frc.robot.subsystems.ClimbingSubsystem;
 import frc.robot.subsystems.IntakeMoverSubsystem;
 import frc.robot.subsystems.IntakeMoverSubsystem;
@@ -90,12 +91,17 @@ public class RobotContainer {
     // JoystickButton joyControllSwitchButton = new JoystickButton(driver, 6);
     // joyControllSwitchButton.whenPressed(new ControllerSwitchCommand());
     
+    JoystickButton straightenWheelsButton;
+
     JoystickButton outputButton;
     JoystickButton moveIntakeDirectionButton;
     JoystickButton intakeButton;
     JoystickButton intakeFarButton;
     
     // if(gamepadDriver == ControllerInControl.MainController){
+
+    straightenWheelsButton = new JoystickButton(driver, 4);
+    straightenWheelsButton.whenPressed(new turnWheelsStraight());
 
     outputButton = new JoystickButton(operator, 3);
     outputButton.whenHeld(new IntakeSpinCommand(false));

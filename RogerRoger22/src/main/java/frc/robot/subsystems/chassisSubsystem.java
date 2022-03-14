@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.CANCoder;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -38,31 +39,31 @@ public class chassisSubsystem extends SubsystemBase {
 
 
   //Init Analog Encoders to help reset the wheel rotation
-  public AnalogEncoder fRAnalogEncoder = new AnalogEncoder(new AnalogInput(2));
-  public AnalogEncoder fLAnalogEncoder = new AnalogEncoder(new AnalogInput(0));
-  public AnalogEncoder bRAnalogEncoder = new AnalogEncoder(new AnalogInput(3));
-  public AnalogEncoder bLAnalogEncoder = new AnalogEncoder(new AnalogInput(1));
+  CANCoder fLCanCoder = new CANCoder(8);
+  CANCoder fRCanCoder = new CANCoder(6);
+  CANCoder bRCanCoder = new CANCoder(4);
+  CANCoder bLCanCoder = new CANCoder(2);
 
 
   //The Falcon 500s are in charge of spinning the wheels
-  WPI_TalonFX fRDriveMotor = new WPI_TalonFX(6);
-  WPI_TalonFX fLDriveMotor = new WPI_TalonFX(8);
-  WPI_TalonFX bRDriveMotor = new WPI_TalonFX(4);
-  WPI_TalonFX bLDriveMotor = new WPI_TalonFX(2);
+  WPI_TalonFX fLDriveMotor = new WPI_TalonFX(28);
+  WPI_TalonFX fRDriveMotor = new WPI_TalonFX(26);
+  WPI_TalonFX bRDriveMotor = new WPI_TalonFX(24);
+  WPI_TalonFX bLDriveMotor = new WPI_TalonFX(22);
 
 
   //The Neo550s are in charge of rotating the wheels
-  public WPI_TalonFX fRrotationMotor = new WPI_TalonFX(5);
-  public WPI_TalonFX fLrotationMotor = new WPI_TalonFX(7);
-  public WPI_TalonFX bRrotationMotor = new WPI_TalonFX(3);
-  public WPI_TalonFX bLrotationMotor = new WPI_TalonFX(1);
+  public WPI_TalonFX fLrotationMotor = new WPI_TalonFX(27);
+  public WPI_TalonFX fRrotationMotor = new WPI_TalonFX(25);
+  public WPI_TalonFX bRrotationMotor = new WPI_TalonFX(23);
+  public WPI_TalonFX bLrotationMotor = new WPI_TalonFX(21);
 
   // SlewRateLimiter frontLeftLimiter = new SlewRateLimiter(.72);
   // SlewRateLimiter frontRightLimiter = new SlewRateLimiter(.72);
   // SlewRateLimiter backLeftLimiter = new SlewRateLimiter(.72);
   // SlewRateLimiter backRightLimiter = new SlewRateLimiter(.72);
 
-  ControllerInControl driver = ControllerInControl.flightStick;
+  // ControllerInControl driver = ControllerInControl.flightStick;
 
   public AHRS gyro = new AHRS(I2C.Port.kOnboard);
   
@@ -128,6 +129,7 @@ public class chassisSubsystem extends SubsystemBase {
 
   if(setPid){
     SetPIDController();
+    RobotContainer.m_chassisSubsystem.turnWheelsStraight();
   }
 
   m_kinematics = new SwerveDriveKinematics(frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation);
@@ -143,19 +145,21 @@ public class chassisSubsystem extends SubsystemBase {
    */
   public void driveTeleop(double fwd, double strafe, double rotation){
 
-    if(RobotContainer.operator.getYButton()){
-      resetGyro();
-      fRDriveMotor.setSelectedSensorPosition(0);
-      fLDriveMotor.setSelectedSensorPosition(0);
-      bRDriveMotor.setSelectedSensorPosition(0);
-      bLDriveMotor.setSelectedSensorPosition(0);
-    }else if(RobotContainer.driver.getRawButton(9)){
-      resetGyro();
-      fRDriveMotor.setSelectedSensorPosition(0);
-      fLDriveMotor.setSelectedSensorPosition(0);
-      bRDriveMotor.setSelectedSensorPosition(0);
-      bLDriveMotor.setSelectedSensorPosition(0);
-    }
+    // if(RobotContainer.operator.getYButton()){
+    //   resetGyro();
+    //   // fRDriveMotor.setSelectedSensorPosition(0);
+    //   // fLDriveMotor.setSelectedSensorPosition(0);
+    //   // bRDriveMotor.setSelectedSensorPosition(0);
+    //   // bLDriveMotor.setSelectedSensorPosition(0);
+    //   turnWheelsStraight();
+    //}else if(RobotContainer.driver.getRawButton(9)){
+      // resetGyro();
+      // turnWheelsStraight();
+      // fRDriveMotor.setSelectedSensorPosition(0);
+      // fLDriveMotor.setSelectedSensorPosition(0);
+      // bRDriveMotor.setSelectedSensorPosition(0);
+      // bLDriveMotor.setSelectedSensorPosition(0);
+    // }
 
     //The following if statements are to set controller deadzones.
     if(fwd < Constants.kDirectionalDeadzone && fwd > -Constants.kDirectionalDeadzone){
@@ -942,6 +946,12 @@ public class chassisSubsystem extends SubsystemBase {
     bLDriveMotor.setSelectedSensorPosition(0);
   }
 
+  public void turnWheelsStraight(){
+    fLrotationMotor.setSelectedSensorPosition((fLCanCoder.getAbsolutePosition() - Constants.kChassisCANCoderOffsetfL) / Constants.kChassisDegreetoMotor);
+    fRrotationMotor.setSelectedSensorPosition((fRCanCoder.getAbsolutePosition() - Constants.kChassisCANCoderOffsetfR) / Constants.kChassisDegreetoMotor);
+    bRrotationMotor.setSelectedSensorPosition((bRCanCoder.getAbsolutePosition() - Constants.kChassisCANCoderOffsetbR) / Constants.kChassisDegreetoMotor);
+    bLrotationMotor.setSelectedSensorPosition((bLCanCoder.getAbsolutePosition() - Constants.kChassisCANCoderOffsetbL) / Constants.kChassisDegreetoMotor);
+  }
   
   /**
    * Resets the gyro
@@ -985,10 +995,10 @@ public class chassisSubsystem extends SubsystemBase {
     //  SmartDashboard.putNumber("BackRightEncoder", bRAnalogEncoder.get());
  
      SmartDashboard.putNumber("rotations traveled", (-fRDriveMotor.getSelectedSensorPosition() + fLDriveMotor.getSelectedSensorPosition() - bRDriveMotor.getSelectedSensorPosition() + bLDriveMotor.getSelectedSensorPosition()) / 4);
-     SmartDashboard.putNumber("Fr", fRDriveMotor.getSelectedSensorPosition());
-     SmartDashboard.putNumber("Fl", fLDriveMotor.getSelectedSensorPosition());
-     SmartDashboard.putNumber("br", bRDriveMotor.getSelectedSensorPosition());
-     SmartDashboard.putNumber("bl", bLDriveMotor.getSelectedSensorPosition());
+     SmartDashboard.putNumber("Fr", fRCanCoder.getAbsolutePosition());
+     SmartDashboard.putNumber("Fl", fLCanCoder.getAbsolutePosition());
+     SmartDashboard.putNumber("br", bRCanCoder.getAbsolutePosition());
+     SmartDashboard.putNumber("bl", bLCanCoder.getAbsolutePosition());
     //  SmartDashboard.putNumber("Wheel power", fRDriveMotor.get());
 
   

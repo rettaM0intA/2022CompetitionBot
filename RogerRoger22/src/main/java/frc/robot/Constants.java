@@ -44,6 +44,10 @@ public final class Constants {
 	public static final double kChassisNeoMotorRotationPerWheelRotation = kChassisNeoToGearbox / kChassisGearboxToOutputGear * kChassisOutputDriveGearToInputGear;
 	public static final double kChassisNeoMotorRotationtoRadians = kChassisNeoMotorRotationPerWheelRotation * Math.PI;
 	
+	public static final double kChassisCANCoderOffsetfL = 86.044921875;
+	public static final double kChassisCANCoderOffsetfR = 225.703125;
+	public static final double kChassisCANCoderOffsetbR = 349.541015625;
+	public static final double kChassisCANCoderOffsetbL = 141.767578125;
 
 	public static final double kChassisFalconToWheelRatio = 2048 * 3 * (72/14);		//0.64814;
 	public static final double kChassisDegreetoMotor = 360 / kChassisFalconToWheelRatio;
