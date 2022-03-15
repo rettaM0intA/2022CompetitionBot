@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -126,6 +127,8 @@ public class chassisSubsystem extends SubsystemBase {
   bRrotationMotor.setInverted(true);
   fLrotationMotor.setInverted(true);
   bLrotationMotor.setInverted(true);
+
+  bRDriveMotor.setInverted(true);
 
   if(setPid){
     SetPIDController();
@@ -575,27 +578,27 @@ public class chassisSubsystem extends SubsystemBase {
    */
   public void driveToPoint(double fwd, double strafe, double rotation, double fLspeed, double fRspeed, double bLspeed, double bRspeed){
 
-    if(RobotContainer.operator.getYButton()){
-      resetGyro();
-      fRDriveMotor.setSelectedSensorPosition(0);
-      fLDriveMotor.setSelectedSensorPosition(0);
-      bRDriveMotor.setSelectedSensorPosition(0);
-      bLDriveMotor.setSelectedSensorPosition(0);
-    }else if(RobotContainer.driver.getRawButton(9)){
-      resetGyro();
-      fRDriveMotor.setSelectedSensorPosition(0);
-      fLDriveMotor.setSelectedSensorPosition(0);
-      bRDriveMotor.setSelectedSensorPosition(0);
-      bLDriveMotor.setSelectedSensorPosition(0);
-    }
+    // if(RobotContainer.operator.getYButton()){
+    //   resetGyro();
+    //   fRDriveMotor.setSelectedSensorPosition(0);
+    //   fLDriveMotor.setSelectedSensorPosition(0);
+    //   bRDriveMotor.setSelectedSensorPosition(0);
+    //   bLDriveMotor.setSelectedSensorPosition(0);
+    // }else if(RobotContainer.driver.getRawButton(9)){
+    //   resetGyro();
+    //   fRDriveMotor.setSelectedSensorPosition(0);
+    //   fLDriveMotor.setSelectedSensorPosition(0);
+    //   bRDriveMotor.setSelectedSensorPosition(0);
+    //   bLDriveMotor.setSelectedSensorPosition(0);
+    // }
 
     //The following if statements are to set controller deadzones.
-    if(fwd < Constants.kDirectionalDeadzone && fwd > -Constants.kDirectionalDeadzone){
-      fwd = 0;
-    }
-    if(strafe < Constants.kDirectionalDeadzone && strafe > -Constants.kDirectionalDeadzone){
-      strafe = 0;
-    }
+    // if(fwd < Constants.kDirectionalDeadzone && fwd > -Constants.kDirectionalDeadzone){
+    //   fwd = 0;
+    // }
+    // if(strafe < Constants.kDirectionalDeadzone && strafe > -Constants.kDirectionalDeadzone){
+    //   strafe = 0;
+    // }
 
     // convert fwd from flight stick y of (-1 to 1) to MetersPerSecond for ChassisSpeeds
     double fwd_MpS = -fwd * Constants.kChassisMaxMetersPerSec;
@@ -603,12 +606,12 @@ public class chassisSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("fwd_MpS", fwd_MpS);
 
     // convert strafe from flight stick x of (-1 to 1) to MetersPerSecond for ChassisSpeeds
-    double strafe_MpS = -strafe * Constants.kChassisMaxMetersPerSec;
+    double strafe_MpS = 0; //-strafe * Constants.kChassisMaxMetersPerSec;
     SmartDashboard.putNumber("strafe", strafe);
     SmartDashboard.putNumber("strafe_MpS", strafe_MpS);
 
     // convert rotation from flight stick twist of (-1 to 1) to MetersPerSecond for ChassisSpeeds
-    double rotation_RpS = -rotation * Constants.kChassisMaxRadiansPerSec;
+    double rotation_RpS = 0; //-rotation * Constants.kChassisMaxRadiansPerSec;
     SmartDashboard.putNumber("rotation", rotation);
     SmartDashboard.putNumber("rotation_RpS", rotation_RpS);
 
@@ -1086,10 +1089,23 @@ public class chassisSubsystem extends SubsystemBase {
   }
 
   public void turnWheelsStraight(){
-    fLrotationMotor.setSelectedSensorPosition((fLCanCoder.getAbsolutePosition() - Constants.kChassisCANCoderOffsetfL) / Constants.kChassisDegreetoMotor);
-    fRrotationMotor.setSelectedSensorPosition((fRCanCoder.getAbsolutePosition() - Constants.kChassisCANCoderOffsetfR) / Constants.kChassisDegreetoMotor);
-    bRrotationMotor.setSelectedSensorPosition((bRCanCoder.getAbsolutePosition() - Constants.kChassisCANCoderOffsetbR) / Constants.kChassisDegreetoMotor);
-    bLrotationMotor.setSelectedSensorPosition((bLCanCoder.getAbsolutePosition() - Constants.kChassisCANCoderOffsetbL) / Constants.kChassisDegreetoMotor);
+    fLrotationMotor.setSelectedSensorPosition(fLCanCoder.getAbsolutePosition() / Constants.kChassisDegreetoMotor);
+    fRrotationMotor.setSelectedSensorPosition(fRCanCoder.getAbsolutePosition() / Constants.kChassisDegreetoMotor);
+    bRrotationMotor.setSelectedSensorPosition(bRCanCoder.getAbsolutePosition() / Constants.kChassisDegreetoMotor);
+    bLrotationMotor.setSelectedSensorPosition(bLCanCoder.getAbsolutePosition() / Constants.kChassisDegreetoMotor);
+    
+    //Use with necessary CANCoder to fix offset. First set to 0 and enable the robot. 
+    //Then set the Offset to the CANCoder's position in degrees. Comment when done.
+    // fRCanCoder.configMagnetOffset(0);
+
+    // fLCanCoder.configMagnetOffset(-85.4); //Correct offset for Front Left. Do not change without permission. Only grantable by Cody or Darrel.
+
+    //Uncomment if CANCoder starts reading between 0-360. recomment after running once.
+    // fLCanCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+    // fRCanCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+    // bRCanCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+    // bLCanCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+
   }
   
   /**
@@ -1138,6 +1154,11 @@ public class chassisSubsystem extends SubsystemBase {
      SmartDashboard.putNumber("Fl", fLCanCoder.getAbsolutePosition());
      SmartDashboard.putNumber("br", bRCanCoder.getAbsolutePosition());
      SmartDashboard.putNumber("bl", bLCanCoder.getAbsolutePosition());
+
+     SmartDashboard.putNumber("Fr MOTOR", fRrotationMotor.getSelectedSensorPosition());
+     SmartDashboard.putNumber("Fl MOTOR", fLrotationMotor.getSelectedSensorPosition());
+     SmartDashboard.putNumber("Br MOTOR", bRrotationMotor.getSelectedSensorPosition());
+     SmartDashboard.putNumber("Bl MOTOR", bLrotationMotor.getSelectedSensorPosition());
     //  SmartDashboard.putNumber("Wheel power", fRDriveMotor.get());
 
   

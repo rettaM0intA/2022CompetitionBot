@@ -18,12 +18,12 @@ public class Auton_1 extends SequentialCommandGroup {
   public Auton_1() {   
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    
+
     //Resets Gyro
     addCommands(new ResetGyroCommand());
     //Spit first ball
     addCommands(new AutoIntakeCommand(false, 1));
     //Move backwards
-    addCommands(new AutoChassisMovePid(0, -30, 3));
+    addCommands(new AutoChassisMovePid(0, -30, 7.5));
   }
 }

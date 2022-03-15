@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AutoChassisMoveCommand;
 import frc.robot.commands.AutoChassisMovePid;
 import frc.robot.commands.AutoChassisSpinPID;
+import frc.robot.commands.AutoIntakeCommand;
 // import frc.robot.commands.AutoIntakeCommand;
 import frc.robot.commands.IntakeDirectionChangeCommand;
 import frc.robot.commands.IntakeSpinCommand;
@@ -25,14 +26,16 @@ public class TestCommand extends SequentialCommandGroup {
   public TestCommand() {
     // Add your commands in the addCommands() call, e.g.
 
-    addCommands(new ResetGyroCommand(), new ResetWheelPositionCommand());
+    // addCommands(new ResetGyroCommand());
     // addCommands(new AutoChassisMovePid(0, -35, -3));
     //addCommands(new ParallelCommandGroup(new IntakeSpinCommand(true, 5.0), new ResetWheelPositionCommand()));
     
+    // addCommands(new AutoChassisMovePid(0, 30, 2));
     //Spit first ball
     // addCommands(new AutoIntakeCommand(false, 1));
     //Move backwards
-    addCommands(new AutoChassisMovePid(0, -30, 2));
+    addCommands(new AutoChassisMovePid(0, 50, 8));
+    // addCommands(new AutoChassisSpinPID(165, 25));
 
     
 

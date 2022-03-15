@@ -52,8 +52,8 @@ public class RobotContainer {
   public static XboxController operator = new XboxController(1);
 
   public static ControllerInControl gamepadDriver = ControllerInControl.flightStick;
-  public static IntakeDirection intakeDirection = IntakeDirection.still;
-  public static IntakeDirection chosenDirection = IntakeDirection.still;
+  public static IntakeDirection intakeDirection = IntakeDirection.up;
+  public static IntakeDirection chosenDirection = IntakeDirection.up;
 
   public static boolean fullSpeed = false;
 

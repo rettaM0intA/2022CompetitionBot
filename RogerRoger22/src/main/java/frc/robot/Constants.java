@@ -35,7 +35,7 @@ public final class Constants {
 	public static final double kChassisMaxMetersPerSec = 5.67;
 	public static final double kChassisMaxRadiansPerSec = 18.59;
 
-	public static final double kChassisEstimatedRotationsToInches = 2048*7.45/4; //motor counts, conversion to wheel turns, amount of inches per turn.
+	public static final double kChassisEstimatedRotationsToInches = 2048*7.45/12; //motor counts, conversion to wheel turns, amount of inches per turn.
 
 	// The gear ratios for the serve turning motor
 	public static final double kChassisNeoToGearbox = 80;
@@ -44,10 +44,10 @@ public final class Constants {
 	public static final double kChassisNeoMotorRotationPerWheelRotation = kChassisNeoToGearbox / kChassisGearboxToOutputGear * kChassisOutputDriveGearToInputGear;
 	public static final double kChassisNeoMotorRotationtoRadians = kChassisNeoMotorRotationPerWheelRotation * Math.PI;
 	
-	public static final double kChassisCANCoderOffsetfL = 86.044921875;
-	public static final double kChassisCANCoderOffsetfR = 225.703125;
-	public static final double kChassisCANCoderOffsetbR = 349.541015625;
-	public static final double kChassisCANCoderOffsetbL = 141.767578125;
+	public static final double kChassisCANCoderOffsetfL = 86.484375;
+	public static final double kChassisCANCoderOffsetfR = 227.8125;
+	public static final double kChassisCANCoderOffsetbR = 171.826171875;
+	public static final double kChassisCANCoderOffsetbL = 142.20703125;
 
 	public static final double kChassisFalconToWheelRatio = 2048 * 3 * (72/14);		//0.64814;
 	public static final double kChassisDegreetoMotor = 360 / kChassisFalconToWheelRatio;

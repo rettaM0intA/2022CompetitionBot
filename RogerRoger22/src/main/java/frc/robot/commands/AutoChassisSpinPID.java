@@ -30,7 +30,7 @@ public class AutoChassisSpinPID extends CommandBase {
   double currentDegree = 0;
   int buffer = 0;
   
-  AHRS gyro;
+  // AHRS gyro;
 
   /** Creates a new AutoChassisSpinPID. */
   /**
@@ -48,9 +48,9 @@ public class AutoChassisSpinPID extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    gyro = RobotContainer.m_chassisSubsystem.gyro;
+    // gyro = RobotContainer.m_chassisSubsystem.gyro;
 
-    RobotContainer.m_chassisSubsystem.resetGyro();
+    // RobotContainer.m_chassisSubsystem.resetGyro();
     RobotContainer.m_chassisSubsystem.driveAuton(0, 0, 0);
     // buffer = 0;
     // Commented this out^.
@@ -70,18 +70,33 @@ public class AutoChassisSpinPID extends CommandBase {
       if(buffer > 20){
         RobotContainer.m_chassisSubsystem.driveTeleop(0, 0, -speed);
       }else{
-        RobotContainer.m_chassisSubsystem.driveTeleop(0, 0, 0.03);
+        RobotContainer.m_chassisSubsystem.driveTeleop(0, 0, -0.03);
       }
     
-      if(gyro.getAngle() > goalDegree -35 && speed > 0.03){
+      if(currentDegree > goalDegree -35 && speed > 0.2){
         speed *= 0.5;
       }
 
-      if(gyro.getAngle() >= goalDegree){
+      if(currentDegree >= goalDegree){
         isFinished = true;
       }
 
     }
+
+    
+  //   if(goalDegree > 0 && gyro.getAngle() > goalDegree -35 && speed > 0.03){
+  //     speed *= 0.5;
+  //   }else if(goalDegree > 0 && gyro.getAngle() < goalDegree +35 && speed > 0.03){
+  //     speed *= 0.5;
+  //   }
+
+  //   if(goalDegree > 0 && gyro.getAngle() >= goalDegree){
+  //     isFinished = true;
+  //   }else if(goalDegree < 0 && gyro.getAngle() <= goalDegree){
+  //     isFinished = true;
+  //   }
+
+  // }
 
 
     // This^ still needs to be tested.
