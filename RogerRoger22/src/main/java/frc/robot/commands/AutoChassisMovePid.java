@@ -58,7 +58,7 @@ public class AutoChassisMovePid extends CommandBase {
     addRequirements(RobotContainer.m_chassisSubsystem);
 
     goalRadian = ((m_degree + 90) * Math.PI / 180); //The math requires radians, so translate degree input to radians
-    speed = m_speed / 100;
+    speed = -m_speed / 100;
 
     
     fwd = (Math.sin(goalRadian) / 100) * speed;
@@ -76,13 +76,13 @@ public class AutoChassisMovePid extends CommandBase {
     bLspeed = speed;
     bRspeed = speed;
 
-    if(goalDistance > 0){
+    if(speed > 0){
       forward = true;
     }else{
       forward = false;
-    //   microChange *= -1;
-    //   smallChange *= -1;
-    //   bigChange *= -1;
+      microChange *= -1;
+      smallChange *= -1;
+      bigChange *= -1;
     }
 
   }
@@ -118,8 +118,12 @@ public class AutoChassisMovePid extends CommandBase {
     waitBeforeStart += 1;
 
     if(waitBeforeStart > 30){
-      RobotContainer.m_chassisSubsystem.driveToPoint(fwd, strafe, 0, -fLspeed, -fRspeed, -bLspeed, -bRspeed);
-    }else if(waitBeforeStart > 12){
+      if(forward){
+        RobotContainer.m_chassisSubsystem.driveToPoint(fwd, strafe, 0, -fLspeed, -fRspeed, -bLspeed, -bRspeed);
+      }else{
+        RobotContainer.m_chassisSubsystem.driveToPoint(fwd, strafe, 0, fLspeed, fRspeed, bLspeed, bRspeed);
+      }
+      }else if(waitBeforeStart > 12){
       RobotContainer.m_chassisSubsystem.driveToPoint(fwd, strafe, 0, 0.01, 0.01, 0.01, 0.01);
     }else{
       RobotContainer.m_chassisSubsystem.driveToPoint(fwd, strafe, 0, 0, 0, 0, 0);
@@ -127,94 +131,94 @@ public class AutoChassisMovePid extends CommandBase {
 
     // if(forward){
 
-  //   if(gyro > 0.5){
-  //   if(gyro > 1){
-  //     if(gyro > 3){
-  //       fRspeed += bigChange;
-  //       bRspeed += bigChange;
+    if(gyro > 0.5){
+    if(gyro > 1){
+      if(gyro > 3){
+        fRspeed += bigChange;
+        bRspeed += bigChange;
 
-  //       fLspeed -= bigChange;
-  //       bLspeed -= bigChange;
-  //     }else{
-  //       fRspeed += smallChange;
-  //       bRspeed += smallChange;
+        fLspeed -= bigChange;
+        bLspeed -= bigChange;
+      }else{
+        fRspeed += smallChange;
+        bRspeed += smallChange;
 
-  //       fLspeed -= smallChange;
-  //       bLspeed -= smallChange;
-  //     }
-  //   }else{
+        fLspeed -= smallChange;
+        bLspeed -= smallChange;
+      }
+    }else{
 
-  //     fRspeed += microChange;
-  //     bRspeed += microChange;
+      fRspeed += microChange;
+      bRspeed += microChange;
 
-  //     fLspeed -= microChange;
-  //     bLspeed -= microChange;
+      fLspeed -= microChange;
+      bLspeed -= microChange;
 
-  //   }
-  //   }else if(gyro < -0.5){
-  //   if(gyro < -1){
-  //     if(gyro < -3){
+    }
+    }else if(gyro < -0.5){
+    if(gyro < -1){
+      if(gyro < -3){
 
-  //       fLspeed += bigChange;
-  //       bLspeed += bigChange;
+        fLspeed += bigChange;
+        bLspeed += bigChange;
 
-  //       fRspeed -= bigChange;
-  //       bRspeed -= bigChange;
+        fRspeed -= bigChange;
+        bRspeed -= bigChange;
 
-  //     }else{
+      }else{
 
-  //       fLspeed += smallChange;
-  //       bLspeed += smallChange;
+        fLspeed += smallChange;
+        bLspeed += smallChange;
 
-  //       fRspeed -= smallChange;
-  //       bRspeed -= smallChange;
+        fRspeed -= smallChange;
+        bRspeed -= smallChange;
 
-  //     }
-  //   }else{
+      }
+    }else{
 
-  //     fLspeed += microChange;
-  //     bLspeed += microChange;
+      fLspeed += microChange;
+      bLspeed += microChange;
 
-  //     fRspeed -= microChange;
-  //     bRspeed -= microChange;
+      fRspeed -= microChange;
+      bRspeed -= microChange;
 
-  //   }
-  // }
+    }
+  }
 
     // }else{
 
-      //TODO, switch motor pairs
+    //   //TODO, switch motor pairs
 
-    //   if(gyro.getAngle() > 1 * direction){
-    //     if(gyro.getAngle() > 3 * direction){
+    //   if(gyro > 1 * direction){
+    //     if(gyro > 3 * direction){
     //       fRspeed -= bigChange;
     //       bRspeed -= bigChange;
   
-    //       fLspeed += bigChange / 2;
-    //       bLspeed += bigChange / 2;
+    //       fLspeed += bigChange;
+    //       bLspeed += bigChange;
     //     }else{
     //       fRspeed -= smallChange;
     //       bRspeed -= smallChange;
   
-    //       fLspeed += smallChange / 2;
-    //       bLspeed += smallChange / 2;
+    //       fLspeed += smallChange;
+    //       bLspeed += smallChange;
     //     }
-    //   }else if(gyro.getAngle() < -1 * direction){
-    //     if(gyro.getAngle() < -3 * direction){
+    //   }else if(gyro < -1 * direction){
+    //     if(gyro < -3 * direction){
   
     //       fLspeed -= bigChange;
     //       bLspeed -= bigChange;
   
-    //       fRspeed += bigChange / 2;
-    //       bRspeed += bigChange / 2;
+    //       fRspeed += bigChange;
+    //       bRspeed += bigChange;
   
     //     }else{
   
     //       fLspeed -= smallChange;
     //       bLspeed -= smallChange;
   
-    //       fRspeed += smallChange / 2;
-    //       bRspeed += smallChange / 2;
+    //       fRspeed += smallChange;
+    //       bRspeed += smallChange;
   
     //     }
     //   }

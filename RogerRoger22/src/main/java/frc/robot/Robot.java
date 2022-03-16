@@ -58,7 +58,7 @@ public class Robot extends TimedRobot {
 
     m_chooser.setDefaultOption("dropAndReverse", new Auton_1());
     m_chooser.addOption("test", new TestCommand());
-    m_chooser.addOption("nick", new NicksAutonSimple());
+    // m_chooser.addOption("nick", new NicksAutonSimple());
     m_chooser.addOption("auton_2", new Auton_2());
     m_chooser.addOption("test_spin", new TurnNDegrees());
     m_chooser.addOption("test_better_spin", new OneBallAuton());
@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
     
     // m_chooser.addOption(name, object);
 
-    SmartDashboard.putData(m_chooser);
+    SmartDashboard.putData("chooser", m_chooser);
   }
 
   /**
@@ -98,6 +98,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    RobotContainer.m_chassisSubsystem.turnWheelsStraight();
     m_autonomousCommand = m_chooser.getSelected();
 
     // schedule the autonomous command (example)

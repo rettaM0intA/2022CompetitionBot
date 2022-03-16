@@ -36,8 +36,17 @@ public class Auton_2 extends SequentialCommandGroup {
     addCommands(new IntakeDirectionChangeCommand());
     addCommands(new ResetGyroCommand());
     //intake on and move forward
-    addCommands(new AutoChassisMovePid(0, -28, 5));
-    addCommands(new IntakeSpinCommand(true));
-
+    addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, 28, 5), new AutoIntakeCommand(true, 3)));
+    //Turn back towards tower
+    addCommands(new AutoChassisSpinPID(170, 25));
+    addCommands(new ResetGyroCommand());
+    //Move towards tower
+    addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, 28, 4.5), new IntakeDirectionChangeCommand()));
+    //turn towards center of tower
+    addCommands(new AutoChassisSpinPID(52, 25));
+    //Move towards tower
+    addCommands(new AutoChassisMovePid(0, 30, 3));
+    //FIRE!
+    addCommands(new AutoIntakeCommand(false, 1));
   }
 }
