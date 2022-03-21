@@ -23,7 +23,7 @@ public class AutoIntakeCommand extends CommandBase {
    * @param direction IntakeDirection either in (true) or out (false)
    * @param goalTime amount of seconds it should be on for
   */
-  public AutoIntakeCommand(Boolean SpinIn, int m_time) {
+  public AutoIntakeCommand(Boolean SpinIn, double m_time) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_intakeSubsystem);
     direction = SpinIn;

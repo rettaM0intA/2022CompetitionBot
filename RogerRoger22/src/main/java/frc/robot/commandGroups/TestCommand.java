@@ -15,6 +15,7 @@ import frc.robot.commands.IntakeDirectionChangeCommand;
 import frc.robot.commands.IntakeSpinCommand;
 import frc.robot.commands.ResetGyroCommand;
 import frc.robot.commands.ResetWheelPositionCommand;
+import frc.robot.commands.turnWheelsStraight;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -26,16 +27,15 @@ public class TestCommand extends SequentialCommandGroup {
   public TestCommand() {
     // Add your commands in the addCommands() call, e.g.
 
-    addCommands(new ResetGyroCommand());
-    // addCommands(new AutoChassisMovePid(0, -35, -3));
-    //addCommands(new ParallelCommandGroup(new IntakeSpinCommand(true, 5.0), new ResetWheelPositionCommand()));
+    addCommands(new turnWheelsStraight(), new ResetGyroCommand());
     
+    addCommands(new AutoChassisSpinPID(-90, 25, false));
     // addCommands(new AutoChassisMovePid(0, 30, 2));
     //Spit first ball
-    addCommands(new AutoIntakeCommand(false, 1));
+    // addCommands(new AutoIntakeCommand(false, 1));
     //Move backwards
-    addCommands(new AutoChassisMovePid(0, -30, 8));
-    addCommands(new AutoIntakeCommand(false, 1));
+    // addCommands(new AutoChassisMovePid(0, 30, 6));
+    // addCommands(new AutoIntakeCommand(false, 1));
     // addCommands(new AutoChassisSpinPID(165, 25));
 
     

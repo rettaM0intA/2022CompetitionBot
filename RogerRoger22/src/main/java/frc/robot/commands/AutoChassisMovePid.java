@@ -41,7 +41,7 @@ public class AutoChassisMovePid extends CommandBase {
   //move right one decimal
   double microChange = 0.00001;
   double smallChange = 0.0001;
-  double bigChange = 0.001;
+  double bigChange   = 0.01;
 
   int direction = 1;
   int timesTurned = 0;
@@ -71,18 +71,22 @@ public class AutoChassisMovePid extends CommandBase {
     bLgoalDistance = m_distance * Constants.kChassisEstimatedRotationsToInches * 12;
     bRgoalDistance = m_distance * Constants.kChassisEstimatedRotationsToInches * 12;
 
-    fLspeed = speed;
-    fRspeed = speed;
-    bLspeed = speed;
-    bRspeed = speed;
 
     if(speed > 0){
       forward = true;
+      fLspeed = -Math.abs(speed) + (smallChange * speed / speed);
+      fRspeed = -Math.abs(speed);
+      bLspeed = -Math.abs(speed) + (smallChange * speed / speed);
+      bRspeed = -Math.abs(speed);
+      // microChange *= -1;
+      // smallChange *= -1;
+      // bigChange *= -1;
     }else{
       forward = false;
-      microChange *= -1;
-      smallChange *= -1;
-      bigChange *= -1;
+      fLspeed = -Math.abs(speed) - (smallChange * speed / speed);
+      fRspeed = -Math.abs(speed);
+      bLspeed = -Math.abs(speed) - (smallChange * speed / speed);
+      bRspeed = -Math.abs(speed);
     }
 
   }
@@ -129,61 +133,59 @@ public class AutoChassisMovePid extends CommandBase {
       RobotContainer.m_chassisSubsystem.driveToPoint(fwd, strafe, 0, 0, 0, 0, 0);
     }
 
-    // if(forward){
+  //   if(gyro > 0.5){
+  //   if(gyro > 1){
+  //     if(gyro > 3){
+  //       fRspeed += bigChange;
+  //       bRspeed += bigChange;
 
-    if(gyro > 0.5){
-    if(gyro > 1){
-      if(gyro > 3){
-        fRspeed += bigChange;
-        bRspeed += bigChange;
+  //       fLspeed -= bigChange;
+  //       bLspeed -= bigChange;
+  //     }else{
+  //       fRspeed += smallChange;
+  //       bRspeed += smallChange;
 
-        fLspeed -= bigChange;
-        bLspeed -= bigChange;
-      }else{
-        fRspeed += smallChange;
-        bRspeed += smallChange;
+  //       fLspeed -= smallChange;
+  //       bLspeed -= smallChange;
+  //     }
+  //   }else{
 
-        fLspeed -= smallChange;
-        bLspeed -= smallChange;
-      }
-    }else{
+  //     fRspeed += microChange;
+  //     bRspeed += microChange;
 
-      fRspeed += microChange;
-      bRspeed += microChange;
+  //     fLspeed -= microChange;
+  //     bLspeed -= microChange;
 
-      fLspeed -= microChange;
-      bLspeed -= microChange;
+  //   }
+  //   }else if(gyro < -0.5){
+  //   if(gyro < -1){
+  //     if(gyro < -3){
 
-    }
-    }else if(gyro < -0.5){
-    if(gyro < -1){
-      if(gyro < -3){
+  //       fLspeed += bigChange;
+  //       bLspeed += bigChange;
 
-        fLspeed += bigChange;
-        bLspeed += bigChange;
+  //       fRspeed -= bigChange;
+  //       bRspeed -= bigChange;
 
-        fRspeed -= bigChange;
-        bRspeed -= bigChange;
+  //     }else{
 
-      }else{
+  //       fLspeed += smallChange;
+  //       bLspeed += smallChange;
 
-        fLspeed += smallChange;
-        bLspeed += smallChange;
+  //       fRspeed -= smallChange;
+  //       bRspeed -= smallChange;
 
-        fRspeed -= smallChange;
-        bRspeed -= smallChange;
+  //     }
+  //   }else{
 
-      }
-    }else{
+  //     fLspeed += microChange;
+  //     bLspeed += microChange;
 
-      fLspeed += microChange;
-      bLspeed += microChange;
+  //     fRspeed -= microChange;
+  //     bRspeed -= microChange;
 
-      fRspeed -= microChange;
-      bRspeed -= microChange;
-
-    }
-  }
+  //   }
+  // }
 
     // }else{
 

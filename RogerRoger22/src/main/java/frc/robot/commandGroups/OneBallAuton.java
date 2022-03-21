@@ -25,7 +25,7 @@ public class OneBallAuton extends SequentialCommandGroup {
     addCommands(new AutoChassisMovePid(0, -30, -3));
     addCommands(new ResetGyroCommand());
     // Robot rotates 180 degrees.
-    addCommands(new AutoChassisSpinPID(180, 25));
+    addCommands(new AutoChassisSpinPID(180, 25, true));
     addCommands(new ResetGyroCommand());
 
     // Intake is lowered.
@@ -40,7 +40,7 @@ public class OneBallAuton extends SequentialCommandGroup {
     //addCommands(new Move(true, speedHere));
 
     // Robot turns 180 degrees.
-    addCommands(new AutoChassisSpinPID(180, 25));
+    addCommands(new AutoChassisSpinPID(180, 25, true));
     addCommands(new ResetGyroCommand());
     // Robot moves back to the goal.
     addCommands(new AutoChassisMovePid(0, 30, 3));

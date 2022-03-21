@@ -32,7 +32,7 @@ public class ChassisDefaultCommand extends CommandBase {
     // RobotContainer.m_chassisSubsystem.driveTeleop(-RobotContainer.operator.getLeftY(), -RobotContainer.operator.getLeftX(), -RobotContainer.operator.getRightX()*.25);
     // }else{
     //XBox controller
-    RobotContainer.m_chassisSubsystem.driveTeleop(-RobotContainer.driver.getLeftY(), -RobotContainer.driver.getLeftX(), -RobotContainer.driver.getRightX() * .25);
+    RobotContainer.m_chassisSubsystem.driveTeleop(-RobotContainer.driver.getLeftY(), -RobotContainer.driver.getLeftX(), -RobotContainer.driver.getRightX() * .40);
     // }
 
 

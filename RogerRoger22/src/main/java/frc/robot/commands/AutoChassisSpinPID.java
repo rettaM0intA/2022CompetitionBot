@@ -24,6 +24,7 @@ import frc.robot.RobotContainer;
 public class AutoChassisSpinPID extends CommandBase {
 
   boolean isFinished = false;
+  boolean isRight = false;
   // boolean isInit = false;
   double speed = 0; // Corresponds with input.
   double goalDegree = 0; // Corresponds with input.
@@ -38,11 +39,17 @@ public class AutoChassisSpinPID extends CommandBase {
    * @param m_goalDegree What direction you want to go to in degrees.
    * @param m_speed How fast you want to move in percent.
    */
-  public AutoChassisSpinPID(double m_goalDegree, double m_speed) {
+  public AutoChassisSpinPID(double m_goalDegree, double m_speed, boolean m_isRight) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_chassisSubsystem);
-    goalDegree = m_goalDegree;
     speed = m_speed / 100;
+    isRight = m_isRight;
+
+    if(isRight){
+      goalDegree = m_goalDegree;
+    }else{
+      goalDegree = -m_goalDegree;
+    }
   }
 
   // Called when the command is initially scheduled.
@@ -67,6 +74,7 @@ public class AutoChassisSpinPID extends CommandBase {
     currentDegree = RobotContainer.m_chassisSubsystem.gyro.getAngle();
 
     // if(goalDegree > 0){
+    if(isRight){
       if(buffer > 20){
         RobotContainer.m_chassisSubsystem.driveTeleop(0, 0, -speed);
       }else{
@@ -81,8 +89,26 @@ public class AutoChassisSpinPID extends CommandBase {
         isFinished = true;
       }
 
-    }
+    }else{
+        if(buffer > 20){
+          RobotContainer.m_chassisSubsystem.driveTeleop(0, 0, speed);
+        }else{
+          RobotContainer.m_chassisSubsystem.driveTeleop(0, 0, 0.03);
+        }
+      
+        if(currentDegree < goalDegree + 35 && speed > 0.2){
+          speed *= 0.5;
+        }
+  
+        if(currentDegree <= goalDegree){
+          isFinished = true;
+        }
+  
+      }
 
+  }
+
+  
     
   //   if(goalDegree > 0 && gyro.getAngle() > goalDegree -35 && speed > 0.03){
   //     speed *= 0.5;
@@ -125,6 +151,7 @@ public class AutoChassisSpinPID extends CommandBase {
     if(isFinished){
       // RobotContainer.m_chassisSubsystem.resetGyro();
       RobotContainer.m_chassisSubsystem.zeroMotors();
+      RobotContainer.m_chassisSubsystem.driveTeleop(0, 0, 0);
       isFinished = false;
       return true;
     }

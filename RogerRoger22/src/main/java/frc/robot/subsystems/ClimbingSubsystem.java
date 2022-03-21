@@ -22,32 +22,37 @@ public class ClimbingSubsystem extends SubsystemBase {
   public ClimbingSubsystem() {
     rightClimbMotor.setIdleMode(IdleMode.kBrake);
     leftClimbMotor.setIdleMode(IdleMode.kBrake);
+    rightClimbMotor.getEncoder().setPosition(0);
+    leftClimbMotor.getEncoder().setPosition(0);
+    // rightClimbMotor.setInverted(rightClimbMotor.getInverted());
+    // leftClimbMotor.setInverted(rightClimbMotor.getInverted());
   }
 
-  //right max 202 but motor limit should be 190. momentum
+  //right max 202 but motor limit should be 187. momentum
 
   public void Climb(boolean isUp){
     if(isUp){
-      if(rightClimbMotor.getEncoder().getPosition() < 190){
+      if(rightClimbMotor.getEncoder().getPosition() < 187){
         rightClimbMotor.set(1); //100%
       }else{
         rightClimbMotor.set(0);
       }
-      if(leftClimbMotor.getEncoder().getPosition() > -200){
-        leftClimbMotor.set(-1); //100%
+      if(leftClimbMotor.getEncoder().getPosition() < 185){
+        leftClimbMotor.set(1); //100%
       }else{
         leftClimbMotor.set(0);
       }
     }else{
-      if(rightClimbMotor.getEncoder().getPosition() > 4){
+      if(rightClimbMotor.getEncoder().getPosition() > 0){
         rightClimbMotor.set(-0.5); //50%
       }else{
         rightClimbMotor.set(0);
       }
-      if(leftClimbMotor.getEncoder().getPosition() < -4){
-        leftClimbMotor.set(0.5); //50%
+      if(leftClimbMotor.getEncoder().getPosition() > 0){
+        leftClimbMotor.set(-0.5); //50%
       }else{
         leftClimbMotor.set(0);
+
       }
       
     }

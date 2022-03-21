@@ -31,7 +31,7 @@ public class TwoBallAuton extends SequentialCommandGroup {
     //Go to ball closest to white tape and turn to other ball
     addCommands(new AutoChassisMovePid(0, 45, 4.5));
     addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisSpinPID(180, 25));
+    addCommands(new AutoChassisSpinPID(180, 25, true));
     addCommands(new ResetGyroCommand());
     // Add command to lower intake.
     // Intake needs to move while driving forward to capture ball
@@ -39,7 +39,7 @@ public class TwoBallAuton extends SequentialCommandGroup {
     addCommands(new AutoChassisMovePid(0, 25, 0.5));
     // Add command to raise intake
     //Turn, then move to other ball
-    addCommands(new AutoChassisSpinPID(90, 25));
+    addCommands(new AutoChassisSpinPID(90, 25, true));
     addCommands(new ResetGyroCommand());
     addCommands(new AutoChassisMovePid(0, 30, 6));
     addCommands(new ResetGyroCommand());

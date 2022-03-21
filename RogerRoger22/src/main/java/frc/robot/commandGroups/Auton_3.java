@@ -6,23 +6,21 @@ package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.AutoChassisMoveCommand;
 import frc.robot.commands.AutoChassisMovePid;
 import frc.robot.commands.AutoChassisSpinPID;
 import frc.robot.commands.AutoIntakeCommand;
 import frc.robot.commands.IntakeDirectionChangeCommand;
-import frc.robot.commands.IntakeSpinCommand;
 import frc.robot.commands.ResetGyroCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Auton_2 extends SequentialCommandGroup {
-  /** Creates a new Auton_2. */
-  public Auton_2() {
+public class Auton_3 extends SequentialCommandGroup {
+  /** Creates a new Auton_3. */
+  public Auton_3() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-
+    
     //Resets Gyro
     addCommands(new ResetGyroCommand());
     //Spit first ball
@@ -30,23 +28,22 @@ public class Auton_2 extends SequentialCommandGroup {
     //Move backwards
     addCommands(new AutoChassisMovePid(0, -55, 3.8));
     //Turn Around
-    // addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisSpinPID(150, 25, true));
+    addCommands(new AutoChassisSpinPID(135, 45, false));
     //Drop down the intake
     addCommands(new IntakeDirectionChangeCommand());
     addCommands(new ResetGyroCommand());
     //intake on and move forward
-    addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, 35, 5), new AutoIntakeCommand(true, 1.8)));
+    addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, 35, 1.7), new AutoIntakeCommand(true, 1.8)));
     
-    addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, -35, 8.5), new IntakeDirectionChangeCommand()));
-//140
+    addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, -35, 1.5), new IntakeDirectionChangeCommand()));
+
     addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisSpinPID(172, 25, true));
-
-
-    //FIRE!
-    addCommands(new AutoChassisMovePid(0, 30, 1));
-    addCommands(new AutoIntakeCommand(false, 1));
+    addCommands(new AutoChassisSpinPID(137, 25, true));
     
+    addCommands(new AutoChassisMovePid(0, 30, 4));
+
+    addCommands(new AutoChassisSpinPID(20, 30, true));
+    //FIRE!
+    addCommands(new AutoIntakeCommand(false, 1));
   }
 }

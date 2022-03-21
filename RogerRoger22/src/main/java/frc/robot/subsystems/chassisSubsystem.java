@@ -657,13 +657,13 @@ public class chassisSubsystem extends SubsystemBase {
 
     //The goal of these four uses of rotationOverflow is to have the wheels avoid a 350+ degree rotation
     
-    fLrotationMotor.set(TalonFXControlMode.Position, (int)fLAngle);
+    fLrotationMotor.set(TalonFXControlMode.Position, (int)0);
     
-    fRrotationMotor.set(TalonFXControlMode.Position, (int)fRAngle);
+    fRrotationMotor.set(TalonFXControlMode.Position, (int)0);
 
-    bLrotationMotor.set(TalonFXControlMode.Position, (int)bLAngle);
+    bLrotationMotor.set(TalonFXControlMode.Position, (int)0);
 
-    bRrotationMotor.set(TalonFXControlMode.Position, (int)bRAngle);
+    bRrotationMotor.set(TalonFXControlMode.Position, (int)0);
     
     //these lines tell the motor controller what poisition to set the motor to
     // fLrotationMotor.getPIDController().setReference(fLAngle, ControlType.kPosition);
@@ -1096,9 +1096,11 @@ public class chassisSubsystem extends SubsystemBase {
     
     //Use with necessary CANCoder to fix offset. First set to 0 and enable the robot. 
     //Then set the Offset to the CANCoder's position in degrees. Comment when done.
-    // fRCanCoder.configMagnetOffset(0);
-
-    // fLCanCoder.configMagnetOffset(-85.4); //Correct offset for Front Left. Do not change without permission. Only grantable by Cody or Darrel.
+    // fRCanCoder.configMagnetOffset(-226.5);
+    
+    // bRCanCoder.configMagnetOffset(-169);
+    
+    // fLCanCoder.configMagnetOffset(-85.4); //Correct offset for Front Left.\
 
     //Uncomment if CANCoder starts reading between 0-360. recomment after running once.
     // fLCanCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
