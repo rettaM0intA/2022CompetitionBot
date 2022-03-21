@@ -1096,11 +1096,14 @@ public class chassisSubsystem extends SubsystemBase {
     
     //Use with necessary CANCoder to fix offset. First set to 0 and enable the robot. 
     //Then set the Offset to the CANCoder's position in degrees. Comment when done.
-    // fRCanCoder.configMagnetOffset(-226.5);
+
+    // bLCanCoder.configMagnetOffset(-167.1); //Correct offset for Back Right. Do not change without permission.
+
+    // fRCanCoder.configMagnetOffset(-228.5); //Correct offset for Front Right. Do not change without permission.
     
-    // bRCanCoder.configMagnetOffset(-169);
+    // bRCanCoder.configMagnetOffset(-171.4); //Correct offset for Back Left. Do not change without permission.
     
-    // fLCanCoder.configMagnetOffset(-85.4); //Correct offset for Front Left.\
+    // fLCanCoder.configMagnetOffset(-85.8); //Correct offset for Front Left. Do not change without permission.
 
     //Uncomment if CANCoder starts reading between 0-360. recomment after running once.
     // fLCanCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
