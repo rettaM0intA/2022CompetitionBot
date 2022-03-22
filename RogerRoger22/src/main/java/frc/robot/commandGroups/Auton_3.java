@@ -35,7 +35,9 @@ public class Auton_3 extends SequentialCommandGroup {
     //intake on and move forward
     addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, 35, 1.7), new AutoIntakeCommand(true, 1.8)));
     
-    addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, -35, 1.5), new IntakeDirectionChangeCommand()));
+    addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, 35, .5), new IntakeDirectionChangeCommand()));
+
+    addCommands(new AutoChassisMovePid(0, -35, 1.5));
 
     addCommands(new ResetGyroCommand());
     addCommands(new AutoChassisSpinPID(137, 25, true));
