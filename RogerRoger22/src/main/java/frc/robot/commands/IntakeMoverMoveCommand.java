@@ -31,7 +31,7 @@ public class IntakeMoverMoveCommand extends CommandBase {
     }
 
     if(RobotContainer.m_intakeMoverSubsystem.Move(true)){
-
+      
     }
 
   }

@@ -31,21 +31,22 @@ public class Auton_2 extends SequentialCommandGroup {
     addCommands(new AutoChassisMovePid(0, -55, 3.8));
     //Turn Around
     // addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisSpinPID(150, 25, true));
+    addCommands(new AutoChassisSpinPID(146, 25, true));
     //Drop down the intake
     addCommands(new IntakeDirectionChangeCommand());
     addCommands(new ResetGyroCommand());
     //intake on and move forward
     addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, 35, 5), new AutoIntakeCommand(true, 1.8)));
-    
-    addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, -35, 8.5), new IntakeDirectionChangeCommand()));
-//140
+    //Turn to fix for drift
     addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisSpinPID(172, 25, true));
-
-
+    addCommands(new AutoChassisSpinPID(10, 35, true));
+    //reverse and intake up
+    addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, -35, 7), new IntakeDirectionChangeCommand()));
+    //turn to face goal
+    addCommands(new ResetGyroCommand());
+    addCommands(new AutoChassisSpinPID(160, 25, true));
     //FIRE!
-    addCommands(new AutoChassisMovePid(0, 30, 1));
+    addCommands(new AutoChassisMovePid(0, 0, 0), new AutoChassisMovePid(0, 30, 3.3));
     addCommands(new AutoIntakeCommand(false, 1));
     
   }

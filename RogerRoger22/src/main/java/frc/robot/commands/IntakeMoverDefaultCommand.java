@@ -9,6 +9,9 @@ import frc.robot.IntakeDirection;
 import frc.robot.RobotContainer;
 
 public class IntakeMoverDefaultCommand extends CommandBase {
+
+  int stillCounter = 0;
+
   /** Creates a new IntakeMoverDefaultCommand. */
   public IntakeMoverDefaultCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -31,20 +34,25 @@ public class IntakeMoverDefaultCommand extends CommandBase {
     if(RobotContainer.intakeDirection != IntakeDirection.still){
       if(RobotContainer.intakeDirection == IntakeDirection.up){
         if(RobotContainer.m_intakeMoverSubsystem.Move(true)){
-          RobotContainer.intakeDirection = IntakeDirection.still;
+          stillCounter += 1;
         }
       }else{
         if(RobotContainer.m_intakeMoverSubsystem.Move(false)){
           RobotContainer.intakeDirection = IntakeDirection.still;
         }
       }
+
+      if(stillCounter >= 2){
+        RobotContainer.intakeDirection = IntakeDirection.still;
+      }
+
     }else{
       if(RobotContainer.chosenDirection == IntakeDirection.down){
         RobotContainer.m_intakeMoverSubsystem.Move(false, 0.03);
       }else{
 
-      RobotContainer.m_intakeMoverSubsystem.Move(true, 0.05);
-
+        stillCounter = 0;
+        RobotContainer.m_intakeMoverSubsystem.Move(true, 0.05);
       }
     }
   }

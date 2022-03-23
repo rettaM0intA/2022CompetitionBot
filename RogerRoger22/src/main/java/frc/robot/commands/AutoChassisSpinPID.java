@@ -12,6 +12,8 @@
 // Notes on things changed w/Cody's help:
 /*set inputs to variables from variable declaration
 
+//stuff above talks about code that has since been deleted and commented
+
 spinToPoint(speed, 0, 0)*/
 
 package frc.robot.commands;

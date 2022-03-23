@@ -37,7 +37,7 @@ public class ClimbingSubsystem extends SubsystemBase {
       }else{
         rightClimbMotor.set(0);
       }
-      if(leftClimbMotor.getEncoder().getPosition() < 185){
+      if(leftClimbMotor.getEncoder().getPosition() < 190){
         leftClimbMotor.set(1); //100%
       }else{
         leftClimbMotor.set(0);

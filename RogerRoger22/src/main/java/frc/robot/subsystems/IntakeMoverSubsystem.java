@@ -122,7 +122,7 @@ public class IntakeMoverSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // SmartDashboard.putNumber("IntakeMover Position", motor.getEncoder().getPosition());
+    SmartDashboard.putNumber("IntakeMover Position", motor.getEncoder().getPosition());
     // SmartDashboard.putNumber("highest speed", highestPower);
   }
 }
