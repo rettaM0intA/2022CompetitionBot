@@ -27,9 +27,9 @@ public class TestCommand extends SequentialCommandGroup {
   public TestCommand() {
     // Add your commands in the addCommands() call, e.g.
 
-    addCommands(new turnWheelsStraight(), new ResetGyroCommand());
+    // addCommands(new turnWheelsStraight(), new ResetGyroCommand());
     
-    addCommands(new AutoChassisSpinPID(-90, 25, false));
+    // addCommands(new AutoChassisSpinPID(-90, 25, false));
     // addCommands(new AutoChassisMovePid(0, 30, 2));
     //Spit first ball
     // addCommands(new AutoIntakeCommand(false, 1));

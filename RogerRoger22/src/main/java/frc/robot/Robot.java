@@ -129,6 +129,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+
     // sub_c.driveTeleop(driver.getTriggerAxis(Hand.kLeft),driver.getTriggerAxis(Hand.kLeft), driver.getX(Hand.kRight));
 
     // if(driver.getBButton()){
@@ -145,10 +146,15 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
+    //Start the compressor.
+    RobotContainer.m_chassisSubsystem.compressor.enableDigital();
     CommandScheduler.getInstance().cancelAll();
   }
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    //Start the compressor.
+    RobotContainer.m_chassisSubsystem.compressor.enableDigital();
+  }
 }

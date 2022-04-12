@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class ClimbingDefaultCommand extends CommandBase {
@@ -22,12 +23,24 @@ public class ClimbingDefaultCommand extends CommandBase {
   @Override
   public void execute() {
       if(RobotContainer.operator.getLeftBumper()){
-        RobotContainer.m_climbingSubsystem.Climb(false);
+        RobotContainer.m_climbingSubsystem.Climb(false, true);
       }else if(RobotContainer.operator.getRightBumper()){
-        RobotContainer.m_climbingSubsystem.Climb(true);
+        RobotContainer.m_climbingSubsystem.Climb(true, true);
+      }else if(RobotContainer.operator.getRightTriggerAxis() > 0.5){
+        RobotContainer.m_climbingSubsystem.Climb(true, false);
+      }else if(RobotContainer.operator.getLeftTriggerAxis() > 0.5){
+        RobotContainer.m_climbingSubsystem.Climb(false, false);
       }else{
         RobotContainer.m_climbingSubsystem.Hold();
       }
+
+      if(RobotContainer.driver.getYButton()){
+        RobotContainer.m_climbingSubsystem.FirePiston(true);
+      }
+      if(RobotContainer.driver.getAButton()){
+        RobotContainer.m_climbingSubsystem.FirePiston(false);
+      }
+
       // Uncomment code if driver controlls the hooks
       // if(RobotContainer.operator.getRightY() > 0.05){
       //   RobotContainer.m_climbingSubsystem.Climb(false);

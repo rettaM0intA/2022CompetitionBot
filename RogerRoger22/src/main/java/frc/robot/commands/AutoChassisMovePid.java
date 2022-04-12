@@ -24,7 +24,7 @@ public class AutoChassisMovePid extends CommandBase {
   int waitBeforeStart = 0;
 
   double gyro = 0;
-
+  
   double goalDistance = 0;
   double fLgoalDistance = 0;
   double fRgoalDistance = 0;

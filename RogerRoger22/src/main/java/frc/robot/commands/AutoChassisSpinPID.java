@@ -27,11 +27,13 @@ public class AutoChassisSpinPID extends CommandBase {
 
   boolean isFinished = false;
   boolean isRight = false;
-  // boolean isInit = false;
   double speed = 0; // Corresponds with input.
+  double startDegree = 0;
   double goalDegree = 0; // Corresponds with input.
   double currentDegree = 0;
   int buffer = 0;
+
+
   
   // AHRS gyro;
 
@@ -40,6 +42,8 @@ public class AutoChassisSpinPID extends CommandBase {
    * How we turn the robot
    * @param m_goalDegree What direction you want to go to in degrees.
    * @param m_speed How fast you want to move in percent.
+   * @param m_isRight Set true to turn right, false to turn left. 
+   * This takes care of negatives for you, so all other inputs should be positive.
    */
   public AutoChassisSpinPID(double m_goalDegree, double m_speed, boolean m_isRight) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -47,10 +51,12 @@ public class AutoChassisSpinPID extends CommandBase {
     speed = m_speed / 100;
     isRight = m_isRight;
 
+    startDegree = RobotContainer.m_chassisSubsystem.gyro.getAngle();
+
     if(isRight){
-      goalDegree = m_goalDegree;
+      goalDegree = m_goalDegree /*+ startDegree*/;
     }else{
-      goalDegree = -m_goalDegree;
+      goalDegree = -m_goalDegree /*+ startDegree*/;
     }
   }
 
@@ -58,6 +64,9 @@ public class AutoChassisSpinPID extends CommandBase {
   @Override
   public void initialize() {
     // gyro = RobotContainer.m_chassisSubsystem.gyro;
+
+    
+    goalDegree = goalDegree + RobotContainer.m_chassisSubsystem.gyro.getAngle();
 
     // RobotContainer.m_chassisSubsystem.resetGyro();
     RobotContainer.m_chassisSubsystem.driveAuton(0, 0, 0);

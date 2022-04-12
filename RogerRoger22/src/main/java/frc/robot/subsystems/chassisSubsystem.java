@@ -21,7 +21,10 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -68,6 +71,9 @@ public class chassisSubsystem extends SubsystemBase {
 
   public AHRS gyro = new AHRS(I2C.Port.kOnboard);
   
+  
+  //Compressor for pnumatics
+  public Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
 
   int frontLeftOnPointCount = 0;
   int frontRightOnPointCount = 0;
@@ -1089,27 +1095,29 @@ public class chassisSubsystem extends SubsystemBase {
   }
 
   public void turnWheelsStraight(){
-    fLrotationMotor.setSelectedSensorPosition(fLCanCoder.getAbsolutePosition() / Constants.kChassisDegreetoMotor);
-    fRrotationMotor.setSelectedSensorPosition(fRCanCoder.getAbsolutePosition() / Constants.kChassisDegreetoMotor);
-    bRrotationMotor.setSelectedSensorPosition(bRCanCoder.getAbsolutePosition() / Constants.kChassisDegreetoMotor);
-    bLrotationMotor.setSelectedSensorPosition(bLCanCoder.getAbsolutePosition() / Constants.kChassisDegreetoMotor);
-    
     //Use with necessary CANCoder to fix offset. First set to 0 and enable the robot. 
     //Then set the Offset to the CANCoder's position in degrees. Comment when done.
 
-    // bLCanCoder.configMagnetOffset(-77.1); //Correct offset for Back Right. Do not change without permission.
+    bLCanCoder.configMagnetOffset(208); //Correct offset for Back Left. Do not change without permission.
 
     // fRCanCoder.configMagnetOffset(-227.5); //Correct offset for Front Right. Do not change without permission.
     
     // bRCanCoder.configMagnetOffset(-169.5); //Correct offset for Back Left. Do not change without permission.
     
-    // fLCanCoder.configMagnetOffset(-85.8); //Correct offset for Front Left. Do not change without permission.
+    fLCanCoder.configMagnetOffset(85); //Correct offset for Front Left. Do not change without permission.
 
-    //Uncomment if CANCoder starts reading between 0-360. recomment after running once.
+    //Uncomment if CANCoder starts reading between -180 - 180. recomment after running once.
     // fLCanCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
     // fRCanCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
     // bRCanCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
     // bLCanCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+
+
+    fLrotationMotor.setSelectedSensorPosition(fLCanCoder.getAbsolutePosition() / Constants.kChassisDegreetoMotor);
+    fRrotationMotor.setSelectedSensorPosition(fRCanCoder.getAbsolutePosition() / Constants.kChassisDegreetoMotor);
+    bRrotationMotor.setSelectedSensorPosition(bRCanCoder.getAbsolutePosition() / Constants.kChassisDegreetoMotor);
+    bLrotationMotor.setSelectedSensorPosition(bLCanCoder.getAbsolutePosition() / Constants.kChassisDegreetoMotor);
+    
 
   }
   

@@ -11,6 +11,9 @@ import frc.robot.ControllerInControl;
 import frc.robot.RobotContainer;
 
 public class ChassisDefaultCommand extends CommandBase {
+
+  boolean pneumaticsOn = false;
+
   /** Creates a new ChassisDefaultCommand. */
   public ChassisDefaultCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -37,6 +40,17 @@ public class ChassisDefaultCommand extends CommandBase {
 
     // RobotContainer.m_chassisSubsystem.driveTeleop(0.5, 0, 0);
 
+      if(RobotContainer.driver.getLeftBumperPressed()){
+        pneumaticsOn = !pneumaticsOn;
+      }
+
+      if(pneumaticsOn){
+        //stop the compressor
+        RobotContainer.m_chassisSubsystem.compressor.disable();
+      }else{
+        //Start the compressor.
+        RobotContainer.m_chassisSubsystem.compressor.enableDigital();
+      }
 
     
     SmartDashboard.putNumber("distancetraveld", RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() / Constants.kChassisEstimatedRotationsToInches);

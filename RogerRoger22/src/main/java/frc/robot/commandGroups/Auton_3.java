@@ -26,25 +26,25 @@ public class Auton_3 extends SequentialCommandGroup {
     //Spit first ball
     addCommands(new AutoIntakeCommand(false, 1));
     //Move backwards
-    addCommands(new AutoChassisMovePid(0, -55, 3.8));
+    addCommands(new AutoChassisMovePid(0, -55, 4));
     //Turn Around
     addCommands(new AutoChassisSpinPID(135, 45, false));
     //Drop down the intake
     addCommands(new IntakeDirectionChangeCommand());
-    addCommands(new ResetGyroCommand());
+    // addCommands(new ResetGyroCommand());
     //intake on and move forward
     addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, 35, 1.7), new AutoIntakeCommand(true, 1.8)));
-    
+    //pick up intake and move back
     addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, 35, .5), new IntakeDirectionChangeCommand()));
-
+    //Move back
     addCommands(new AutoChassisMovePid(0, -35, 1.5));
 
-    addCommands(new ResetGyroCommand());
+    // addCommands(new ResetGyroCommand());
     addCommands(new AutoChassisSpinPID(137, 25, true));
     
-    addCommands(new AutoChassisMovePid(0, 30, 4));
+    addCommands(new AutoChassisMovePid(0, 30, 4.2));
 
-    addCommands(new AutoChassisSpinPID(20, 30, true));
+    // addCommands(new AutoChassisSpinPID(20, 30, true));
     //FIRE!
     addCommands(new AutoIntakeCommand(false, 1));
   }
