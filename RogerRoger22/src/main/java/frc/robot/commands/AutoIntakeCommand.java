@@ -15,19 +15,22 @@ public class AutoIntakeCommand extends CommandBase {
 
   boolean finished = false;
   boolean direction;
+  boolean isClose;
   double startTime;
   double goalTime;
   Timer timer = new Timer();
 
   /** Creates a new AutoIntakeCommand. 
-   * @param direction IntakeDirection either in (true) or out (false)
-   * @param goalTime amount of seconds it should be on for
+   * @param SpinIn IntakeDirection either in (true) or out (false)
+   * @param m_time amount of seconds it should be on for
+   * @param m_isClose True if next to the goal, false if not.
   */
-  public AutoIntakeCommand(Boolean SpinIn, double m_time) {
+  public AutoIntakeCommand(Boolean SpinIn, double m_time, Boolean m_isClose) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_intakeSubsystem);
     direction = SpinIn;
     goalTime = m_time;
+    isClose = m_isClose;
   }
 
   // Called when the command is initially scheduled.
@@ -42,7 +45,11 @@ public class AutoIntakeCommand extends CommandBase {
   @Override
   public void execute() {
 
-    RobotContainer.m_intakeSubsystem.Spin(direction);
+    if(isClose){
+      RobotContainer.m_intakeSubsystem.Spin(direction);
+    }else{
+      RobotContainer.m_intakeSubsystem.Spin(-1);
+    }
 
     if(goalTime <= timer.get() - startTime){
       finished = true;

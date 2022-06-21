@@ -17,10 +17,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commandGroups.Auton_1;
 import frc.robot.commandGroups.Auton_2;
 import frc.robot.commandGroups.Auton_3;
-import frc.robot.commandGroups.NicksAutonSimple;
-// import frc.robot.commandGroups.NicksAutonSimple;
 import frc.robot.commandGroups.TestCommand;
-import frc.robot.commandGroups.TurnNDegrees;
 import frc.robot.commandGroups.OneBallAuton;
 
 /**
@@ -61,13 +58,7 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("2 ball auton", new Auton_2());
     m_chooser.addOption("2 rightBall auton", new Auton_3());
     m_chooser.addOption("test", new TestCommand());
-    // m_chooser.addOption("nick", new NicksAutonSimple());
-    m_chooser.addOption("test_spin", new TurnNDegrees());
     m_chooser.addOption("test_better_spin", new OneBallAuton());
-    // m_chooser.addOption("test_nick", new NicksAutonSimple());
-
-    
-    // m_chooser.addOption(name, object);
 
     SmartDashboard.putData("chooser", m_chooser);
   }

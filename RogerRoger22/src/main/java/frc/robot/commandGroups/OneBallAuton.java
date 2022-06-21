@@ -20,7 +20,7 @@ public class OneBallAuton extends SequentialCommandGroup {
 
     addCommands(new ResetGyroCommand());
     // Robot shoots ball held at the beginning.
-    addCommands(new AutoIntakeCommand(false, 1));
+    addCommands(new AutoIntakeCommand(false, 1, true));
     // Robot moves backward out to ball.
     addCommands(new AutoChassisMovePid(0, -30, -3));
     addCommands(new ResetGyroCommand());
@@ -45,7 +45,7 @@ public class OneBallAuton extends SequentialCommandGroup {
     // Robot moves back to the goal.
     addCommands(new AutoChassisMovePid(0, 30, 3));
     // Ball is deposited.
-    addCommands(new AutoIntakeCommand(false, 1));
+    addCommands(new AutoIntakeCommand(false, 1, true));
     addCommands(new ResetGyroCommand());
 
     // To run multiple commands at the same time,

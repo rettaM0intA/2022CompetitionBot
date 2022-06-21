@@ -52,6 +52,8 @@ public class ChassisDefaultCommand extends CommandBase {
         RobotContainer.m_chassisSubsystem.compressor.enableDigital();
       }
 
+      SmartDashboard.putBoolean("Pnumatics Activated", !pneumaticsOn);
+
     
     SmartDashboard.putNumber("distancetraveld", RobotContainer.m_chassisSubsystem.wheelMotorCountAverage() / Constants.kChassisEstimatedRotationsToInches);
   }

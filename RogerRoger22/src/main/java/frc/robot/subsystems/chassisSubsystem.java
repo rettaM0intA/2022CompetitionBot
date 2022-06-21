@@ -1162,16 +1162,19 @@ public class chassisSubsystem extends SubsystemBase {
     //  SmartDashboard.putNumber("BackLeftEncoder", bLAnalogEncoder.get());
     //  SmartDashboard.putNumber("BackRightEncoder", bRAnalogEncoder.get());
  
-     SmartDashboard.putNumber("rotations traveled", (-fRDriveMotor.getSelectedSensorPosition() + fLDriveMotor.getSelectedSensorPosition() - bRDriveMotor.getSelectedSensorPosition() + bLDriveMotor.getSelectedSensorPosition()) / 4);
-     SmartDashboard.putNumber("Fr", fRCanCoder.getAbsolutePosition());
-     SmartDashboard.putNumber("Fl", fLCanCoder.getAbsolutePosition());
-     SmartDashboard.putNumber("br", bRCanCoder.getAbsolutePosition());
-     SmartDashboard.putNumber("bl", bLCanCoder.getAbsolutePosition());
+    // SmartDashboard.putNumber("rotations traveled", (-fRDriveMotor.getSelectedSensorPosition() + fLDriveMotor.getSelectedSensorPosition() - bRDriveMotor.getSelectedSensorPosition() + bLDriveMotor.getSelectedSensorPosition()) / 4);
+    
+    //  SmartDashboard.putNumber("Fr", fRCanCoder.getAbsolutePosition());
+    //  SmartDashboard.putNumber("Fl", fLCanCoder.getAbsolutePosition());
+    //  SmartDashboard.putNumber("br", bRCanCoder.getAbsolutePosition());
+    //  SmartDashboard.putNumber("bl", bLCanCoder.getAbsolutePosition());
 
-     SmartDashboard.putNumber("Fr MOTOR", fRrotationMotor.getSelectedSensorPosition());
-     SmartDashboard.putNumber("Fl MOTOR", fLrotationMotor.getSelectedSensorPosition());
-     SmartDashboard.putNumber("Br MOTOR", bRrotationMotor.getSelectedSensorPosition());
-     SmartDashboard.putNumber("Bl MOTOR", bLrotationMotor.getSelectedSensorPosition());
+     //TODO uncomment when fixing motor directions
+    //  SmartDashboard.putNumber("Fr MOTOR", fRrotationMotor.getSelectedSensorPosition());
+    //  SmartDashboard.putNumber("Fl MOTOR", fLrotationMotor.getSelectedSensorPosition());
+    //  SmartDashboard.putNumber("Br MOTOR", bRrotationMotor.getSelectedSensorPosition());
+    //  SmartDashboard.putNumber("Bl MOTOR", bLrotationMotor.getSelectedSensorPosition());
+
     //  SmartDashboard.putNumber("Wheel power", fRDriveMotor.get());
 
   

@@ -22,7 +22,7 @@ public class Auton_1 extends SequentialCommandGroup {
     //Resets Gyro
     addCommands(new ResetGyroCommand());
     //Spit first ball
-    addCommands(new AutoIntakeCommand(false, 1));
+    addCommands(new AutoIntakeCommand(false, 1, false));
     //Move backwards
     addCommands(new AutoChassisMovePid(0, -30, 7.5));
   }

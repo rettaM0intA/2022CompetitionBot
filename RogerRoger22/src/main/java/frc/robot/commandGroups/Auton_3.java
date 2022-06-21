@@ -24,7 +24,7 @@ public class Auton_3 extends SequentialCommandGroup {
     //Resets Gyro
     addCommands(new ResetGyroCommand());
     //Spit first ball
-    addCommands(new AutoIntakeCommand(false, 1));
+    addCommands(new AutoIntakeCommand(false, 1, true));
     //Move backwards
     addCommands(new AutoChassisMovePid(0, -55, 4));
     //Turn Around
@@ -33,7 +33,7 @@ public class Auton_3 extends SequentialCommandGroup {
     addCommands(new IntakeDirectionChangeCommand());
     // addCommands(new ResetGyroCommand());
     //intake on and move forward
-    addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, 35, 1.7), new AutoIntakeCommand(true, 1.8)));
+    addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, 35, 1.7), new AutoIntakeCommand(true, 1.8, true)));
     //pick up intake and move back
     addCommands(new ParallelCommandGroup(new AutoChassisMovePid(0, 35, .5), new IntakeDirectionChangeCommand()));
     //Move back
@@ -46,6 +46,6 @@ public class Auton_3 extends SequentialCommandGroup {
 
     // addCommands(new AutoChassisSpinPID(20, 30, true));
     //FIRE!
-    addCommands(new AutoIntakeCommand(false, 1));
+    addCommands(new AutoIntakeCommand(false, 1, true));
   }
 }
