@@ -13,7 +13,6 @@ import com.ctre.phoenix.sensors.CANCoder;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.controller.PIDController;
-// import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -62,15 +61,7 @@ public class chassisSubsystem extends SubsystemBase {
   public WPI_TalonFX bRrotationMotor = new WPI_TalonFX(23);
   public WPI_TalonFX bLrotationMotor = new WPI_TalonFX(21);
 
-  // SlewRateLimiter frontLeftLimiter = new SlewRateLimiter(.72);
-  // SlewRateLimiter frontRightLimiter = new SlewRateLimiter(.72);
-  // SlewRateLimiter backLeftLimiter = new SlewRateLimiter(.72);
-  // SlewRateLimiter backRightLimiter = new SlewRateLimiter(.72);
-
-  // ControllerInControl driver = ControllerInControl.flightStick;
-
   public AHRS gyro = new AHRS(I2C.Port.kOnboard);
-  
   
   //Compressor for pnumatics
   public Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
