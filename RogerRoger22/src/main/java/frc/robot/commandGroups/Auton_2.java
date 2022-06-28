@@ -18,7 +18,7 @@ import frc.robot.commands.ResetGyroCommand;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Auton_2 extends SequentialCommandGroup {
-  /** Creates a new Auton_2. */
+  /** Auton for left side that does 2 balls */
   public Auton_2() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());

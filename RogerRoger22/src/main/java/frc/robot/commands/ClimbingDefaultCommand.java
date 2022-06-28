@@ -41,7 +41,7 @@ public class ClimbingDefaultCommand extends CommandBase {
         RobotContainer.m_climbingSubsystem.FirePiston(false);
       }
 
-      // Uncomment code if driver controlls the hooks
+      // Uncomment code if driver controls the hooks
       // if(RobotContainer.operator.getRightY() > 0.05){
       //   RobotContainer.m_climbingSubsystem.Climb(false);
       // }else if(RobotContainer.operator.getRightY() < -0.05){

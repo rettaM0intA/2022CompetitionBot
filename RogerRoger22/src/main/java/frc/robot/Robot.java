@@ -17,8 +17,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commandGroups.Auton_1;
 import frc.robot.commandGroups.Auton_2;
 import frc.robot.commandGroups.Auton_3;
+import frc.robot.commandGroups.Auton_4;
 import frc.robot.commandGroups.TestCommand;
-import frc.robot.commandGroups.OneBallAuton;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -55,10 +55,10 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     m_chooser.setDefaultOption("dropAndReverse", new Auton_1());
-    m_chooser.addOption("2 ball auton", new Auton_2());
-    m_chooser.addOption("2 rightBall auton", new Auton_3());
+    m_chooser.addOption("2 left auton", new Auton_2());
+    m_chooser.addOption("2 right auton", new Auton_3());
+    m_chooser.addOption("3 right auton", new Auton_4());
     m_chooser.addOption("test", new TestCommand());
-    m_chooser.addOption("test_better_spin", new OneBallAuton());
 
     SmartDashboard.putData("chooser", m_chooser);
   }
