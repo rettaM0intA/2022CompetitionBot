@@ -91,7 +91,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    RobotContainer.m_chassisSubsystem.turnWheelsStraight();
+    // RobotContainer.m_chassisSubsystem.turnWheelsStraight();
     m_autonomousCommand = m_chooser.getSelected();
 
     // schedule the autonomous command (example)
@@ -138,7 +138,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     //Start the compressor.
-    RobotContainer.m_chassisSubsystem.compressor.enableDigital();
+    // RobotContainer.m_chassisSubsystem.compressor.enableDigital();
     CommandScheduler.getInstance().cancelAll();
   }
 
@@ -146,6 +146,6 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     //Start the compressor.
-    RobotContainer.m_chassisSubsystem.compressor.enableDigital();
+    // RobotContainer.m_chassisSubsystem.compressor.enableDigital();
   }
 }

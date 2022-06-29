@@ -9,16 +9,19 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ChassisDefaultCommand;
+// import frc.robot.commands.ChassisDefaultCommand;
 import frc.robot.commands.ClimbingDefaultCommand;
 import frc.robot.commands.ControllerSwitchCommand;
+import frc.robot.commands.DrivelineDefaultCommand;
+import frc.robot.commands.FieldOrientedModeToggleCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeDirectionChangeCommand;
 import frc.robot.commands.IntakeMoverDefaultCommand;
 import frc.robot.commands.IntakeMoverMoveCommand;
 import frc.robot.commands.IntakeSpinCommand;
-import frc.robot.commands.turnWheelsStraight;
+// import frc.robot.commands.turnWheelsStraight;
 import frc.robot.subsystems.ClimbingSubsystem;
+import frc.robot.subsystems.Driveline;
 import frc.robot.subsystems.IntakeMoverSubsystem;
 import frc.robot.subsystems.IntakeMoverSubsystem;
 import frc.robot.commands.IntakeFarCommand;
@@ -32,15 +35,20 @@ import frc.robot.subsystems.chassisSubsystem;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  
 
-  // The robot's subsystems and commands are defined here...
-  public static chassisSubsystem m_chassisSubsystem = new chassisSubsystem();
+  // // The robot's subsystems and commands are defined here...
+  // public static chassisSubsystem m_chassisSubsystem = new chassisSubsystem();
+  
+  public static final Driveline driveline = new Driveline();
+  private DrivelineDefaultCommand drivelineDefaultCommand = new DrivelineDefaultCommand(driveline);
+
   public static IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   public static IntakeMoverSubsystem m_intakeMoverSubsystem = new IntakeMoverSubsystem();
   public static ClimbingSubsystem m_climbingSubsystem = new ClimbingSubsystem();
 
   // private static ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  public static ChassisDefaultCommand m_chassisDefaultCommand = new ChassisDefaultCommand();
+  // public static ChassisDefaultCommand m_chassisDefaultCommand = new ChassisDefaultCommand();
   public static IntakeDefaultCommand m_intakeDefaultCommand = new IntakeDefaultCommand();
   public static IntakeMoverDefaultCommand m_intakeMoverDefaultCommand = new IntakeMoverDefaultCommand();
   public static ClimbingDefaultCommand m_climbingDefaultCommand = new ClimbingDefaultCommand();
@@ -59,9 +67,10 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-
-    // m_chassisSubsystem.setDefaultCommand(new m_exampleSubsystem());\
-    m_chassisSubsystem.setDefaultCommand(m_chassisDefaultCommand);
+    
+    driveline.setDefaultCommand(drivelineDefaultCommand);
+    // // m_chassisSubsystem.setDefaultCommand(new m_exampleSubsystem());\
+    // m_chassisSubsystem.setDefaultCommand(m_chassisDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_intakeDefaultCommand);
     m_intakeMoverSubsystem.setDefaultCommand(m_intakeMoverDefaultCommand);
     m_climbingSubsystem.setDefaultCommand(m_climbingDefaultCommand);
@@ -97,11 +106,12 @@ public class RobotContainer {
     JoystickButton moveIntakeDirectionButton;
     JoystickButton intakeButton;
     JoystickButton intakeFarButton;
+    JoystickButton DrivelineFieldOrientedModeActive;
     
     // if(gamepadDriver == ControllerInControl.MainController){
 
-    straightenWheelsButton = new JoystickButton(driver, 4);
-    straightenWheelsButton.whenPressed(new turnWheelsStraight());
+    // straightenWheelsButton = new JoystickButton(driver, 4);
+    // straightenWheelsButton.whenPressed(new turnWheelsStraight());
 
     outputButton = new JoystickButton(operator, 3);
     outputButton.whenHeld(new IntakeSpinCommand(false));
@@ -114,6 +124,9 @@ public class RobotContainer {
 
     intakeFarButton = new JoystickButton(operator, 4);
     intakeFarButton.whenHeld(new IntakeFarCommand());
+
+    DrivelineFieldOrientedModeActive = new JoystickButton(driver, 6);
+    DrivelineFieldOrientedModeActive.whenPressed(new FieldOrientedModeToggleCommand());
 
       // JoystickButton padSpinButton = new JoystickButton(operator, 2);
       // padSpinButton.whenActive(new SpinCommand());
