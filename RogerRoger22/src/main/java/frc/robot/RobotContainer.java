@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.commands.ChassisDefaultCommand;
+// import frc.robot.commands.ChassisDefaultCommand;
 import frc.robot.commands.ClimbingDefaultCommand;
 import frc.robot.commands.ControllerSwitchCommand;
 import frc.robot.commands.DrivelineDefaultCommand;
@@ -19,14 +20,12 @@ import frc.robot.commands.IntakeDirectionChangeCommand;
 import frc.robot.commands.IntakeMoverDefaultCommand;
 import frc.robot.commands.IntakeMoverMoveCommand;
 import frc.robot.commands.IntakeSpinCommand;
-// import frc.robot.commands.turnWheelsStraight;
 import frc.robot.subsystems.ClimbingSubsystem;
 import frc.robot.subsystems.Driveline;
 import frc.robot.subsystems.IntakeMoverSubsystem;
-import frc.robot.subsystems.IntakeMoverSubsystem;
 import frc.robot.commands.IntakeFarCommand;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.chassisSubsystem;
+// import frc.robot.subsystems.chassisSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -36,6 +35,7 @@ import frc.robot.subsystems.chassisSubsystem;
  */
 public class RobotContainer {
   
+  ActiveMode activeMode = ActiveMode.test;
 
   // // The robot's subsystems and commands are defined here...
   // public static chassisSubsystem m_chassisSubsystem = new chassisSubsystem();

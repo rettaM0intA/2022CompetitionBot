@@ -26,13 +26,13 @@ import frc.robot.Constants.SWERVE;
 
 public class Driveline extends SubsystemBase {
   private final SwerveModule m_leftFront = new SwerveModule("LF", CANIDS.kDriveline_LFSteer, CANIDS.kDriveline_LFDrive,
-      CANIDS.kDriveline_LFSteerEnc, InvertType.None, InvertType.None, SWERVE.kLFAbsoluteOffsetInDegrees);
+      CANIDS.kDriveline_LFSteerEnc, InvertType.InvertMotorOutput, InvertType.InvertMotorOutput, SWERVE.kLFAbsoluteOffsetInDegrees);
   private final SwerveModule m_rightFront = new SwerveModule("RF", CANIDS.kDriveline_RFSteer, CANIDS.kDriveline_RFDrive,
-      CANIDS.kDriveline_RFSteerEnc, InvertType.None, InvertType.None,SWERVE.kRFAbsoluteOffsetInDegrees);
+      CANIDS.kDriveline_RFSteerEnc, InvertType.InvertMotorOutput, InvertType.InvertMotorOutput,SWERVE.kRFAbsoluteOffsetInDegrees);
   private final SwerveModule m_leftBack = new SwerveModule("LB", CANIDS.kDriveline_LBSteer, CANIDS.kDriveline_LBDrive,
-      CANIDS.kDriveline_LBSteerEnc, InvertType.None, InvertType.None, SWERVE.kLBAbsoluteOffsetInDegrees);
+      CANIDS.kDriveline_LBSteerEnc, InvertType.InvertMotorOutput, InvertType.InvertMotorOutput, SWERVE.kLBAbsoluteOffsetInDegrees);
   private final SwerveModule m_rightBack = new SwerveModule("RB", CANIDS.kDriveline_RBSteer, CANIDS.kDriveline_RBDrive,
-      CANIDS.kDriveline_RBSteerEnc, InvertType.None, InvertType.None,SWERVE.kRBAbsoluteOffsetInDegrees);
+      CANIDS.kDriveline_RBSteerEnc, InvertType.InvertMotorOutput, InvertType.InvertMotorOutput,SWERVE.kRBAbsoluteOffsetInDegrees);
 
   private final AHRS m_gyro = new AHRS(I2C.Port.kOnboard);
   
@@ -64,7 +64,11 @@ public class Driveline extends SubsystemBase {
         // SmartDashboard.putNumber("Driveline RF Current", m_rightFront.getDriveCurrent());
         // SmartDashboard.putNumber("Driveline RB Current", m_rightBack.getDriveCurrent());
         // SmartDashboard.putData(RobotContainer.PDP);
-        
+        SmartDashboard.putNumber("FrontLeftEncoder", m_leftFront.getSteerMotAndInDegExact());
+        SmartDashboard.putNumber("BackLeftEncoder", m_leftBack.getSteerMotAndInDegExact());
+        SmartDashboard.putNumber("FrontRightEncoder", m_rightFront.getSteerMotAndInDegExact());
+        SmartDashboard.putNumber("BackRightEncoder", m_rightBack.getSteerMotAndInDegExact());
+
   }
 
   public Pose2d getPose() {

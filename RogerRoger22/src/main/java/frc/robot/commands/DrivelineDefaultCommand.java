@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.ActiveMode;
 import frc.robot.RobotContainer;
 import frc.robot.Util;
 import frc.robot.Constants.OI;
@@ -29,10 +30,11 @@ public class DrivelineDefaultCommand extends CommandBase {
   @Override
   public void execute() {
     
+    // // if(RobotContainer.activeMode == ActiveMode.autonomous){
     // Read Joystick values for X, Y and rotation
-    double x = 0.2;//RobotContainer.driver.getLeftX();
-    double y = 0;//-RobotContainer.driver.getLeftY();
-    double twist = 0;//RobotContainer.driver.getRightX() * 0.5;
+    double x = RobotContainer.driver.getLeftX();
+    double y = -RobotContainer.driver.getLeftY();
+    double twist = RobotContainer.driver.getRightX() * 0.7;
 
     // Limit the X,Y Rotation values so minor changes do not make motors move
     x =  Util.deadband(x, OI.kDeadband);//(Math.abs(x) > OI.kDeadband) ? x - OI.kDeadband : 0;
@@ -41,6 +43,7 @@ public class DrivelineDefaultCommand extends CommandBase {
 
     RobotContainer.driveline.drive(x, y, twist, RobotContainer.driveline.getFieldOrientedModeActive());
 
+    // // }
   }
 
   // Called once the command ends or is interrupted.

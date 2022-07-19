@@ -31,6 +31,8 @@ public class SwerveModule {
     private final CANCoder m_steerEncoder;
     private double m_steerEncoderAbsoluteOffset;
     private double m_driveSpeed = 0;
+    private int circleNumber = 0;
+    private int ticksSinceCircleChange = 0;
 
     private int[][] m_desiredQuadDirIndexArray = { { 0, 2, 1, 3 }, { 1, 0, 3, 2 }, { 2, 3, 0, 1 }, { 3, 1, 2, 0 } };
     private int[][] m_virtualQuadArray = { { 1, 2, 3, 4, -1, -2, -3, -4 }, { 2, 3, 4, 1, 1, -1, -2, -3 },
@@ -112,6 +114,15 @@ public class SwerveModule {
         motCnts = motCnts % 2047;
         return motCnts / SWERVE.kSteerMotCountsPerWheelRadian;
     }
+    public double getSteerMotAngInDeg() {
+        double motCnts = m_steerMotor.getSelectedSensorPosition();
+        motCnts = motCnts % 2047;
+        return motCnts / SWERVE.kSteerMotCntsPerWheelDeg;
+    }
+    public double getSteerMotAndInDegExact() {
+        double motCnts = m_steerMotor.getSelectedSensorPosition();
+        return motCnts / SWERVE.kSteerMotCntsPerWheelDeg;
+    }
     public double getSteerEncAngleInRad() {
         return m_steerEncoder.getPosition() * Math.PI / 180.0;
     }
@@ -135,17 +146,64 @@ public class SwerveModule {
     // Calculate the states and command the motors.
     public void setDesiredState(SwerveModuleState _desiredState) {
         //calcNewAngle(_desiredState);
-      //SwerveModuleState swerveModuleState = _desiredState;
-      SwerveModuleState swerveModuleState = SwerveModuleState.optimize(_desiredState, getRotation2d());
-      double steerAng = swerveModuleState.angle.getRadians();
-      double steerCnts = steerAng * SWERVE.kSteerMotCountsPerWheelRadian;
-      m_steerMotor.set(ControlMode.Position, steerCnts);
+
+        //Uncomment if not using optimize
+        // SwerveModuleState swerveModuleState = _desiredState;
+
+        //Uncomment to activate optimize
+        SwerveModuleState swerveModuleState = SwerveModuleState.optimize(_desiredState, getRotation2d());
+        
+        //the desired angle in degrees
+        double goalAngle = swerveModuleState.angle.getDegrees();
+
+        double driveSpeed = swerveModuleState.speedMetersPerSecond;
+
+        //TODO finish this if you want. It is supposed to let the wheel spin infinitely.
+
+        // //Optimizes the steering of the wheels by making them spin backwards instead of facing backwards.
+        // if(getSteerMotAngInDeg() > goalAngle + 90 || getSteerMotAngInDeg() < goalAngle - 90){
+        //     if(goalAngle > 0){
+        //         goalAngle -= 180;
+        //     }else{
+        //         goalAngle += 180;
+        //     }
+        //     driveSpeed = driveSpeed * -1;
+        // }
+        
+        // ticksSinceCircleChange += 1;
+        // if((getSteerMotorCnts()*SWERVE.kSteerMotCntsPerWheelDeg) - (360*circleNumber) > 150 && goalAngle < -150){
+                
+        //     if(ticksSinceCircleChange > 5){
+        //         circleNumber += 1;
+        //         ticksSinceCircleChange = 0;
+        //     }
+        // }else 
+        // if((getSteerMotorCnts()*SWERVE.kSteerMotCntsPerWheelDeg) - (360*circleNumber) < -150 && goalAngle > 150){
+                
+        //     if(ticksSinceCircleChange > 5){
+        //         circleNumber -= 1;
+        //         ticksSinceCircleChange = 0;
+        //     }
+        // }
+        
+        // //Optimizes the steering of the wheels by making them spin backwards instead of facing backwards.
+        // if(getSteerMotAngInDeg() > goalAngle + 90 || getSteerMotAngInDeg() < goalAngle - 90){
+        //     if(goalAngle > 0){
+        //         goalAngle -= 180;
+        //     }else{
+        //         goalAngle += 180;
+        //     }
+        //     driveSpeed = driveSpeed * -1;
+        // }
+    
+        // double steerAng = goalAngle + (360*circleNumber);
+        double steerCnts = goalAngle * SWERVE.kSteerMotCntsPerWheelDeg;
+        m_steerMotor.set(ControlMode.Position, steerCnts);
       
-      double driveSpeed = swerveModuleState.speedMetersPerSecond;
-      driveSpeed = driveSpeed / DRIVE.kMaxSpeedMetersPerSecond;
-      m_driveMotor.set(ControlMode.PercentOutput, driveSpeed);
-      m_driveSpeed = driveSpeed;
-     // SmartDashboard.putNumber(name + "_Vel", m_driveMotor.getSelectedSensorVelocity());
+        driveSpeed = driveSpeed / DRIVE.kMaxSpeedMetersPerSecond;
+        m_driveMotor.set(ControlMode.PercentOutput, driveSpeed);
+        m_driveSpeed = driveSpeed;
+        //SmartDashboard.putNumber(name + "_Vel", m_driveMotor.getSelectedSensorVelocity());
     }
 
     public void setDesiredState(SwerveModuleState _desiredState, boolean disableDrive){

@@ -95,10 +95,10 @@ public final class Constants {
         public static final double kSteerEncoderCountsPerRev = 4096.0;
         public static final double kSteerCountsPerRadian = kSteerEncoderCountsPerRev / 2 * Math.PI;
 
-        public static final double kLFAbsoluteOffsetInDegrees = 180.35;
-        public static final double kRFAbsoluteOffsetInDegrees = 358.33;
-        public static final double kLBAbsoluteOffsetInDegrees = 179.03;
-        public static final double kRBAbsoluteOffsetInDegrees = 359.8;
+        public static final double kLFAbsoluteOffsetInDegrees = 0.35;
+        public static final double kRFAbsoluteOffsetInDegrees = 178.33;
+        public static final double kLBAbsoluteOffsetInDegrees = -0.97;
+        public static final double kRBAbsoluteOffsetInDegrees = 179.8;
     }
 
 
