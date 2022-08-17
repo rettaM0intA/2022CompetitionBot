@@ -53,7 +53,7 @@ public class Driveline extends SubsystemBase {
         m_rightFront.getState(),
         m_rightBack.getState());
     
-        SmartDashboard.putNumber("Gyro", getRobotAngle());
+        SmartDashboard.putData(m_gyro);
         // double dlc = (m_leftFront.getDriveCurrent()+ m_leftFront.getSteerCurrent() +
         // m_leftBack.getDriveCurrent()+ m_leftBack.getSteerCurrent() +
         // m_rightFront.getDriveCurrent()+ m_rightFront.getSteerCurrent() +
