@@ -6,13 +6,11 @@ package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-// import frc.robot.commands.AutoChassisMoveCommand;
-// import frc.robot.commands.AutoChassisMovePid;
-// import frc.robot.commands.AutoChassisSpinPID;
-// import frc.robot.commands.AutoIntakeCommand;
-// import frc.robot.commands.IntakeDirectionChangeCommand;
-// import frc.robot.commands.IntakeSpinCommand;
-// import frc.robot.commands.ResetGyroCommand;
+import frc.robot.commands.AutoDriveStraight;
+import frc.robot.commands.AutoIntakeCommand;
+import frc.robot.commands.AutoSpin;
+import frc.robot.commands.IntakeDirectionChangeCommand;
+import frc.robot.commands.ResetGyroCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -23,6 +21,30 @@ public class Auton_2 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
+    //New code
+    //Resets Gyro
+    addCommands(new ResetGyroCommand());
+    //Spit first ball
+    addCommands(new AutoIntakeCommand(false, 1, true));
+    //Move backwards
+    addCommands(new AutoDriveStraight(0, -0.3, .5));
+    addCommands(new AutoDriveStraight(-.12, -0.308, 61.5));
+    //turn to face ball
+    addCommands(new ParallelCommandGroup(new AutoSpin(125.3, 60, true),new IntakeDirectionChangeCommand()));
+
+    addCommands(new ResetGyroCommand());
+    //intake on and move forward
+    addCommands(new ParallelCommandGroup(new AutoDriveStraight(0, .15, 40), new AutoIntakeCommand(true, 1.8, true)));
+    // intake up
+    addCommands(new IntakeDirectionChangeCommand());
+    //turn to face goal
+    addCommands(new ResetGyroCommand(), new AutoSpin(143, 60, false));
+    //Move to goal
+    addCommands(new AutoDriveStraight(.165, 0.45, 77));
+    //FIRE!
+    addCommands(new AutoIntakeCommand(false, 1, true));
+
+    //OLD CODE
     // //Resets Gyro
     // addCommands(new ResetGyroCommand());
     // //Spit first ball

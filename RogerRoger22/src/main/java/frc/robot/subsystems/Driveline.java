@@ -26,13 +26,13 @@ import frc.robot.Constants.SWERVE;
 
 public class Driveline extends SubsystemBase {
   private final SwerveModule m_leftFront = new SwerveModule("LF", CANIDS.kDriveline_LFSteer, CANIDS.kDriveline_LFDrive,
-      CANIDS.kDriveline_LFSteerEnc, InvertType.InvertMotorOutput, InvertType.InvertMotorOutput, SWERVE.kLFAbsoluteOffsetInDegrees);
+      CANIDS.kDriveline_LFSteerEnc, InvertType.None, InvertType.InvertMotorOutput, SWERVE.kLFAbsoluteOffsetInDegrees);
   private final SwerveModule m_rightFront = new SwerveModule("RF", CANIDS.kDriveline_RFSteer, CANIDS.kDriveline_RFDrive,
-      CANIDS.kDriveline_RFSteerEnc, InvertType.InvertMotorOutput, InvertType.InvertMotorOutput,SWERVE.kRFAbsoluteOffsetInDegrees);
+      CANIDS.kDriveline_RFSteerEnc, InvertType.None, InvertType.InvertMotorOutput,SWERVE.kRFAbsoluteOffsetInDegrees);
   private final SwerveModule m_leftBack = new SwerveModule("LB", CANIDS.kDriveline_LBSteer, CANIDS.kDriveline_LBDrive,
-      CANIDS.kDriveline_LBSteerEnc, InvertType.InvertMotorOutput, InvertType.InvertMotorOutput, SWERVE.kLBAbsoluteOffsetInDegrees);
+      CANIDS.kDriveline_LBSteerEnc, InvertType.None, InvertType.InvertMotorOutput, SWERVE.kLBAbsoluteOffsetInDegrees);
   private final SwerveModule m_rightBack = new SwerveModule("RB", CANIDS.kDriveline_RBSteer, CANIDS.kDriveline_RBDrive,
-      CANIDS.kDriveline_RBSteerEnc, InvertType.InvertMotorOutput, InvertType.InvertMotorOutput,SWERVE.kRBAbsoluteOffsetInDegrees);
+      CANIDS.kDriveline_RBSteerEnc, InvertType.None, InvertType.InvertMotorOutput,SWERVE.kRBAbsoluteOffsetInDegrees);
 
   private final AHRS m_gyro = new AHRS(I2C.Port.kOnboard);
   
@@ -64,10 +64,11 @@ public class Driveline extends SubsystemBase {
         // SmartDashboard.putNumber("Driveline RF Current", m_rightFront.getDriveCurrent());
         // SmartDashboard.putNumber("Driveline RB Current", m_rightBack.getDriveCurrent());
         // SmartDashboard.putData(RobotContainer.PDP);
-        SmartDashboard.putNumber("FrontLeftEncoder", m_leftFront.getSteerMotAndInDegExact());
-        SmartDashboard.putNumber("BackLeftEncoder", m_leftBack.getSteerMotAndInDegExact());
-        SmartDashboard.putNumber("FrontRightEncoder", m_rightFront.getSteerMotAndInDegExact());
-        SmartDashboard.putNumber("BackRightEncoder", m_rightBack.getSteerMotAndInDegExact());
+        SmartDashboard.putNumber("FrontLeftEncoder", m_leftFront.getSteerEncAngleDeg());
+        SmartDashboard.putNumber("BackLeftEncoder", m_leftBack.getSteerEncAngleDeg());
+        SmartDashboard.putNumber("FrontRightEncoder", m_rightFront.getSteerEncAngleDeg());
+        SmartDashboard.putNumber("BackRightEncoder", m_rightBack.getSteerEncAngleDeg());
+        SmartDashboard.putNumber("Distance", getAverageDistanceInInches());
 
   }
 
@@ -129,7 +130,7 @@ public class Driveline extends SubsystemBase {
     double xSpeed = _xSpeed * DRIVE.kMaxSpeedMetersPerSecond;
     double ySpeed = -_ySpeed * DRIVE.kMaxSpeedMetersPerSecond;
 
-    double rot = RobotContainer.driveline.getRobotAngle() * 0.001;
+    double rot = RobotContainer.driveline.getRobotAngle() * -0.15; //0.001;
     SwerveModuleState[] swerveModuleStates = DRIVE.kDriveKinematics
         .toSwerveModuleStates(new ChassisSpeeds(xSpeed, ySpeed, rot));
     // Normalize the wheel speeds
@@ -200,7 +201,7 @@ public class Driveline extends SubsystemBase {
     m_rightBack.resetDriveMotorCnts();
   }
   public double getAverageDistanceInInches(){
-    double dis = (m_leftFront.getDriveMotorCnts() + m_leftBack.getDriveMotorCnts() + m_rightBack.getDriveMotorCnts() + m_rightFront.getDriveMotorCnts()) / 4.0;
+    double dis = (Math.abs(m_leftFront.getDriveMotorCnts()) + Math.abs(m_leftBack.getDriveMotorCnts()) + Math.abs(m_rightBack.getDriveMotorCnts()) + Math.abs(m_rightFront.getDriveMotorCnts())) / 4.0;
     return dis / SWERVE.kDriveCntsPerInch;
   }
   public double getAverageVelocity(){

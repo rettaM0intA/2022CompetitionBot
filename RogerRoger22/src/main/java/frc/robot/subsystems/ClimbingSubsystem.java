@@ -36,7 +36,7 @@ public class ClimbingSubsystem extends SubsystemBase {
     rightClimbMotor.getEncoder().setPosition(0);
     leftClimbMotor.getEncoder().setPosition(0);
     rightClimbMotor.setInverted(false);
-    leftClimbMotor.setInverted(true);
+    leftClimbMotor.setInverted(false);
 
     climbSolenoid.set(Value.kForward);
   }
@@ -51,7 +51,7 @@ public class ClimbingSubsystem extends SubsystemBase {
       }else{
         rightClimbMotor.set(0);
       }
-      if(leftClimbMotor.getEncoder().getPosition() < 237){
+      if(leftClimbMotor.getEncoder().getPosition() < 235){
         leftClimbMotor.set(1); //100%
       }else{
         leftClimbMotor.set(0);

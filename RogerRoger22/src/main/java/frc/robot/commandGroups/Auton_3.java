@@ -6,11 +6,16 @@ package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.AutoDriveStraight;
+import frc.robot.commands.AutoIntakeCommand;
+import frc.robot.commands.AutoSpin;
+import frc.robot.commands.IntakeDirectionChangeCommand;
 // import frc.robot.commands.AutoChassisMovePid;
 // import frc.robot.commands.AutoChassisSpinPID;
 // import frc.robot.commands.AutoIntakeCommand;
 // import frc.robot.commands.IntakeDirectionChangeCommand;
 // import frc.robot.commands.ResetGyroCommand;
+import frc.robot.commands.ResetGyroCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -21,6 +26,17 @@ public class Auton_3 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     
+    //New Code
+    //Resets Gyro
+    addCommands(new ResetGyroCommand());
+    //Move to and grab first ball
+    addCommands(new IntakeDirectionChangeCommand(), new AutoSpin(0, 0, true), new ParallelCommandGroup(new AutoDriveStraight(0, .3, 35), new AutoIntakeCommand(true, 1.5, true)));
+    //Move back to goal
+    addCommands(new ParallelCommandGroup(new IntakeDirectionChangeCommand(), new AutoDriveStraight(0, -.7, 45)));
+    //Aim and fire
+    addCommands(new AutoSpin(130, 60, false), new AutoSpin(10, 40, false), new AutoDriveStraight(0.08, .3, 6), new AutoIntakeCommand(false, 1, false));
+
+    //Old Code
     // //Resets Gyro
     // addCommands(new ResetGyroCommand());
     // //Spit first ball

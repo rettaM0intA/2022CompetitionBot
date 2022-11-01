@@ -6,11 +6,16 @@ package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.AutoDriveStraight;
+import frc.robot.commands.AutoIntakeCommand;
 // import frc.robot.commands.AutoChassisMovePid;
 // import frc.robot.commands.AutoChassisSpinPID;
 // import frc.robot.commands.AutoIntakeCommand;
 // import frc.robot.commands.IntakeDirectionChangeCommand;
 // import frc.robot.commands.ResetGyroCommand;
+import frc.robot.commands.AutoSpin;
+import frc.robot.commands.IntakeDirectionChangeCommand;
+import frc.robot.commands.ResetGyroCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -18,6 +23,27 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class Auton_4 extends SequentialCommandGroup {
   /** Auton for right side that does 3 balls */
   public Auton_4() {
+
+    //New Code
+
+    //Resets Gyro
+    addCommands(new ResetGyroCommand());
+    //Move to and grab first ball
+    addCommands(new IntakeDirectionChangeCommand(), new AutoIntakeCommand(true, 0.1, true), new ParallelCommandGroup(new AutoDriveStraight(0, .3, 35), new AutoIntakeCommand(true, 1.5, true)));
+    //Move back to goal
+    addCommands(new ParallelCommandGroup(new IntakeDirectionChangeCommand(), new AutoDriveStraight(0, -.7, 45)));
+    //Aim and fire
+    addCommands(new AutoSpin(130, 70, false), new AutoSpin(10, 40, false), new AutoDriveStraight(0.08, .3, 6), new AutoIntakeCommand(false, .7, false));
+    //Reset Gyro
+    addCommands(new ResetGyroCommand());
+    //Turn to face next ball
+    addCommands(new AutoSpin(110, 70, false), new ParallelCommandGroup(new IntakeDirectionChangeCommand(),  new AutoSpin(15, 50, false)));
+    //Go to and grab the next ball
+    addCommands(new AutoDriveStraight(0, .55, 40), new AutoDriveStraight(0, 0.01, 0), new ParallelCommandGroup(new AutoDriveStraight(0, .4, 40), new AutoIntakeCommand(true, 1.2, true)));
+    //Move back and aim
+    addCommands(new IntakeDirectionChangeCommand(), new AutoDriveStraight(0, -.7, 70),new AutoSpin(125, 80, true), new AutoSpin(15, 50, true), new AutoIntakeCommand(false, 2, false));
+    
+    //Old Code
     // //Resets Gyro
     // addCommands(new ResetGyroCommand());
     // //Spit first ball
